@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/28 12:17:49 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/02/28 12:17:49 by rguerrer         ###   ########.fr       */
+/*   Created: 2023/04/17 12:10:11 by rguerrer          #+#    #+#             */
+/*   Updated: 2023/05/02 18:06:12 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+int	ft_isalnum(int c)
 {
-	if (argc > 1)
-	{
-		ft_putstr_fd("Error: minishell does not accept arguments\n", 2);
+	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')
+		|| (c >= '0' && c <= '9'))
 		return (1);
-	}
-	(void)argv;
-	(void)envp;
-	ft_putstr_fd("Welcome to minishell!\n", 1);
 	return (0);
 }

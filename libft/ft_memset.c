@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/28 12:17:49 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/02/28 12:17:49 by rguerrer         ###   ########.fr       */
+/*   Created: 2023/04/17 12:50:13 by rguerrer          #+#    #+#             */
+/*   Updated: 2023/05/02 18:07:42 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+void	*ft_memset(void *b, int c, size_t len)
 {
-	if (argc > 1)
+	size_t	x;
+
+	x = 0;
+	while (x < len)
 	{
-		ft_putstr_fd("Error: minishell does not accept arguments\n", 2);
-		return (1);
+		*((unsigned char *)b + x) = c;
+		x++;
 	}
-	(void)argv;
-	(void)envp;
-	ft_putstr_fd("Welcome to minishell!\n", 1);
-	return (0);
+	return ((void *)b);
 }

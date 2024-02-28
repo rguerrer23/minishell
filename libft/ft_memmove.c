@@ -1,26 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/28 12:17:49 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/02/28 12:17:49 by rguerrer         ###   ########.fr       */
+/*   Created: 2023/04/18 14:55:00 by rguerrer          #+#    #+#             */
+/*   Updated: 2023/05/02 18:07:35 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	if (argc > 1)
+	size_t	x;
+
+	x = 0;
+	if (!len || dst == src)
+		return (dst);
+	if (dst < src)
 	{
-		ft_putstr_fd("Error: minishell does not accept arguments\n", 2);
-		return (1);
+		while (x < len)
+		{
+			*((char *)dst + x) = *((char *)src + x);
+			x++;
+		}
 	}
-	(void)argv;
-	(void)envp;
-	ft_putstr_fd("Welcome to minishell!\n", 1);
-	return (0);
+	else
+	{
+		while (x < len)
+		{
+			*((char *)dst + len - 1) = *((char *)src + len - 1);
+			len--;
+		}
+	}
+	return (dst);
 }

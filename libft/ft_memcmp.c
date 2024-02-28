@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/28 12:17:49 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/02/28 12:17:49 by rguerrer         ###   ########.fr       */
+/*   Created: 2023/04/18 14:36:22 by rguerrer          #+#    #+#             */
+/*   Updated: 2023/05/02 18:07:29 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	if (argc > 1)
+	size_t			x;
+	unsigned char	*c;
+	unsigned char	*y;
+
+	x = 0;
+	c = (unsigned char *)s1;
+	y = (unsigned char *)s2;
+	while (x < n)
 	{
-		ft_putstr_fd("Error: minishell does not accept arguments\n", 2);
-		return (1);
+		if (((unsigned char)c[x]) != (unsigned char)y[x])
+			return (((unsigned char)c[x]) - ((unsigned char)y[x]));
+		x++;
 	}
-	(void)argv;
-	(void)envp;
-	ft_putstr_fd("Welcome to minishell!\n", 1);
 	return (0);
 }

@@ -6,15 +6,15 @@ CFLAGS = -Wall -Wextra -Werror
 
 LIBFT = ./libft
 
-HEADER = -I ./includes -I $(LIBFT)
+HEADER = -I . -I $(LIBFT)
 
 LIBS = $(LIBFT)/libft.a
 
-SOURCES = src/main.c
+SOURCES = src/main.c \
 
 OBJECTS = $(SOURCES:.c=.o)
 
-all: $(NAME)
+all: libft $(NAME)
 
 libft:
 	@make -C $(LIBFT)

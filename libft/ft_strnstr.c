@@ -1,26 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/28 12:17:49 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/02/28 12:17:49 by rguerrer         ###   ########.fr       */
+/*   Created: 2023/04/18 15:12:20 by rguerrer          #+#    #+#             */
+/*   Updated: 2023/05/02 18:12:17 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+char	*ft_strnstr(const char *str, const char *to_find, size_t len)
 {
-	if (argc > 1)
+	size_t	x;
+	size_t	y;
+
+	x = 0;
+	if (to_find[0] == '\0')
+		return ((char *)str);
+	while (str[x] != '\0' && x < len)
 	{
-		ft_putstr_fd("Error: minishell does not accept arguments\n", 2);
-		return (1);
+		y = 0;
+		while ((str[x + y] == to_find[y])
+			&& (str[x + y] != '\0') && (x + y < len))
+		{
+			if (to_find[y + 1] == '\0')
+				return ((char *)&str[x]);
+			y++;
+		}
+		x++;
 	}
-	(void)argv;
-	(void)envp;
-	ft_putstr_fd("Welcome to minishell!\n", 1);
 	return (0);
 }

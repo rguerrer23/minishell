@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/28 12:17:49 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/02/28 12:17:49 by rguerrer         ###   ########.fr       */
+/*   Created: 2023/04/19 11:54:24 by rguerrer          #+#    #+#             */
+/*   Updated: 2023/05/02 18:10:48 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+char	*ft_strdup(const char *s1)
 {
-	if (argc > 1)
+	char		*des;
+	int			x;
+	int			y;
+
+	x = ft_strlen(s1);
+	des = (char *)malloc((x) * sizeof(char) + 1);
+	y = 0;
+	if (des != NULL)
 	{
-		ft_putstr_fd("Error: minishell does not accept arguments\n", 2);
-		return (1);
+		while (s1[y] != '\0')
+		{
+			des[y] = s1[y];
+			y++;
+		}
+		des[y] = '\0';
+		return (des);
 	}
-	(void)argv;
-	(void)envp;
-	ft_putstr_fd("Welcome to minishell!\n", 1);
-	return (0);
+	return (NULL);
 }

@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/28 12:17:49 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/02/28 12:17:49 by rguerrer         ###   ########.fr       */
+/*   Created: 2023/04/19 12:30:18 by rguerrer          #+#    #+#             */
+/*   Updated: 2023/05/02 18:10:57 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	if (argc > 1)
+	char	*str;
+	int		x;
+	int		y;
+
+	x = 0;
+	y = 0;
+	str = malloc((ft_strlen(s1) + ft_strlen(s2)) * sizeof(char) + 1);
+	if (str != NULL)
 	{
-		ft_putstr_fd("Error: minishell does not accept arguments\n", 2);
-		return (1);
+		while (s1[x])
+			str[y++] = s1[x++];
+		x = 0;
+		while (s2[x])
+			str[y++] = s2[x++];
+		str[y] = '\0';
+		return (str);
 	}
-	(void)argv;
-	(void)envp;
-	ft_putstr_fd("Welcome to minishell!\n", 1);
-	return (0);
+	return (NULL);
 }
