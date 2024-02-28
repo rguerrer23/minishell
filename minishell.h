@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/28 12:17:49 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/02/28 12:17:49 by rguerrer         ###   ########.fr       */
+/*   Created: 2024/02/28 12:42:47 by rguerrer          #+#    #+#             */
+/*   Updated: 2024/02/28 12:42:47 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
-int main(int argc, char **argv, char **envp)
-{
-	if (argc > 1)
-	{
-		ft_putstr_fd("Error: minishell does not accept arguments\n", 2);
-		return (1);
-	}
-	
-}
+# include <stdio.h>
+# include <stdlib.h>
+
+
+int		main(int argc, char **argv, char **envp);
+
+#endif
