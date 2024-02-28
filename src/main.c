@@ -19,8 +19,5 @@ int	main(int argc, char **argv, char **envp)
 		ft_putstr_fd("Error: minishell does not accept arguments\n", 2);
 		return (1);
 	}
-	(void)argv;
-	(void)envp;
-	ft_putstr_fd("Welcome to minishell!\n", 1);
 	return (0);
 }
