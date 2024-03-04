@@ -14,6 +14,8 @@
 
 int	main(int argc, char **argv, char **envp)
 {
+	(void)envp;
+	(void)argv;
 	if (argc > 1)
 	{
 		ft_putstr_fd("Error: minishell does not accept arguments\n", 2);

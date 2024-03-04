@@ -23,7 +23,7 @@ libft:
 	@$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
 
 $(NAME): $(OBJECTS) $(LIBS)
-	@$(CC) $(CFLAGS) $(HEADER) $(OBJECTS) $(LIBS) -o $(NAME)
+	$(CC) $(CFLAGS) $(HEADER) $(OBJECTS) $(LIBS) -o $(NAME)
 
 clean:
 	@rm -f $(OBJECTS)
