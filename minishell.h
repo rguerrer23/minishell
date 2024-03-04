@@ -18,6 +18,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+# define ERROR 1
+# define SUCCESS 0
 
 int	main(int argc, char **argv, char **envp);
 
