@@ -1,21 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_cd.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ezhou <ezhou@student.42malaga.com>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/06 13:06:35 by ezhou             #+#    #+#             */
+/*   Updated: 2024/03/06 13:11:01 by ezhou            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
 static	char	*ft_current_path(void)
 {
 	char	*cwd;
 
-    cwd = ft_calloc(PATH_MAX, 1);
-    if (!cwd)
-        return (printf("Malloc Error\n"), NULL);
+	cwd = ft_calloc(PATH_MAX, 1);
+	if (!cwd)
+		return (printf("Malloc Error\n"), NULL);
 	if (getcwd(cwd, PATH_MAX))
 	{
 		return (cwd);
 	}
-    else
-    {
-        printf("Getcwd Error\n");
-	    return (NULL);
-    }
+	else
+	{
+		printf("Getcwd Error\n");
+		return (NULL);
+	}
 }
 
 static	void	ft_update_oldpwd(char **env)
@@ -63,8 +75,8 @@ static	void	ft_update_pwd(char **env)
 }
 
 int	ft_cd(t_cmd **cmd)
-{   
-    int		i;
+{
+	int		i;
 	char	*temp;
 
 	i = 0;
@@ -84,6 +96,5 @@ int	ft_cd(t_cmd **cmd)
 		return (SUCCESS);
 	}
 	free(temp);
-    return (ERROR)
+	return (ERROR);
 }
-

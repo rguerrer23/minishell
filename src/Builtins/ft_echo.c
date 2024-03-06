@@ -1,4 +1,16 @@
-static	int		ft_size(char **args)
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ezhou <ezhou@student.42malaga.com>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/06 13:06:46 by ezhou             #+#    #+#             */
+/*   Updated: 2024/03/06 13:09:12 by ezhou            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+static	int	ft_size(char **args)
 {
 	int		i;
 
@@ -8,7 +20,7 @@ static	int		ft_size(char **args)
 	return (i);
 }
 
-int				ft_echo(char **args)
+int	ft_echo(char **args)
 {
 	int		i;
 	int		flag;
