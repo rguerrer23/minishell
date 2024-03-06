@@ -6,7 +6,7 @@
 /*   By: ezhou <ezhou@student.42malaga.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:06:35 by ezhou             #+#    #+#             */
-/*   Updated: 2024/03/06 15:58:26 by ezhou            ###   ########.fr       */
+/*   Updated: 2024/03/06 16:10:46 by ezhou            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,10 @@ static	int	ft_size(char **args)
 	return (i);
 }
 
-/* int main(int argc, char **argv, char **env)
+/*  int main(int argc, char **argv, char **env)
 {
-	t_cmd *cmd	int	i = 0;
+	t_cmd *cmd;
+	int	i = 0;
 
 	cmd = (t_cmd *)malloc(sizeof(t_cmd) * 1);
 	cmd->cmd_path = "/bin/cd";
@@ -135,4 +136,4 @@ static	int	ft_size(char **args)
 	i = 0;
 	ft_pwd();
 	return (0);
-} */
+}  */
