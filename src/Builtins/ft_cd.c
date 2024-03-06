@@ -6,7 +6,7 @@
 /*   By: ezhou <ezhou@student.42malaga.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:06:35 by ezhou             #+#    #+#             */
-/*   Updated: 2024/03/06 13:11:01 by ezhou            ###   ########.fr       */
+/*   Updated: 2024/03/06 15:58:26 by ezhou            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static	char	*ft_current_path(void)
 	}
 }
 
-static	void	ft_update_oldpwd(char **env)
+static	void	ft_update_oldpwd(t_env *env)
 {
 	int		i;
 	char	*temp;
@@ -40,19 +40,20 @@ static	void	ft_update_oldpwd(char **env)
 	if (!cwd)
 		return ;
 	i = 0;
-	while (cmd->env[i])
+	while (env->env[i])
 	{
-		if (cmd->env && ft_strncmp(cmd->env[i], "OLDPWD", 6))
+		if (!ft_strncmp(env->env[i], "OLDPWD", 6))
 		{
+/* 			printf("%s\n", env->env[i]); */
 			temp = ft_strjoin("OLDPWD=", cwd);
-			free(cmd->env[i]);
-			cmd->env[i] = temp;
+			free(env->env[i]);
+			env->env[i] = temp;
 		}
 		i++;
 	}
 }
 
-static	void	ft_update_pwd(char **env)
+static	void	ft_update_pwd(t_env *env)
 {
 	int		i;
 	char	*temp;
@@ -62,13 +63,14 @@ static	void	ft_update_pwd(char **env)
 	if (!cwd)
 		return ;
 	i = 0;
-	while (cmd->env[i])
+	while (env->env[i])
 	{
-		if (cmd->env && ft_strncmp(cmd->env[i], "PWD", 6))
+		if (!ft_strncmp(env->env[i], "PWD", 3))
 		{
+			/* printf("%s\n", env->env[i]); */
 			temp = ft_strjoin("PWD=", cwd);
-			free(cmd->env[i]);
-			cmd->env[i] = temp;
+			free(env->env[i]);
+			env->env[i] = temp;
 		}
 		i++;
 	}
@@ -80,6 +82,7 @@ int	ft_cd(t_cmd **cmd)
 	char	*temp;
 
 	i = 0;
+	temp = ft_strdup((*cmd)->arg[1]);
 	ft_update_oldpwd((*cmd)->env);
 	if ((*cmd)->num_arg == 0)
 	{
@@ -98,3 +101,38 @@ int	ft_cd(t_cmd **cmd)
 	free(temp);
 	return (ERROR);
 }
+
+static	int	ft_size(char **args)
+{
+	int		i;
+
+	i = 0;
+	while (args[i])
+		i++;
+	return (i);
+}
+
+/* int main(int argc, char **argv, char **env)
+{
+	t_cmd *cmd	int	i = 0;
+
+	cmd = (t_cmd *)malloc(sizeof(t_cmd) * 1);
+	cmd->cmd_path = "/bin/cd";
+	cmd->arg = (char **)malloc(sizeof(char *) * 3);
+	cmd->arg[0] = "cd";
+	cmd->arg[1] = "/Users/ezhou/minishell/src";
+	cmd->arg[2] = 0;
+	cmd->env = (t_env *)malloc(sizeof(t_env) * 1);
+	cmd->env->env_size = ft_size(env);
+	cmd->env->env = (char **)malloc(sizeof(char *) * cmd->env->env_size);
+	while (env[i])
+	{
+		cmd->env->env[i] = ft_strdup(env[i]);
+		i++;
+	}
+	cmd->num_arg = 1;
+	ft_cd(&cmd);
+	i = 0;
+	ft_pwd();
+	return (0);
+} */

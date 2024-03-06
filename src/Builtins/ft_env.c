@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ezhou <ezhou@student.42malaga.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/06 13:07:01 by ezhou             #+#    #+#             */
-/*   Updated: 2024/03/06 15:18:29 by ezhou            ###   ########.fr       */
+/*   Created: 2024/03/06 15:22:34 by ezhou             #+#    #+#             */
+/*   Updated: 2024/03/06 15:24:58 by ezhou            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int	ft_pwd(void)
+int	ft_env(t_env *env)
 {
-	char	*cwd;
+	int	i;
 
-	cwd = ft_calloc(PATH_MAX, 1);
-	if (!cwd)
-		return (printf("Malloc Error\n"), ERROR);
-	if (getcwd(cwd, PATH_MAX))
+	i = 0;
+	while (env->env[i])
 	{
-		ft_putendl_fd(cwd, 1);
-		return (SUCCESS);
+		printf("%s\n", env->env[i]);
+		i++;
 	}
-	return (ERROR);
+	return (SUCCESS);
 }

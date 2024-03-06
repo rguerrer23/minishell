@@ -6,9 +6,11 @@
 /*   By: ezhou <ezhou@student.42malaga.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 13:06:46 by ezhou             #+#    #+#             */
-/*   Updated: 2024/03/06 13:09:12 by ezhou            ###   ########.fr       */
+/*   Updated: 2024/03/06 15:18:23 by ezhou            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../../minishell.h"
 
 static	int	ft_size(char **args)
 {
