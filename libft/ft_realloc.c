@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ezhou <ezhou@student.42malaga.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/11 12:08:34 by ezhou             #+#    #+#             */
-/*   Updated: 2023/10/19 15:18:38 by ezhou            ###   ########.fr       */
+/*   Created: 2024/03/07 12:08:43 by ezhou             #+#    #+#             */
+/*   Updated: 2024/03/07 12:32:46 by ezhou            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *s)
+char	**ft_realloc_doublep_char(char **ptr, size_t size)
 {
-	size_t	index;
+	char	**new;
+	size_t	i;
 
-	index = 0;
-	if (!s || *s == 0)
-		return (0);
-	while (s[index])
-		index++;
-	return (index);
+	i = 0;
+	new = ft_calloc(size, sizeof(char *));
+	while (ptr[i] && i < size)
+	{
+		new[i] = ft_strdup(ptr[i]);
+		i++;
+	}
+	ft_free_char(ptr);
+	return (new);
 }

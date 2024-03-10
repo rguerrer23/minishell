@@ -1,25 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_free_dpointer.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ezhou <ezhou@student.42malaga.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/11 12:08:34 by ezhou             #+#    #+#             */
-/*   Updated: 2023/10/19 15:18:38 by ezhou            ###   ########.fr       */
+/*   Created: 2023/11/30 12:24:16 by ezhou             #+#    #+#             */
+/*   Updated: 2024/03/07 12:26:04 by ezhou            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *s)
+void	ft_free_char(char **array)
 {
-	size_t	index;
+	int	index;
 
 	index = 0;
-	if (!s || *s == 0)
-		return (0);
-	while (s[index])
+	while (array[index])
+	{
+		free(array[index]);
 		index++;
-	return (index);
+	}
+	free(array);
+}
+
+void	ft_free_tpointer(char ***array)
+{
+	int	i;
+
+	i = -1;
+	while ((array)[++i])
+		ft_free_char((array)[i]);
+	free(array);
 }

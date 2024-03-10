@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   print_all_lines.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ezhou <ezhou@student.42malaga.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/11 12:08:34 by ezhou             #+#    #+#             */
-/*   Updated: 2023/10/19 15:18:38 by ezhou            ###   ########.fr       */
+/*   Created: 2023/11/20 10:44:22 by ezhou             #+#    #+#             */
+/*   Updated: 2023/11/20 10:46:34 by ezhou            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *s)
+void	print_all_lines(int fd)
 {
-	size_t	index;
+	char	*line;
 
-	index = 0;
-	if (!s || *s == 0)
-		return (0);
-	while (s[index])
-		index++;
-	return (index);
+	line = "";
+	while (line)
+	{
+		line = get_next_line(fd);
+		ft_printf("%s\n", line);
+		free(line);
+	}
 }

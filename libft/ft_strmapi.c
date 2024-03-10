@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ezhou <ezhou@student.42malaga.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/27 18:55:47 by rguerrer          #+#    #+#             */
-/*   Updated: 2023/04/27 18:55:47 by rguerrer         ###   ########.fr       */
+/*   Created: 2023/09/11 12:09:14 by ezhou             #+#    #+#             */
+/*   Updated: 2023/10/19 15:18:43 by ezhou            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,22 @@
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	int		x;
-	char	*prt;
+	unsigned int	index;
+	unsigned int	length;
+	char			*result;
 
-	if (!s || !f)
+	if (!s)
 		return (NULL);
-	prt = malloc(sizeof(char) * (ft_strlen(s) + 1));
-	if (!prt)
+	length = ft_strlen(s);
+	result = (char *)malloc(sizeof(char) * (length + 1));
+	if (!result)
 		return (NULL);
-	x = 0;
-	while (s[x])
+	index = 0;
+	while (index < length)
 	{
-		prt[x] = f(x, s[x]);
-		x++;
+		result[index] = f(index, s[index]);
+		index++;
 	}
-	prt[x] = '\0';
-	return (prt);
+	result[index] = '\0';
+	return (result);
 }

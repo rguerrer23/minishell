@@ -3,38 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ezhou <ezhou@student.42malaga.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/18 15:55:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2023/05/02 18:05:52 by rguerrer         ###   ########.fr       */
+/*   Created: 2023/09/11 11:08:33 by ezhou             #+#    #+#             */
+/*   Updated: 2023/12/11 13:20:26 by ezhou            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *str)
+long	ft_atoi(const char *nptr)
 {
-	int	x;
-	int	num;
-	int	signo;
+	long	result;
+	int		index;
+	int		minus;
 
-	x = 0;
-	num = 0;
-	signo = 1;
-	while ((str[x] == ' ') || (str[x] >= 9 && str[x] <= 13))
-		x++;
-	if (str[x] == '-')
+	minus = 1;
+	result = 0;
+	index = 0;
+	while ((nptr[index] >= 9 && nptr[index] <= 13) || nptr[index] == 32)
+		index++;
+	if (nptr[index] == '+' || nptr[index] == '-')
 	{
-		signo = -1;
-		x++;
+		if (nptr[index] == '-')
+			minus = -1;
+		index += 1;
 	}
-	else if (str[x] == '+')
-		x++;
-	while (str[x] != '\0' && (str[x] >= '0' && str[x] <= '9'))
+	while (nptr[index] >= '0' && nptr[index] <= '9')
 	{
-		num *= 10;
-		num += str[x] - '0';
-		x++;
+		result = result * 10 + (nptr[index++] - '0');
 	}
-	return (num * signo);
+	return (result * minus);
 }

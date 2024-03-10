@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstmap.c                                        :+:      :+:    :+:   */
+/*   ft_lstmap_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ezhou <ezhou@student.42malaga.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/29 12:09:17 by rguerrer          #+#    #+#             */
-/*   Updated: 2023/04/29 12:09:17 by rguerrer         ###   ########.fr       */
+/*   Created: 2023/09/15 10:50:12 by ezhou             #+#    #+#             */
+/*   Updated: 2023/10/19 15:16:26 by ezhou            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,23 @@
 
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	t_list	*lista;
-	t_list	*listadef;
+	t_list	*new;
+	t_list	*start;
+	void	*content;
 
-	if (!lst)
-		return (NULL);
-	lista = ft_lstnew((*f)(lst->content));
-	if (!lista)
+	start = NULL;
+	while (lst)
 	{
-		ft_lstclear(&lista, del);
-		return (NULL);
-	}
-	listadef = lista;
-	lst = lst->next;
-	while (lst != NULL)
-	{
-		lista->next = ft_lstnew((*f)(lst->content));
-		lista = lista->next;
-		if (!lista)
+		content = f(lst->content);
+		new = ft_lstnew(content);
+		if (!new)
 		{
-			ft_lstclear(&lista, del);
+			free(content);
+			ft_lstclear(&start, del);
 			return (NULL);
 		}
+		ft_lstadd_back(&start, new);
 		lst = lst->next;
 	}
-	return (listadef);
+	return (start);
 }

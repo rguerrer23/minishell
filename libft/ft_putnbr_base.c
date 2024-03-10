@@ -1,25 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_putnbr_base.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ezhou <ezhou@student.42malaga.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/11 12:08:34 by ezhou             #+#    #+#             */
-/*   Updated: 2023/10/19 15:18:38 by ezhou            ###   ########.fr       */
+/*   Created: 2023/10/06 10:38:56 by ezhou             #+#    #+#             */
+/*   Updated: 2023/11/27 16:32:39 by ezhou            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *s)
+int	ft_putnbr_base(long lnbr, char *base)
 {
-	size_t	index;
+	long	length;
+	int		result;
 
-	index = 0;
-	if (!s || *s == 0)
-		return (0);
-	while (s[index])
-		index++;
-	return (index);
+	result = 0;
+	length = ft_strlen(base);
+	if (lnbr < 0)
+	{
+		result += ft_putchar('-');
+		lnbr *= -1;
+	}
+	if (lnbr < length)
+	{
+		result += ft_putchar(base[lnbr]);
+	}
+	else
+	{
+		result += ft_putnbr_base(lnbr / length, base);
+		result += ft_putchar(base[lnbr % length]);
+	}
+	return (result);
 }

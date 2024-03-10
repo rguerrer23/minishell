@@ -1,25 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_print.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ezhou <ezhou@student.42malaga.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/11 12:08:34 by ezhou             #+#    #+#             */
-/*   Updated: 2023/10/19 15:18:38 by ezhou            ###   ########.fr       */
+/*   Created: 2023/10/06 10:46:14 by ezhou             #+#    #+#             */
+/*   Updated: 2023/10/19 15:17:16 by ezhou            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *s)
+int	ft_putchar(char c)
 {
-	size_t	index;
+	return (write(1, &c, 1));
+}
+
+int	ft_putstr(char *s)
+{
+	int	index;
 
 	index = 0;
-	if (!s || *s == 0)
-		return (0);
+	if (!s)
+		s = "(null)";
 	while (s[index])
+	{
+		ft_putchar(s[index]);
 		index++;
+	}
 	return (index);
 }

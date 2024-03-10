@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_dpointer_size.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ezhou <ezhou@student.42malaga.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/11 12:08:34 by ezhou             #+#    #+#             */
-/*   Updated: 2023/10/19 15:18:38 by ezhou            ###   ########.fr       */
+/*   Created: 2023/11/30 12:08:03 by ezhou             #+#    #+#             */
+/*   Updated: 2023/11/30 12:16:47 by ezhou            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *s)
+int	ft_dpointer_size(char **pointer)
 {
-	size_t	index;
+	int	i;
 
-	index = 0;
-	if (!s || *s == 0)
-		return (0);
-	while (s[index])
-		index++;
-	return (index);
+	i = 0;
+	while (pointer[i])
+	{
+		i++;
+	}
+	return (i);
 }

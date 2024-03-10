@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strrchrindex.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ezhou <ezhou@student.42malaga.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/11 12:08:34 by ezhou             #+#    #+#             */
-/*   Updated: 2023/10/19 15:18:38 by ezhou            ###   ########.fr       */
+/*   Created: 2023/09/11 12:19:32 by ezhou             #+#    #+#             */
+/*   Updated: 2023/11/20 17:34:43 by ezhou            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *s)
+int	ft_strrchrindex(const char *s, int c)
 {
 	size_t	index;
 
-	index = 0;
-	if (!s || *s == 0)
+	index = ft_strlen(s);
+	while (s[index] != (unsigned char)c && index > 0)
+	{
+		index--;
+	}
+	if (s[index] == (unsigned char)c)
+		return (index);
+	else
 		return (0);
-	while (s[index])
-		index++;
-	return (index);
 }

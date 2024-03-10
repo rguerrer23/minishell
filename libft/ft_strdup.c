@@ -3,33 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ezhou <ezhou@student.42malaga.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/19 11:54:24 by rguerrer          #+#    #+#             */
-/*   Updated: 2023/05/02 18:10:48 by rguerrer         ###   ########.fr       */
+/*   Created: 2023/09/11 12:03:45 by ezhou             #+#    #+#             */
+/*   Updated: 2023/10/19 15:18:05 by ezhou            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *s1)
+char	*ft_strdup(const char *s)
 {
-	char		*des;
-	int			x;
-	int			y;
+	char	*dupe;
+	int		index;
+	int		length;
 
-	x = ft_strlen(s1);
-	des = (char *)malloc((x) * sizeof(char) + 1);
-	y = 0;
-	if (des != NULL)
+	length = ft_strlen(s);
+	index = 0;
+	dupe = (char *)malloc(sizeof(char) * (length + 1));
+	if (!dupe)
+		return (NULL);
+	while (index < length)
 	{
-		while (s1[y] != '\0')
-		{
-			des[y] = s1[y];
-			y++;
-		}
-		des[y] = '\0';
-		return (des);
+		dupe[index] = s[index];
+		index++;
 	}
-	return (NULL);
+	dupe[index] = '\0';
+	return (dupe);
 }
