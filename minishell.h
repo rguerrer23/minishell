@@ -18,7 +18,20 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+typedef struct s_minishell
+{
+	char		**env;
+}	t_minishell;
 
-int	main(int argc, char **argv, char **envp);
+
+typedef struct s_token
+{
+	t_token_type		type;
+	char				*value;
+	struct s_token		*next;
+	struct s_token		*prev;
+}	t_token;
+
+int	main(int argc, char **argv, char **env);
 
 #endif

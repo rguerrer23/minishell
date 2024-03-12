@@ -12,12 +12,28 @@
 
 #include "minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+void	ft_getenv(char **env)
 {
+}
+
+int	main(int argc, char **argv, char **env)
+{
+	t_minishell	minishell;
+
 	if (argc > 1)
 	{
 		ft_putstr_fd("Error: minishell does not accept arguments\n", 2);
 		return (1);
+	}
+	(void)argv;
+	ft_getenv(env);
+	while (1)
+	{
+		ft_putstr_fd("minishell$ ", 1);
+		ft_read_input(&minishell);
+		ft_parse_input(&minishell);
+		ft_execute_input(&minishell);
+		ft_free_input(&minishell);
 	}
 	return (0);
 }
