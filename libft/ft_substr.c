@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ezhou <ezhou@student.42malaga.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/19 12:08:16 by rguerrer          #+#    #+#             */
-/*   Updated: 2023/04/20 12:18:48 by rguerrer         ###   ########.fr       */
+/*   Created: 2023/09/11 12:20:49 by ezhou             #+#    #+#             */
+/*   Updated: 2023/10/19 15:19:06 by ezhou            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,24 @@
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char				*dst;
-	unsigned int		i;
-	unsigned int		leng;
+	char	*result;
+	size_t	length;
 
-	if (start >= ft_strlen(s))
-		return (ft_strdup(""));
-	if (start + len > ft_strlen(s))
-		leng = ft_strlen(s) - start;
-	else
-		leng = len;
-	dst = malloc(sizeof(char) * (leng + 1));
-	if (!s || !(dst))
+	length = ft_strlen(s);
+	if (!s)
 		return (NULL);
-	i = 0;
-	while (start < ft_strlen((char *)s) && s[start] != '\0' && i < leng)
+	if (length == 0)
+		start = 0;
+	if (length < start)
 	{
-		dst[i] = (char)s[start];
-		i++;
-		start++;
+		len = 0;
+		start = length - 1;
 	}
-	dst[i] = '\0';
-	return (dst);
+	if (length - start < len)
+		len = length - start;
+	result = (char *)malloc(sizeof(char) * (len + 1));
+	if (!result)
+		return (NULL);
+	ft_strlcpy(result, s + start, len + 1);
+	return (result);
 }

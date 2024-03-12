@@ -18,8 +18,6 @@ void	ft_getenv(char **env)
 
 int	main(int argc, char **argv, char **env)
 {
-	t_minishell	minishell;
-
 	if (argc > 1)
 	{
 		ft_putstr_fd("Error: minishell does not accept arguments\n", 2);

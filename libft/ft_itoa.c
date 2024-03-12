@@ -3,60 +3,75 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ezhou <ezhou@student.42malaga.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/20 13:05:38 by rguerrer          #+#    #+#             */
-/*   Updated: 2023/05/02 18:06:41 by rguerrer         ###   ########.fr       */
+/*   Created: 2023/09/11 11:14:34 by ezhou             #+#    #+#             */
+/*   Updated: 2023/12/11 13:53:57 by ezhou            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-// #include <stdio.h>
-// #include <stdlib.h>
 
-int	ft_lenint(int n)
+char	*ft_strnew(size_t size)
 {
-	int	x;
+	char	*pointer;
 
-	x = 1;
-	if (n < 0)
-	{
-		n *= -1;
-		x++;
-	}
-	while (n >= 10)
-	{
-		n /= 10;
-		x++;
-	}
-	return (x);
-}
-
-char	*ft_itoa(int n)
-{
-	char	*ptr;
-	int		x;
-	int		nb;
-
-	nb = n;
-	if (nb == 0)
-		return (ft_strdup("0"));
-	if (nb == -2147483648)
-		return (ft_strdup("-2147483648"));
-	ptr = malloc(sizeof(char) * (ft_lenint(nb) + 1));
-	if (!ptr)
+	pointer = (char *)malloc(sizeof(char) * size);
+	if (!pointer)
 		return (NULL);
-	x = ft_lenint(nb);
-	ptr[x--] = '\0';
-	if (nb < 0)
-	{
-		nb *= -1;
-		ptr[0] = '-';
-	}
-	while (nb > 0)
-	{
-		ptr[x--] = nb % 10 + '0';
-		nb /= 10;
-	}
-	return (ptr);
+	ft_memset(pointer, '\0', size);
+	return (pointer);
 }
+
+int	ft_number_length(long n)
+{
+	int	counter;
+
+	counter = 0;
+	if (n == 0)
+		counter += 1;
+	if (n < 0)
+		counter += 1;
+	while (n != 0)
+	{
+		n = n / 10;
+		counter += 1;
+	}
+	return (counter);
+}
+
+char	*ft_itoa(long ln)
+{
+	char	*list;
+	int		length;
+
+	length = ft_number_length(ln);
+	list = ft_strnew(length + 1);
+	if (!list)
+		return (NULL);
+	if (ln < 0)
+		list[0] = '-';
+	if (ln == 0)
+		list[length - 1] = '0';
+	list[length] = '\0';
+	while (ln != 0)
+	{
+		if (ln % 10 < 0)
+			list[length - 1] = ((ln % 10) * -1) + '0';
+		else
+			list[length - 1] = (ln % 10) + '0';
+		length--;
+		ln /= 10;
+	}
+	return (list);
+}
+/*
+int	main(void)
+{
+	char	*str;
+
+	str = ft_itoa(9223372036854775807);
+	printf("%s\n", str);
+	return (0);
+}
+*/

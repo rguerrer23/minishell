@@ -3,34 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: ezhou <ezhou@student.42malaga.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/18 15:12:20 by rguerrer          #+#    #+#             */
-/*   Updated: 2023/05/02 18:12:17 by rguerrer         ###   ########.fr       */
+/*   Created: 2023/09/11 12:19:05 by ezhou             #+#    #+#             */
+/*   Updated: 2023/10/19 15:18:53 by ezhou            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strnstr(const char *str, const char *to_find, size_t len)
+char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	size_t	x;
-	size_t	y;
+	size_t	index;
+	size_t	length;
 
-	x = 0;
-	if (to_find[0] == '\0')
-		return ((char *)str);
-	while (str[x] != '\0' && x < len)
+	length = ft_strlen(little);
+	index = 0;
+	if (!little[0])
+		return ((char *)big);
+	while (big[index] && index < len)
 	{
-		y = 0;
-		while ((str[x + y] == to_find[y])
-			&& (str[x + y] != '\0') && (x + y < len))
+		if (big[index] == little[0])
 		{
-			if (to_find[y + 1] == '\0')
-				return ((char *)&str[x]);
-			y++;
+			if (ft_strncmp(&(big[index]), little, length) == 0 && index
+				+ length <= len)
+				return ((char *)&(big[index]));
 		}
-		x++;
+		index++;
 	}
-	return (0);
+	return (NULL);
 }
