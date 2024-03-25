@@ -17,11 +17,9 @@ void	ft_parse_input(t_minishell *minishell)
 	t_token	*token;
 	char	*line;
 
-	if (get_next_line(0, &line) == 0)
-	{
-		ft_putstr_fd("exit\n", 1);
-		exit(0);
-	}
-	
-
+	line = minishell.line;
+	token = ft_get_token(line);
+	ft_lstadd_back(&minishell.tokens, ft_lstnew(token));
+	free(line);
+	minishell.line = NULL;
 }
