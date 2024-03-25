@@ -22,6 +22,14 @@
 # define ERROR 1
 # define SUCCESS 0
 
+typedef struct s_token
+{
+	char			*content;
+	int				type;
+	struct s_token	*prev;
+	struct s_token	*next;
+}					t_token;
+
 typedef struct s_env
 {
 	char			**env;
