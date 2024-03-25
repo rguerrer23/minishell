@@ -22,7 +22,7 @@ static	int	ft_valid_name(char	*string)
 		if (i == 0)
 		{
 			if (!ft_isalpha(string[i]))
-				return (2);
+				return (ERROR);
 		}
 		else
 		{
@@ -38,13 +38,47 @@ static	int	ft_valid_name(char	*string)
 	return (SUCCESS);
 }
 
+int	ft_env_index(char **env, char *variable, int *index)
+{
+	char	*key;
+	char	**temp;
+	int 	i;
+	int		flag;
+
+	flag = 0;
+	temp = ft_split(variable);
+	key = temp[0];
+	while (env[i])
+	{
+		if !(ft_strncmp(key, env[i], ft_strlen(key)))
+		{
+			flag = 1;
+			*index = i;
+			break;
+		}
+		i++;
+	}
+	ft_free_char(temp);
+	return (flag);
+}
+
 static void	ft_update_env(char **env, size_t size, char *variable)
 {
-	if (ft_strcontains(variable, '='))
-		env[size - 1] = ft_strdup(variable);
+	int	index;
+
+	if (ft_env_index(env, variable, &index))
+	{
+		if (ft_strcontains(variable, '='))
+		{
+			free(env[index]);
+			env[index] = ft_strdup(variable);
+		}
+	}
 	else
 	{
-		env[size - 1] = ft_strjoin(variable, "=");
+		
+		if (ft_strcontains(variable, '='))
+			env[size - 1] = ft_strdup(variable);
 	}
 }
 
