@@ -2,28 +2,41 @@ Esta es la guia en la que nos estamos basando para el proyecto:
 
     https://github.com/madebypixel02/minishell
 
-Nos vamos a repartir las tareas de la siguiente manera>
+Realmente lo que vamos a crear en este proyecto es un "interprete" de comandos que
+se comunicara con el kernel y nos permitira ejecutar los comandos de diversos tipos.
 
-    - jmartos-: parser
+Todo el proyecto se basa en cadenas leidas por "readline" (revisar)
+
+En un principio nos vamos a repartir las tareas de la siguiente manera:
+    
+    - jmartos-: lexer, expander, parser
     - rguerrer: executor
 
-1- Voy a proceder a pensar que estructuras vamos a necesitar, por lo pronto necesitamos
-una "general", que llamaremos t_shell, 
+Procedemos a pensar que estructuras vamos a necesitar, por lo pronto necesitamos
+una "general", que llamaremos t_minishell, y otro 
 
+
+
+
+
+
+
+*********************************************************************************
 INDICE:
-MINISHELL
+    MINISHELL
 
-MANEJAR ERRORES DE USUARIO
-SIGNAL
+    MANEJAR ERRORES DE USUARIO
+    SIGNAL
 
-LEXER:
-- SEPARAR EL STRING ENTRE ESPACIOS Y COMILLAS (SIMPLES Y DOBLES)
-- EXPANDER
-- SEPARAR ENTRE SIGNOS <, |, >.... SOLO SI ESTAS FUERA DE COMILLAS
+    LEXER:
+    - SEPARAR EL STRING ENTRE ESPACIOS Y COMILLAS (SIMPLES Y DOBLES)
+    - EXPANDER
+    - SEPARAR ENTRE SIGNOS <, |, >.... SOLO SI ESTAS FUERA DE COMILLAS
 
-PARSER:
-- CAMBIAR LA STRING DE UNA FORMA QUE PUEDA UTILIZAR EL EXECUTOR
+    PARSER:
+    - CAMBIAR LA STRING DE UNA FORMA QUE PUEDA UTILIZAR EL EXECUTOR
 
-EXECUTOR:
-- IMPLEMENTAR IGUAL QUE EL PIPEX (AÑADIR HEREDOC)
-- BUILTINS
+    EXECUTOR:
+    - IMPLEMENTAR IGUAL QUE EL PIPEX (AÑADIR HEREDOC)
+    - BUILTINS
+*********************************************************************************

@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/06/18 17:24:04 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/06/18 19:07:36 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini.h"
-
+#include "../inc/minishell.h"
+/*
 int	shell_init(t_shell *shell, char **envp)
 {
 	shell->envp = envp;
@@ -38,12 +38,13 @@ void	shell_read(char **line)
 	if (ft_strlen(shell->line) > 0)
 		add_history(shell->line);
 }
+*/
 
-int	main(int argc, char **argv, char **envp)
+int	main(int ac, char **av, char **envp)
 {
-	t_prompt	shell;
+	t_prompt	prompt;
 
-	if (argc != 1 || argv[1])
+	if (ac < 2)
 	{
 		ft_putstr_fd("minishell: invalid arguments\n", STDERR_FILENO);
 		return (EXIT_FAILURE);
