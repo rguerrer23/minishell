@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/18 17:05:28 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/06/18 17:51:57 by rguerrer         ###   ########.fr       */
+/*   Created: 2024/06/18 17:52:13 by rguerrer          #+#    #+#             */
+/*   Updated: 2024/06/18 17:58:58 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
 
-int cd(char *path)
+int ft_pwd(void)
 {
-    if (chdir(path) != 0)
-    {
-        write(STDERR_FILENO, "cd failed", 9);
-        return (EXIT_FAILURE);
-    }
+    char *cwd;
+    
+    cwd = getcwd(NULL, 0);
+    ft_putstr_fd(cwd, STDOUT_FILENO);
+    ft_putstr_fd("\n", STDOUT_FILENO);
+    free(cwd);
     return (EXIT_SUCCESS);
 }
