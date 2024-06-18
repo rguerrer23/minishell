@@ -9,3 +9,21 @@ Nos vamos a repartir las tareas de la siguiente manera>
 
 1- Voy a proceder a pensar que estructuras vamos a necesitar, por lo pronto necesitamos
 una "general", que llamaremos t_shell, 
+
+INDICE:
+MINISHELL
+
+MANEJAR ERRORES DE USUARIO
+SIGNAL
+
+LEXER:
+- SEPARAR EL STRING ENTRE ESPACIOS Y COMILLAS (SIMPLES Y DOBLES)
+- EXPANDER
+- SEPARAR ENTRE SIGNOS <, |, >.... SOLO SI ESTAS FUERA DE COMILLAS
+
+PARSER:
+- CAMBIAR LA STRING DE UNA FORMA QUE PUEDA UTILIZAR EL EXECUTOR
+
+EXECUTOR:
+- IMPLEMENTAR IGUAL QUE EL PIPEX (AÑADIR HEREDOC)
+- BUILTINS
