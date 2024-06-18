@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/06/18 17:05:10 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:23:14 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,21 @@
 # define SHELL_NAME "minishell"
 # define SHELL_PROMPT "minishell$ "
 
+typedef struct s_prompt
+{
+	t_list	*cmds;
+    char    *line;
+	char	**envp;
+	pid_t	pid;
+}		t_prompt;
 
+typedef struct s_mini
+{
+	char	**full_cmd;
+	char	*full_path;
+	int	infile;
+	int	outfile;
+}		t_mini;
 
 int		main(int argc, char **argv, char **envp);
 int     ft_echo(char **args);

@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/06/18 16:40:05 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:24:04 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	shell_init(t_shell *shell, char **envp)
 {
-
+	shell->envp = envp;
 }
 
 void	shell_prompt(t_shell *shell)
@@ -30,9 +30,9 @@ void	shell_prompt(t_shell *shell)
 	free(cwd);
 }
 
-void	shell_read(t_shell *shell)
+void	shell_read(char **line)
 {
-	shell->line = readline(NULL);
+	line = readline(NULL);
 	if (!shell->line)
 		exit_shell(shell, EXIT_SUCCESS);
 	if (ft_strlen(shell->line) > 0)
@@ -41,7 +41,7 @@ void	shell_read(t_shell *shell)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_shell	shell;
+	t_prompt	shell;
 
 	if (argc != 1 || argv[1])
 	{
