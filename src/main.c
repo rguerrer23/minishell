@@ -3,20 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/06/18 19:07:36 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/06/18 21:53:32 by kevlar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-/*
-int	shell_init(t_shell *shell, char **envp)
-{
-	shell->envp = envp;
-}
 
+int g_mutex = 0;
+
+/*
 void	shell_prompt(t_shell *shell)
 {
 	char	*cwd;
@@ -43,20 +41,23 @@ void	shell_read(char **line)
 int	main(int ac, char **av, char **envp)
 {
 	t_prompt	prompt;
+	char		*str_in;
+	char		*str_out;
 
 	if (ac < 2)
 	{
-		ft_putstr_fd("minishell: invalid arguments\n", STDERR_FILENO);
+		ft_putstr_fd(RED"minishell: invalid arguments\n"NC, STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}
-	shell_init(&shell, envp);
- 	while (1)
-	{
-		shell_prompt(&shell);
-		shell_read(&shell);
-		shell_lexer(&shell);
-		shell_parser(&shell);
-		shell_execute(&shell);
-	} 
+	parse_input(&prompt, av);
+	// shell_init(&shell, envp);
+ 	// while (1)
+	// {
+	// 	shell_prompt(&shell);
+	// 	shell_read(&shell);
+	// 	shell_lexer(&shell);
+	// 	shell_parser(&shell);
+	// 	shell_execute(&shell);
+	// } 
 	return (0);
 }

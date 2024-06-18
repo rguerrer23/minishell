@@ -5,15 +5,21 @@ Esta es la guia en la que nos estamos basando para el proyecto:
 Realmente lo que vamos a crear en este proyecto es un "interprete" de comandos que
 se comunicara con el kernel y nos permitira ejecutar los comandos de diversos tipos.
 
-Todo el proyecto se basa en cadenas leidas por "readline" (revisar)
+OBJETIVOS:
+
+    - Mostrar una entrada mientras se espera un comando.
+    - Tener un historial funcional.
+    - buscar y ejecutar comandos/ordenes.
+    - Evitar usar mas de una variable global para evitar problemas de señales y estructuras.
 
 En un principio nos vamos a repartir las tareas de la siguiente manera:
     
     - jmartos-: lexer, expander, parser
     - rguerrer: executor
 
-Procedemos a pensar que estructuras vamos a necesitar, por lo pronto necesitamos
-una "general", que llamaremos t_minishell, y otro 
+TO_DO (jmartos-):
+
+    1º- He creado una funcion en el libft para copiar matrices bidireccionales (ft_matrixdup.c).
 
 
 
@@ -21,7 +27,7 @@ una "general", que llamaremos t_minishell, y otro
 
 
 
-*********************************************************************************
+***************************** JMARTOS- Y RGUERRER ******************************
 INDICE:
     MINISHELL
 
@@ -30,11 +36,13 @@ INDICE:
 
     LEXER:
     - SEPARAR EL STRING ENTRE ESPACIOS Y COMILLAS (SIMPLES Y DOBLES)
-    - EXPANDER
+    - EXPANDER???
     - SEPARAR ENTRE SIGNOS <, |, >.... SOLO SI ESTAS FUERA DE COMILLAS
 
     PARSER:
-    - CAMBIAR LA STRING DE UNA FORMA QUE PUEDA UTILIZAR EL EXECUTOR
+    - CAMBIAR LA STRING DE UNA FORMA QUE PUEDA UTILIZAR EL EXECUTOR.
+    - SEPARAR EL ARGUMENTO PASADO POR PARAMETROS EN LA ENTRADA ESTANDAR Y
+    GUARDARLA EN LASTRUCTURA DE FORMA ADECUADA PARA PODER SER USADA/INTERPRETADA.
 
     EXECUTOR:
     - IMPLEMENTAR IGUAL QUE EL PIPEX (AÑADIR HEREDOC)

@@ -1,34 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_word_counter.letter                                  :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/06 16:25:28 by kevlar            #+#    #+#             */
-/*   Updated: 2024/06/18 21:55:06 by kevlar           ###   ########.fr       */
+/*   Created: 2024/06/18 21:40:30 by kevlar            #+#    #+#             */
+/*   Updated: 2024/06/18 22:36:02 by kevlar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h" /* Libreria 42 "jmartos-". */
+#include "../inc/minishell.h"
 
-int	ft_word_counter(char const *str, char letter)
+t_prompt	init_prompt(char **av, char **envp)
 {
-	int	c;
-	int	w_cont;
+	t_prompt	prompt;
+	char		*str;
 
-	c = 0;
-	w_cont = 0;
-	while (str[c] != '\0')
-	{
-		if (str[c] != letter)
-		{
-			w_cont++;
-			while (str[c] != letter && str[c] != '\0')
-				c++;
-		}
-		else
-			c++;
-	}
-	return (w_cont);
+	str = NULL;
+	prompt->input = ft_dup_matrix(av);
+	prompt->cmd_path = ft_strdup(envp);
+    prompt->infile = STDIN_FILENO;
+    prompt->infile = STDOUT_FILENO;
+	return (prompt);
 }

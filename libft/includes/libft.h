@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:51:25 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/03/21 18:23:19 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/06/18 21:23:25 by kevlar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,5 +114,8 @@ int		ft_isdigit_str(char *str);
 
 // Cuenta las palabras de un string usando un delimitador.
 int		ft_word_counter(char const *s, char c);
+
+// Duplica con seguridad una matriz bidimensional (similar a ft_strdup).
+char	**ft_matrixdup(char **matrix);
 
 #endif
