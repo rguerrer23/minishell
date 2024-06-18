@@ -1,32 +1,27 @@
-NAME = minishell
+NAME		= minishell
 
-CC = gcc
+CFLAGS		= -Wall -Wextra -Werror
 
-CFLAGS = -Wall -Wextra -Werror
+INC			= -I.
 
-INCLUDES = -I.
+SRC			= src/main.c \
 
-SOURCES = src/main.c \
-		  src/parser.c \
-		  src/execute.c \
-		  src/utils.c \
-		  src/lexer.c \
+LIBFT		= libft/libft.a
 
-LIBS = libft/libft.a
+OBJ			= $(SRC:.c=.o)
 
-OBJ = $(SOURCES:.c=.o)
-
-RM = rm -f
-
-GREEN = \033[0;32m
-YELLOW = \033[0;33m
-NO_COLOR = \033[0m
+BOLD		=\033[1m
+RED			=\033[31;1m
+GREEN		=\033[32;1m
+YELLOW		=\033[33;1m
+BLUE		=\033[34;1m
+NO_COLOR	=\033[0m
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(LIBS)
+$(NAME): $(OBJ) $(LIBFT)
 	@echo "$(YELLOW)Compiling $(NAME)...$(NO_COLOR)"
-	@$(CC) $(CFLAGS)  $(INCLUDES) $(OBJ) $(LIBS) -o $(NAME) -lreadline > /dev/null
+	@gcc $(CFLAGS) $(INC) $(OBJ) $(LIBFT) -o $(NAME) -lreadline > /dev/null
 	@echo "$(GREEN)Compilation of $(NAME) done.$(NO_COLOR)"
 
 libft/libft.a:
@@ -36,17 +31,17 @@ libft/libft.a:
 
 %.o: %.c
 	@echo "$(YELLOW)Compiling $<...$(NO_COLOR)"
-	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@ > /dev/null
+	@gcc $(CFLAGS) $(INC) -c $< -o $@ > /dev/null
 
 clean:
 	@echo "$(YELLOW)Cleaning objects...$(NO_COLOR)"
-	@$(RM) $(OBJ) > /dev/null
+	@rm -f $(OBJ) > /dev/null
 	@make clean -C libft > /dev/null
 	@echo "$(GREEN)Cleaning done.$(NO_COLOR)"
 
 fclean: clean
 	@echo "$(YELLOW)Cleaning executable...$(NO_COLOR)"
-	@$(RM) $(NAME) > /dev/null
+	@rm -f $(NAME) > /dev/null
 	@make fclean -C libft > /dev/null
 	@echo "$(GREEN)Cleaning done.$(NO_COLOR)"
 

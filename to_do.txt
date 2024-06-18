@@ -1,0 +1,11 @@
+Esta es la guia en la que nos estamos basando para el proyecto:
+
+    https://github.com/madebypixel02/minishell
+
+Nos vamos a repartir las tareas de la siguiente manera>
+
+    - jmartos-: parser
+    - rguerrer: executor
+
+1- Voy a proceder a pensar que estructuras vamos a necesitar, por lo pronto necesitamos
+una "general", que llamaremos t_shell, 
