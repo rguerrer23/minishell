@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   mini.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/05/02 12:51:36 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/06/18 16:40:38 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,33 +34,8 @@
 # define SHELL_NAME "minishell"
 # define SHELL_PROMPT "minishell$ "
 
-typedef struct s_token
-{
-	char	*type;
-	char	*value;
-	struct s_token	*next;
-	struct s_token	*prev;
-}				t_token;
 
-typedef struct s_shell
-{
-	char		**envp;
-	char		*line;
-	char		**ast;
-	int			exit_status;
-	pid_t		pid;
-	int			fd_in;
-	int			fd_out;
-	int			fd_err;
-	t_token		*token;
-}				t_shell;
 
 int		main(int argc, char **argv, char **envp);
-void	exit_shell(t_shell *shell, int status);
-void	free_tokens(char **tokens);
-void	shell_lexer(t_shell *shell);
-void	shell_execute(t_shell *shell);
-void	free_ast(char **ast);
-void	shell_parser(t_shell *shell);
 
 #endif

@@ -3,16 +3,11 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 10:38:21 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/05/08 10:38:21 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:16:43 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini.h"
-
-void	shell_parser(t_shell *shell)
-{
-	
-}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/05/02 12:03:39 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/06/18 16:40:05 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,7 @@
 
 int	shell_init(t_shell *shell, char **envp)
 {
-	shell->envp = envp;
-	shell->line = NULL;
-	shell->ast = NULL;
-	shell->exit_status = 0;
-	shell->pid = 0;
-	shell->fd_in = dup(0);
-	shell->fd_out = dup(1);
-	shell->fd_err = dup(2);
-	return (EXIT_SUCCESS);
+
 }
 
 void	shell_prompt(t_shell *shell)
@@ -34,7 +26,7 @@ void	shell_prompt(t_shell *shell)
 		exit_shell(shell, EXIT_FAILURE);
 	ft_putstr_fd(SHELL_PROMPT, shell->fd_out);
 	ft_putstr_fd(cwd, shell->fd_out);
-	ft_putstr_fd("$ ", shell->fd_out);
+	ft_putstr_fd("% ", shell->fd_out);
 	free(cwd);
 }
 
