@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/06/19 10:40:08 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/06/19 19:33:30 by kevlar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	shell_read(char **line)
 
 int	main(int ac, char **av, char **envp)
 {
-	t_prompt	prompt;
+	t_cmd		prompt;
 	char		*str_in;
 	char		*str_out;
 
@@ -49,7 +49,9 @@ int	main(int ac, char **av, char **envp)
 		ft_putstr_fd(RED"minishell: invalid arguments\n"NC, STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}
-	parse_input(&prompt, av);
+	init_prompt(&av, &envp);
+	
+	// parse_input(&prompt, av);
 	// shell_init(&shell, envp);
  	// while (1)
 	// {
