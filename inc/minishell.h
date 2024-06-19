@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/06/18 22:34:46 by kevlar           ###   ########.fr       */
+/*   Updated: 2024/06/19 10:52:38 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,14 @@
 /*
 	En t_shell;
 		
-		- **cmds	= parametros ya filtrados. solo contiene los comandos.
+		- *cmds		= puntero a la estructura de comandos.
+		- *line		= linea de comandos leida por el shell.
 		- **envp	= matriz de punteros a las variables de entorno del shell.
 		- pid		= id del proceso actual de la consola.
 	
 	En t_prompt;
 		
-		- **input	= los argumenos sin filtrar (argv).
+		- **full_cmd= matriz de punteros a los comandos de la linea de comandos.
 		- *cmd_path	= ruta del primer comandos encontrado en el input.
 		- inline	= (STDIN 0) file descriptor a leer para ejecutar un comando.
 		- outline	= (STDOUT 1)file descriptor a escribir para ejecutar un comando.
@@ -54,19 +55,19 @@
 
 typedef struct s_shell
 {
-	
-	char	**envp;
-	char	**cmds;
+	t_cmd	*cmds;
+	char	*line;
+	char	**env;
 	pid_t		pid;
-}	t_shell;
+}				t_shell;
 
-typedef struct s_prompt
+typedef struct s_cmd
 {
-	char	**input;
+	char	**full_cmd;
 	char	*cmd_path;
 	int		infile;
 	int		outfile;
-}				t_prompt;
+}				t_cmd;
 
 /*******/
 /* SRC */

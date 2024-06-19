@@ -6,8 +6,53 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 17:59:23 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/06/18 17:59:35 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/06/19 12:15:53 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini.h"
+#include "../inc/minishell.h"
+
+/* Esta funcion crea o modifica una variable de entorno. */
+
+void	ft_new_env(char *name_var, char *value_var, t_shell *shell)
+{
+	int		i;
+	int		j;
+	char	**new_env;
+
+	i = 0;
+	while (shell->env[i])
+		i++;
+	new_env = (char **)malloc(sizeof(char *) * (i + 2));
+	if (!new_env)
+		return ;
+	i = 0;
+	while (shell->env[i])
+	{
+		new_env[i] = ft_strdup(shell->env[i]);
+		i++;
+	}
+	new_env[i] = ft_strjoin(name_var, value_var);
+	new_env[i + 1] = NULL;
+	free(shell->env);
+	shell->env = new_env;
+}
+
+int	ft_export(char *name_var, char *value_var, t_shell *shell)
+{
+	int	i;
+
+	i = 0;
+	while (shell->env[i])
+	{
+		if (!ft_strncmp(shell->env[i], name_var, ft_strlen(name_var))
+			&& shell->env[i][ft_strlen(name_var)] == '=')
+		{
+			free(shell->env[i]);
+			shell->env[i] = ft_strjoin(name_var, value_var);
+			return (EXIT_SUCCESS);
+		}
+		i++;
+	}
+	ft_new_env(name_var, value_var, shell);
+}
