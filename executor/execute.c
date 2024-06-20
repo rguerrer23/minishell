@@ -6,13 +6,26 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 11:37:06 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/06/19 12:16:39 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/06/20 18:14:49 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	execute(t_shell *shell, t_cmd *cmd)
+/* Esta funcion comprueba si existe un builtin y escoje*/
+void	execute(t_shell *shell)
 {
-	execve(cmd->cmd_path, cmd->full_cmd, shell->env);
+	t_list	*tmp;
+	t_cmd	*cmd;
+
+	tmp = shell->cmds;
+	while (tmp)
+	{
+		cmd = tmp->content;
+		if (is_builtin(cmd->full_cmd[0]))
+			execute_builtin(cmd->full_cmd);
+		else
+			execute_ins(cmd, shell);
+		tmp = tmp->next;
+	}
 }

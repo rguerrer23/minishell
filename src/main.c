@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/06/19 19:33:30 by kevlar           ###   ########.fr       */
+/*   Updated: 2024/06/20 17:03:19 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,24 @@
 
 int g_mutex = 0;
 
-/*
+
 void	shell_prompt(t_shell *shell)
 {
-	char	*cwd;
 
-	cwd = getcwd(NULL, 0);
-	if (!cwd)
-		exit_shell(shell, EXIT_FAILURE);
-	ft_putstr_fd(SHELL_PROMPT, shell->fd_out);
-	ft_putstr_fd(cwd, shell->fd_out);
-	ft_putstr_fd("% ", shell->fd_out);
-	free(cwd);
 }
 
-void	shell_read(char **line)
+void	shell_read(t_shell *shell)
 {
-	line = readline(NULL);
+	shell->line = readline("minishell$ ");
 	if (!shell->line)
-		exit_shell(shell, EXIT_SUCCESS);
+	{
+		ft_putstr_fd("exit\n", STDOUT_FILENO);
+		exit(EXIT_SUCCESS);
+	}
 	if (ft_strlen(shell->line) > 0)
 		add_history(shell->line);
 }
-*/
+
 
 int	main(int ac, char **av, char **envp)
 {
@@ -49,17 +44,12 @@ int	main(int ac, char **av, char **envp)
 		ft_putstr_fd(RED"minishell: invalid arguments\n"NC, STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}
-	init_prompt(&av, &envp);
-	
-	// parse_input(&prompt, av);
-	// shell_init(&shell, envp);
- 	// while (1)
-	// {
-	// 	shell_prompt(&shell);
-	// 	shell_read(&shell);
-	// 	shell_lexer(&shell);
-	// 	shell_parser(&shell);
-	// 	shell_execute(&shell);
-	// } 
+ 	while (1)
+	{	
+		shell_prompt(&shell);
+		shell_read(&shell);
+		init_prompt(&av, &envp);
+		shell_execute(&shell);
+	} 
 	return (0);
 }
