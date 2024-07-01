@@ -16,12 +16,25 @@ extern int	g_status;
 
 /* Esta funcion ejecuta un comando de sistema. */
 
+void	get_pid(t_shell *shell)
+{
+	pid_t pid;
+
+	pid = fork();
+	if (pid == 0)
+		shell->pid = 0;
+	else if (pid < 0)
+		shell->pid = -1;
+	else
+		shell->pid = pid;
+}
+
 void	execute_ins(t_cmd *cmd, t_shell *shell)
 {
 	int	status;
 
 	status = 0;
-	shell->pid = fork();
+	get_pid(shell);
 	if (shell->pid == 0)
 	{
 		if (cmd->infile != 0)
