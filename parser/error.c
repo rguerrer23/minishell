@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 19:45:39 by kevlar            #+#    #+#             */
-/*   Updated: 2024/06/18 20:46:52 by kevlar           ###   ########.fr       */
+/*   Updated: 2024/07/01 14:05:08 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,5 @@
 void	error_exit(char *msg)
 {
 	printf(RED"%s\n"NC, msg);
-	exit(EXIT_FAILURE);
+	exit(1);
 }

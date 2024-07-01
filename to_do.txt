@@ -8,7 +8,7 @@ se comunicara con el kernel y nos permitira ejecutar los comandos de diversos ti
 OBJETIVOS:
 
     - Análisis de la línea de comandos:
-        en esta parte, se debe dividir la línea de comandos en distintos tokens (palabras),
+        en esta parte, se debe dividir la línea de comandos en distintos tokens (palabras)
         teniendo en cuenta las distintos espacios y caracteres especiales.
 
     - Ejecución de comandos:
