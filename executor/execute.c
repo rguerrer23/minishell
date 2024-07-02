@@ -15,20 +15,15 @@
 /* Esta funcion comprueba si existe un builtin y escoje*/
 void	execute(t_shell *shell)
 {
-	t_list	*tmp;
-	t_cmd	*cmd;
+	char	**cmd;
 
-	tmp = shell->cmds;
-	while (tmp)
-	{
-		cmd = tmp->content;
-		if (is_builtin(cmd->full_cmd[0]))
-			execute_builtin(cmd->full_cmd);
-		else
-		{
-			cmd->cmd_path = get_cmd_path(cmd->full_cmd[0], shell);
-			execute_ins(cmd, shell);
-		}
-		tmp = tmp->next;
-	}
+	cmd = shell->cmd->full_cmd;
+	if (cmd && ft_strcmp(cmd[0], "exit") == 0 && has_pipe(cmd) == 0)
+		ft_exit(shell);
+		//liberar memoria cmd
+	else if (cmd && is_builtin(cmd[0]) == 1)
+		execute_builtin(shell);
+	else if (cmd)
+		execute_ins(shell);
+	//despues liberar memoria y dejar igual que antes
 }
