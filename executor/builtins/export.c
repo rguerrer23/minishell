@@ -6,18 +6,17 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 17:59:23 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/06/19 12:15:53 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/02 16:14:50 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "inc/minishell.h"
 
 /* Esta funcion crea o modifica una variable de entorno. */
 
 void	ft_new_env(char *name_var, char *value_var, t_shell *shell)
 {
 	int		i;
-	int		j;
 	char	**new_env;
 
 	i = 0;
@@ -38,7 +37,7 @@ void	ft_new_env(char *name_var, char *value_var, t_shell *shell)
 	shell->env = new_env;
 }
 
-int	ft_export(char *name_var, char *value_var, t_shell *shell)
+void	ft_export(char *name_var, char *value_var, t_shell *shell)
 {
 	int	i;
 
@@ -50,7 +49,6 @@ int	ft_export(char *name_var, char *value_var, t_shell *shell)
 		{
 			free(shell->env[i]);
 			shell->env[i] = ft_strjoin(name_var, value_var);
-			return (EXIT_SUCCESS);
 		}
 		i++;
 	}
