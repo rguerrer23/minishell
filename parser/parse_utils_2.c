@@ -6,18 +6,18 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:55:09 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/03 15:28:53 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/03 16:07:00 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-char	*call_no_quote(char *prompt, int *i)
+char	*no_quote(char *prompt, int *i)
 {
 	char	*aux;
 
-	aux = ft_noq(prompt, *i);
-	*i += strlen(aux);
+	aux = no_q(prompt, *i);
+	*i += ft_strlen(aux);
 	return (aux);
 }
 

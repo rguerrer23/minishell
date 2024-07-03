@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:59:05 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/03 15:28:52 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/03 16:06:58 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,40 +30,40 @@ char	**ft_expand_vars(char **cmd)
 /* Separa la cadena teniendo en cuenta los espacios y las comillas. */
 char	**cmd_trim(char *prompt)
 {
-	char	**new;
+	int		pos;
 	char	*aux;
-	int		i;
+	char	**new;
 
-	i = 0;
+	pos = 0;
 	new = NULL;
-	while (prompt[i] != '\0')
+	while (prompt[pos])
 	{
-		while (prompt[0] && prompt[i] == ' ')
-			i++;
-		if (prompt[i] == '\"')
-			aux = call_dq(prompt, &i);
-		else if (prompt[i] == '\'')
-			aux = call_sq(prompt, &i);
-		else if (prompt[i] == '|')
-			aux = call_pipe(prompt, &i);
-		else if (prompt[i] == '<')
-			aux = call_red1(prompt, &i);
-		else if (prompt[i] == '>')
-			aux = call_red2(prompt, &i);
+		while (prompt[0] && prompt[pos] == ' ')
+			pos++;
+		if (prompt[pos] == '\"')
+			aux = dq(prompt, &pos); // ...
+		else if (prompt[pos] == '\'')
+			aux = sq(prompt, &pos); // ...
+		else if (prompt[pos] == '|')
+			aux = pipe(prompt, &pos); // ...
+		else if (prompt[pos] == '<')
+			aux = red1(prompt, &pos); // ...
+		else if (prompt[pos] == '>')
+			aux = red2(prompt, &pos); // ...
 		else
-			aux = call_no_quote(prompt, &i);
+			aux = no_quote(prompt, &pos);
 		new = ft_str_add_back(new, aux);
 	}
 	return (new);
 }
 
-char	**parse_input(char prompt)
+char	**parse_input(char prompt, t_cmd *cmd)
 {
-	char	**cmd;
+	char	**new;
 
-	cmd = cmd_trim(prompt); // VOY POR AQUI
+	new = cmd_trim(prompt); // VOY POR AQUI
 	if (prompt[ft_strlen(prompt) - 1] == ' ')
-		cmd = ft_charpp_del_back(cmd);
-	cmd = ft_expand_vars(cmd);
-	return (cmd);
+		new = ft_charpp_del_back(new);
+	new = ft_expand_vars(new);
+	return (new); // CON LA NUEVA CADENA CHECHEADA PODEMOS SPLITEARLA???
 }
