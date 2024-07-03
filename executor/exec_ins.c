@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:43:22 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/06/20 18:15:29 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/03 13:06:30 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,36 +63,36 @@ void	exc(char *path, char **cmd, char **env, t_shell *shell)
 	}
 	else
 		waitpid(shell->pid, &status, 0);
-	return (status);
+	//return (status);
 }
 
-void	execute_ins(t_shell *shell)
+void	execute_ins(t_shell *shell, t_cmd *cmd)
 {
 	int	i;
 	char **bin;
 
 	i = 0;
-	while (shell.env && shell.env[i])
+	while (shell->env && shell->env[i])
 	{
-		if (ft_strncmp(shell.env[i], "PATH=", 5) == 0)
+		if (ft_strncmp(shell->env[i], "PATH=", 5) == 0)
 			break ;
 		i++;
 	}
-	if (shell.env[i] == NULL)
+	if (shell->env[i] == NULL)
 	{
-		exc(shell->cmd->full_cmd[0], shell->cmd->full_cmd, shell->env, shell);
-		exit;
+		exc(cmd->full_cmd[0], cmd->full_cmd, shell->env, shell);
+		return ;
 	}
-	bin = ft_split(shell->env[i] + 5, ':');
-	if (!shell->cmd->full_cmd[0] && !bin)
+	bin = ft_split(shell->env[i], ':');
+	//if (!cmd->full_cmd[0] && !bin)
 	//error
 	i = 1;
-	shell->cmd->cmd_path = get_cmd_path(shell->cmd->full_cmd[0], bin[0]);
-	while(shell->cmd->full_cmd[0] && bin[i] && path == NULL)
-		shell->cmd->cmd_path = get_cmd_path(shell->cmd->full_cmd[0], bin[i++]);
-	if (path != NULL)
-		exc(path, shell->cmd->full_cmd, shell->env, shell);
+	cmd->cmd_path = get_cmd_path(cmd->full_cmd[0], bin[0] + 5);
+	while(cmd->full_cmd[0] && bin[i] && cmd->cmd_path == NULL)
+		cmd->cmd_path = get_cmd_path(cmd->full_cmd[0], bin[i++]);
+	if (cmd->cmd_path != NULL)
+		exc(cmd->cmd_path, cmd->full_cmd, shell->env, shell);
 	else
-		exc(shell->cmd->full_cmd[0], shell->cmd->full_cmd, shell->env, shell);
+		exc(cmd->full_cmd[0], cmd->full_cmd, shell->env, shell);
 	//liberar memoria utilizada
 }
