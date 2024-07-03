@@ -35,7 +35,12 @@ En un principio nos vamos a repartir las tareas de la siguiente manera:
 
 TO_DO (jmartos-):
 
-    1º- He creado una funcion en el libft para copiar matrices bidireccionales (ft_matrixdup.c).
+    1º- Creo "command.c" para crear las funciones que nos permitiran comprobar que los
+        argumentos se han recibido correctamente:
+
+            - 
+
+    ¿?º- He creado una funcion en el libft para copiar matrices bidireccionales (ft_matrixdup.c).
 
 
 

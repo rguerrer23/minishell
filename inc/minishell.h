@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/01 14:25:58 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/03 00:00:50 by kevlar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@
 
 # define EXIT_SUCCESS 0
 # define EXIT_FAILURE 1
+
+# define NO_QUOTE 0
+# define DQ_OPEN 1
+# define SQ_OPEN 2
 
 # define STDIN_FILENO 0 // entrada estandar de informacion (por la terminal)
 # define STDOUT_FILENO 1 // salida estandar de informacion (en la terminal)
@@ -53,13 +57,19 @@
 		- outline	= (STDOUT 1)file descriptor a escribir para ejecutar un comando.
 */
 
+typedef struct s_pipe_red
+{
+	int			pipe;
+	int			red;
+}				t_pipe_red;
+
 typedef struct s_shell
 {
 	t_list	*cmd;
 	char	*line;
 	char	**env;
-	pid_t		pid;
-}				t_shell;
+	pid_t	pid;
+}			t_shell;
 
 typedef struct s_cmd
 {
@@ -67,7 +77,7 @@ typedef struct s_cmd
 	char	*cmd_path;
 	int		infile;
 	int		outfile;
-}				t_cmd;
+}			t_cmd;
 
 
 int		main(int ac, char **av, char **envp);
