@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/03 16:26:04 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/03 22:44:01 by kevlar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ void	shell_prompt(void)
 {
 	//char	*user;
 	//user = getcwd(NULL, 0);
-	ft_printf("Minishell$ ");
+	ft_printf("Minishell$~ ");
 }
 
 void	shell_read(t_shell *shell)
 {
-	shell->line = readline("Minishell$ ");
+	shell->line = readline("Minishell$~ ");
 	if (!shell->line)
 	{
 		ft_putstr_fd("exit\n", STDOUT_FILENO);

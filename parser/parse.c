@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:59:05 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/03 16:26:03 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/03 23:56:32 by kevlar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	**cmd_trim(char *prompt)
 		else if (prompt[pos] == '>')
 			aux = red2(prompt, &pos); // ...
 		else
-			aux = no_quote(prompt, &pos);
+			aux = normal_char(prompt, &pos); // ...
 		new = ft_str_add_back(new, aux);
 	}
 	return (new);

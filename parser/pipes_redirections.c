@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 21:34:18 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/03 14:20:13 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/03 22:39:21 by kevlar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	check_mixes(char *prompt, int pos)
 	return (1);
 }
 
-void	set_pipe_redirection(t_pipe_red *value, int flag)
+void	set_pipe_red(t_pipe_red *value, int flag)
 {
 	if (flag == 1)
 	{
@@ -99,7 +99,7 @@ int	validating_pipes_reds(char *prompt)
 				|| (!check_quotes(prompt[pos], NO_QUOTE) && !check_first_pipe(prompt)))
 				return (0);
 			else
-				set_pipe_redirection(&value, 1);
+				set_pipe_red(&value, 1);
 		}
 		else if (prompt[pos] == '<' || prompt[pos] == '>')
 		{
@@ -107,11 +107,11 @@ int	validating_pipes_reds(char *prompt)
 				&& (!check_quotes(prompt[pos], NO_QUOTE) && !check_mixes(prompt, pos)))
 				return (0);
 			else
-				set_pipe_redirection(&value, 2);
+				set_pipe_red(&value, 2);
 		}
 		else if (prompt[pos] != ' ' && prompt[pos] != '\t'
 			&& prompt[pos] != '|' && prompt[pos] != '<' && prompt[pos] != '>')
-			set_pipe_redirection(&value, 3);
+			set_pipe_red(&value, 3);
 		pos++;
 	}
 	return (check_last_pipe_red(prompt));
