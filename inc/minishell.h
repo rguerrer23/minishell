@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/03 16:06:58 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/03 16:23:27 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ typedef struct s_shell
 */
 typedef struct s_cmd
 {
-	char	**full_prompt; // jmartos-
+	char	**checked_prompt; // jmartos-
 	char	*cmd_path;
 	int		infile;
 	int		outfile;

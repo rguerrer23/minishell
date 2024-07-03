@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:59:05 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/03 16:06:58 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/03 16:26:03 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,13 @@ char	**cmd_trim(char *prompt)
 	return (new);
 }
 
-char	**parse_input(char prompt, t_cmd *cmd)
+char	**parse_input(char *prompt)
 {
-	char	**new;
+	char	**cmd;
 
-	new = cmd_trim(prompt); // VOY POR AQUI
+	cmd = cmd_trim(prompt); //POR AQUI!!!
 	if (prompt[ft_strlen(prompt) - 1] == ' ')
-		new = ft_charpp_del_back(new);
-	new = ft_expand_vars(new);
-	return (new); // CON LA NUEVA CADENA CHECHEADA PODEMOS SPLITEARLA???
+		cmd = ft_charpp_del_back(cmd);
+	cmd = ft_expand_vars(cmd);
+	return (cmd);
 }
