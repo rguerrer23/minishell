@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/03 00:00:50 by kevlar           ###   ########.fr       */
+/*   Updated: 2024/07/03 15:17:33 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,38 +42,37 @@
 # define RED	"\033[31;1m"
 
 /*
-	En t_shell;
-		
-		- *cmds		= puntero a la estructura de comandos.
-		- *line		= linea de comandos leida por el shell.
-		- **env		= matriz de punteros a las variables de entorno del shell.
-		- pid		= id del proceso actual de la consola.
-	
-	En t_cmd;
-		
-		- **full_cmd= matriz de punteros a los comandos de la linea de comandos.
-		- *cmd_path	= ruta del primer comandos encontrado en el input.
-		- inline	= (STDIN 0) file descriptor a leer para ejecutar un comando.
-		- outline	= (STDOUT 1)file descriptor a escribir para ejecutar un comando.
+	Usaremos esta estructura para guardar los estados de pipes y redirecciones.
 */
-
 typedef struct s_pipe_red
 {
 	int			pipe;
 	int			red;
 }				t_pipe_red;
 
+/*
+	- *prompt	= linea de comandos leida por el shell, sin parsear.
+	- **env		= matriz de punteros a las variables de entorno del shell.
+	- pid		= id del proceso actual de la consola.
+	- *cmds		= puntero a la estructura de comandos.
+*/
 typedef struct s_shell
 {
-	t_list	*cmd;
-	char	*line;
+	char	*prompt; // jmartos-
 	char	**env;
 	pid_t	pid;
+	t_list	*cmd;
 }			t_shell;
 
+/*	
+	- **full_prompt	= matriz bidimensional de la linea de comandos ya parseada y spliteada.
+	- *cmd_path		= ruta del primer comandos encontrado en el input.
+	- inline		= (STDIN 0) file descriptor a leer para ejecutar un comando.
+	- outline		= (STDOUT 1)file descriptor a escribir para ejecutar un comando.
+*/
 typedef struct s_cmd
 {
-	char	**full_cmd;
+	char	**full_cmd; // jmartos-
 	char	*cmd_path;
 	int		infile;
 	int		outfile;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 21:40:30 by kevlar            #+#    #+#             */
-/*   Updated: 2024/06/19 19:00:33 by kevlar           ###   ########.fr       */
+/*   Updated: 2024/07/03 14:20:11 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,10 @@ t_cmd	init_prompt(char **av, char **envp)
 	prompt.infile = STDIN_FILENO;
 	prompt.infile = STDOUT_FILENO;
 	return (prompt);
+}
+
+void	init_pipe_red (t_pipe_red *value)
+{
+	value->pipe = 0;
+	value->red = 0;
 }

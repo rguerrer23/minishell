@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/06/20 17:03:19 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/03 14:20:10 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,16 @@
 int g_mutex = 0;
 
 
-void	shell_prompt(t_shell *shell)
+void	shell_prompt(void)
 {
-
+	//char	*user;
+	//user = getcwd(NULL, 0);
+	ft_printf("Minishell$ ");
 }
 
 void	shell_read(t_shell *shell)
 {
-	shell->line = readline("minishell$ ");
+	shell->line = readline("Minishell$ ");
 	if (!shell->line)
 	{
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
@@ -32,12 +34,10 @@ void	shell_read(t_shell *shell)
 		add_history(shell->line);
 }
 
-
 int	main(int ac, char **av, char **envp)
 {
 	t_cmd		prompt;
-	char		*str_in;
-	char		*str_out;
+	t_shell		shell;
 
 	if (ac < 2)
 	{
@@ -46,10 +46,10 @@ int	main(int ac, char **av, char **envp)
 	}
  	while (1)
 	{	
-		shell_prompt(&shell);
+		shell_prompt();
 		shell_read(&shell);
-		init_prompt(&av, &envp);
-		shell_execute(&shell);
+		init_prompt(&av, &envp); // jmartos-
+		shell_execute(&shell, &prompt); // ricardo
 	} 
 	return (0);
 }

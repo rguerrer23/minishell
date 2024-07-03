@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 15:59:54 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/03 00:08:54 by kevlar           ###   ########.fr       */
+/*   Updated: 2024/07/03 14:20:11 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ int	check_cmd(char *prompt)
 	}
 	if (state != NO_QUOTE)
 	{
-		printf("ERROR! (check_cmd)\n");
+		printf(RED"ERROR! (check_cmd)\n"NC);
 		return (-1);
 	}
-	if (!is_first_pipe(prompt))
+	if (is_first_pipe(prompt))
 		return (0);
 	else
 		return (validating_pipes_reds(prompt));

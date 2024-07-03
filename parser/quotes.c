@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 23:23:23 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/02 23:23:41 by kevlar           ###   ########.fr       */
+/*   Updated: 2024/07/03 14:20:12 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	is_dq(int state)
+static int	is_dq(int state)
 {
 	if (state == NO_QUOTE)
 		return (DQ_OPEN);
@@ -22,7 +22,7 @@ int	is_dq(int state)
 		return (state);
 }
 
-int	is_sq(int state)
+static int	is_sq(int state)
 {
 	if (state == NO_QUOTE)
 		return (SQ_OPEN);

@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   pipes_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 21:34:18 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/03 00:09:22 by kevlar           ###   ########.fr       */
+/*   Updated: 2024/07/03 14:20:13 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	is_first_pipe(char *prompt)
+/* Comprobamos que no haya un pipe en el primer caracter valido. */
+int	check_first_pipe(char *prompt)
 {
 	int	pos;
 
@@ -20,10 +21,11 @@ int	is_first_pipe(char *prompt)
 	while (prompt[pos] == ' ' || prompt[pos] == '\t')
 		pos++;
 	if (prompt[pos] == '|')
-		return (1);
-	return (0);
+		return (0);
+	return (1);
 }
 
+/* Comprobamos que las combinaciones de pipes y redirecciones son correctas. */
 int	check_mixes(char *prompt, int pos)
 {
 	if (prompt[pos] == '<')
@@ -43,23 +45,8 @@ int	check_mixes(char *prompt, int pos)
 	while (prompt[pos] == ' ' || prompt[pos] == '\t')
 		pos += 1;
 	if (prompt[pos] == '<' || prompt[pos] == '>' || prompt[pos] == '|')
-		return (1);
-	return (0);
-}
-
-int	check_last_pipe_red(char *prompt)
-{
-	int	pos;
-
-	if (ft_strlen(prompt) > 0)
-		pos = ft_strlen(prompt) - 1;
-	else
-		pos = 0;
-	while (pos >= 0 && (prompt[pos] == ' ' || prompt[pos] == '\t'))
-		pos--;
-	if (prompt[pos] && (prompt[pos] == '|' || prompt[pos] == '<' || prompt[pos] == '>'))
-		return (1);
-	return (0);
+		return (0);
+	return (1);
 }
 
 void	set_pipe_redirection(t_pipe_red *value, int flag)
@@ -80,19 +67,36 @@ void	set_pipe_redirection(t_pipe_red *value, int flag)
 		value->red = 0;
 	}
 }
+/* Verificamos que el ultimo caracter valido no sea ni "|" ni "<" ni ">".  */
+int	check_last_pipe_red(char *prompt)
+{
+	int	pos;
 
+	if (ft_strlen(prompt) > 0)
+		pos = ft_strlen(prompt) - 1;
+	else
+		pos = 0;
+	while (pos >= 0 && (prompt[pos] == ' ' || prompt[pos] == '\t'))
+		pos--;
+	if (prompt[pos] && (prompt[pos] == '|' || prompt[pos] == '<' || prompt[pos] == '>'))
+		return (0);
+	return (1);
+}
+
+/* Validamos la posicion correcta de los pipes y las redirecciones. */
 int	validating_pipes_reds(char *prompt)
 {
 	int			pos;
 	t_pipe_red	value;
 
 	pos = 0;
+	init_pipe_red(&value);
 	while (prompt[pos])
 	{
 		if (prompt[pos] == '|')
 		{
 			if (value.pipe == 1
-				|| (!check_quotes(prompt[pos]) && is_first_pipe(prompt)))
+				|| (!check_quotes(prompt[pos], NO_QUOTE) && !check_first_pipe(prompt)))
 				return (0);
 			else
 				set_pipe_redirection(&value, 1);
@@ -100,13 +104,13 @@ int	validating_pipes_reds(char *prompt)
 		else if (prompt[pos] == '<' || prompt[pos] == '>')
 		{
 			if (value.red == 1
-				&& (!check_quotes(prompt[pos]) && check_mixes(prompt, pos)))
+				&& (!check_quotes(prompt[pos], NO_QUOTE) && !check_mixes(prompt, pos)))
 				return (0);
 			else
 				set_pipe_redirection(&value, 2);
 		}
-		else if (prompt[pos] != ' ' && prompt[pos] != '\t' && prompt[pos] != '|'
-			&& prompt[pos] != '<' && prompt[pos] != '>')
+		else if (prompt[pos] != ' ' && prompt[pos] != '\t'
+			&& prompt[pos] != '|' && prompt[pos] != '<' && prompt[pos] != '>')
 			set_pipe_redirection(&value, 3);
 		pos++;
 	}
