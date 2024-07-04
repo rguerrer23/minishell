@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   pipes_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 21:34:18 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/03 22:39:21 by kevlar           ###   ########.fr       */
+/*   Updated: 2024/07/04 18:09:54 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
 /* Comprobamos que no haya un pipe en el primer caracter valido. */
-int	check_first_pipe(char *prompt)
+static int	check_first_pipe(char *prompt)
 {
 	int	pos;
 
@@ -26,7 +26,7 @@ int	check_first_pipe(char *prompt)
 }
 
 /* Comprobamos que las combinaciones de pipes y redirecciones son correctas. */
-int	check_mixes(char *prompt, int pos)
+static int	check_mixes(char *prompt, int pos)
 {
 	if (prompt[pos] == '<')
 	{
@@ -49,7 +49,7 @@ int	check_mixes(char *prompt, int pos)
 	return (1);
 }
 
-void	set_pipe_red(t_pipe_red *value, int flag)
+static void	set_pipe_red(t_pipe_red *value, int flag)
 {
 	if (flag == 1)
 	{
@@ -68,7 +68,7 @@ void	set_pipe_red(t_pipe_red *value, int flag)
 	}
 }
 /* Verificamos que el ultimo caracter valido no sea ni "|" ni "<" ni ">".  */
-int	check_last_pipe_red(char *prompt)
+static int	check_last_pipe_red(char *prompt)
 {
 	int	pos;
 

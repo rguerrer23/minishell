@@ -6,23 +6,23 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 15:59:54 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/03 14:20:11 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/04 18:09:50 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	check_cmd(char *prompt)
+int	check_cmd(t_shell *shell)
 {
 	int	pos;
 	int	state;
 
 	pos = 0;
 	state = NO_QUOTE;
-	while (prompt[pos])
+	while (shell->prompt[pos])
 	{
-		if (prompt[pos] == '\"' || prompt[pos] == '\'')
-			state = check_quotes(prompt[pos], state);
+		if (shell->prompt[pos] == '\"' || shell->prompt[pos] == '\'')
+			state = check_quotes(shell->prompt[pos], state);
 		pos++;
 	}
 	if (state != NO_QUOTE)
@@ -30,8 +30,8 @@ int	check_cmd(char *prompt)
 		printf(RED"ERROR! (check_cmd)\n"NC);
 		return (-1);
 	}
-	if (is_first_pipe(prompt))
+	if (check_first_pipe(shell->prompt))
 		return (0);
 	else
-		return (validating_pipes_reds(prompt));
+		return (validating_pipes_reds(shell->prompt));
 }

@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/03 16:23:27 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/04 19:01:42 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_pipe_red
 typedef struct s_shell
 {
 	char	*prompt; // jmartos-
+	char	*parsed_prompt; // jmartos-
 	char	**env;
 	pid_t	pid;
 	t_list	*cmd;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/03 22:44:01 by kevlar           ###   ########.fr       */
+/*   Updated: 2024/07/04 19:01:43 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ void	shell_prompt(void)
 
 void	shell_read(t_shell *shell)
 {
-	shell->line = readline("Minishell$~ ");
-	if (!shell->line)
+	shell->prompt = readline("Minishell$~ ");
+	if (!shell->prompt)
 	{
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
 		exit(EXIT_SUCCESS);
 	}
-	if (ft_strlen(shell->line) > 0)
-		add_history(shell->line);
+	if (ft_strlen(shell->prompt) > 0)
+		add_history(shell->prompt);
 }
 
 int	main(int ac, char **av, char **envp)
@@ -47,9 +47,9 @@ int	main(int ac, char **av, char **envp)
  	while (1)
 	{	
 		shell_prompt();
-		shell_read(&shell);
-		init_prompt(&av, &envp); // jmartos-
-		shell_execute(&shell, &prompt); // ricardo
+		shell_read();
+		init_prompt(&av); // jmartos-
+		shell_execute(); // ricardo
 	} 
 	return (0);
 }

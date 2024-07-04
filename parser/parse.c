@@ -3,28 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:59:05 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/03 23:56:32 by kevlar           ###   ########.fr       */
+/*   Updated: 2024/07/04 19:01:44 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-char	**ft_expand_vars(char **cmd)
+char	*if_char(char *prompt, int *pos)
 {
-	char	**ret;
-	int		i;
+	char	*aux;
 
-	i = -1;
-	ret = NULL;
-	if (!cmd)
-		return (NULL);
-	while (cmd[++i])
-		ret = ft_str_add_back(ret, ft_get_var(cmd[i]));
-	ft_charppfree(cmd);
-	return (ret);
+	aux = process_char(prompt, *pos);
+	*pos += ft_strlen(aux);
+	return (aux);
+}
+
+char	*process_char(char *prompt, int pos)
+{
+	int		w_len;
+	int		w_pos;
+	char	*word;
+
+	w_len = wordlen_perso(prompt, pos);
+	word = ft_calloc(w_len + 2, sizeof(char));
+	w_pos = 0;
+	while (prompt[pos]
+		&& prompt[pos] != ' ' && prompt[pos] != '\"' && prompt[pos] != '\'')
+	{
+		word[w_pos] = prompt[pos];
+		pos++;
+		w_pos++;
+	}
+	return (word);
 }
 
 /* Separa la cadena teniendo en cuenta los espacios y las comillas. */
@@ -41,17 +54,17 @@ char	**cmd_trim(char *prompt)
 		while (prompt[0] && prompt[pos] == ' ')
 			pos++;
 		if (prompt[pos] == '\"')
-			aux = dq(prompt, &pos); // ...
+			aux = if_dq(prompt, &pos); // ...
 		else if (prompt[pos] == '\'')
-			aux = sq(prompt, &pos); // ...
+			aux = if_sq(prompt, &pos); // ...
 		else if (prompt[pos] == '|')
-			aux = pipe(prompt, &pos); // ...
+			aux = if_pipe(prompt, &pos); // ...
 		else if (prompt[pos] == '<')
-			aux = red1(prompt, &pos); // ...
+			aux = if_red1(prompt, &pos); // ...
 		else if (prompt[pos] == '>')
-			aux = red2(prompt, &pos); // ...
+			aux = if_red2(prompt, &pos); // ...
 		else
-			aux = normal_char(prompt, &pos); // ...
+			aux = if_char(prompt, &pos); // ...
 		new = ft_str_add_back(new, aux);
 	}
 	return (new);
@@ -61,7 +74,7 @@ char	**parse_input(char *prompt)
 {
 	char	**cmd;
 
-	cmd = cmd_trim(prompt); //POR AQUI!!!
+	cmd = cmd_trim(prompt); // POR AQUI!!!
 	if (prompt[ft_strlen(prompt) - 1] == ' ')
 		cmd = ft_charpp_del_back(cmd);
 	cmd = ft_expand_vars(cmd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:51:25 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/06/18 21:23:25 by kevlar           ###   ########.fr       */
+/*   Updated: 2024/07/04 19:13:34 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,5 +117,8 @@ int		ft_word_counter(char const *s, char c);
 
 // Duplica con seguridad una matriz bidimensional (similar a ft_strdup).
 char	**ft_matrixdup(char **matrix);
+
+// Calcula la longuitud de una parte de "str", desde "start" y hasta encontrar "c"
+int		ft_substrlen(char *str, int start, char chr);
 
 #endif
