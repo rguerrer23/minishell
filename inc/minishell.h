@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/04 19:01:42 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/04 22:15:18 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_pipe_red
 
 /*
 	- *prompt	= linea de comandos leida por el shell, sin parsear.
+	- 
 	- **env		= matriz de punteros a las variables de entorno del shell.
 	- pid		= id del proceso actual de la consola.
 	- *cmds		= puntero a la estructura de comandos.
@@ -79,7 +80,35 @@ typedef struct s_cmd
 	int		outfile;
 }			t_cmd;
 
-
+/*********************/
+/* FUNCIONES COMUNES */
+/*********************/
 int		main(int ac, char **av, char **envp);
+/*******************************/
+/* FUNCIONES JMARTOS- (PARSER) */
+/*******************************/
+/* init.c */
+void	init_pipe_red (t_pipe_red *value);
+void	init_prompt(char **av);
+/* command.c */
+int		check_cmd(t_shell *shell);
+/* check_quotes.c */
+int		check_quotes(char quote, int state);
+/* pipes_redirections.c */
+int		check_first_pipe(char *prompt);
+int		validating_pipes_reds(char *prompt);
+/* parse.c */
+char	**parse_input(char *prompt);
+char	**cmd_trim(char *prompt);
+/* parse_utils_1.c */
+char	*process_dq(char *prompt, int *pos);
+char	*process_sq(char *prompt, int *pos);
+char	*process_pipe(char *prompt, int *pos);
+char	*process_red1(char *prompt, int *pos);
+char	*process_red2(char *prompt, int *pos);
+/* parse_utils_2.c */
+int	strlen_end_word(char *prompt, int pos);
+char	*process_char(char *prompt, int *pos);
+/* parse_utils_3.c */
 
 #endif

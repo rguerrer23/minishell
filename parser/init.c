@@ -6,13 +6,19 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 21:40:30 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/04 19:01:43 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/04 22:11:40 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-t_cmd	init_prompt(char **av)
+void	init_pipe_red (t_pipe_red *value)
+{
+	value->pipe = 0;
+	value->red = 0;
+}
+
+void	init_prompt(char **av)
 {
 	t_cmd	cmd;
 	t_shell	shell;
@@ -31,8 +37,3 @@ t_cmd	init_prompt(char **av)
 	return (cmd);
 }
 
-void	init_pipe_red (t_pipe_red *value)
-{
-	value->pipe = 0;
-	value->red = 0;
-}

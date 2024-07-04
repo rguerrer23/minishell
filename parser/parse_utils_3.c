@@ -5,53 +5,89 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/04 19:05:40 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/04 19:39:53 by jmartos-         ###   ########.fr       */
+/*   Created: 2024/07/04 21:21:51 by jmartos-          #+#    #+#             */
+/*   Updated: 2024/07/04 22:59:14 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-// Calcula la longuitud de una palabra dentro de prompt, empezando en pos y
-// terminando cuando encuentre un espacio, "|", "<" o ">".
-int	strlen_end_word(char *prompt, int pos)
+char	**ft_charpp_del_back(char **str)
 {
-	int	len;
+	char	**ret;
+	int		len;
+	int		i;
 
-	len = 0;
-	while (prompt[pos] && prompt[pos] != ' '
-        && prompt[pos] != '|' && prompt[pos] != '<' && prompt[pos] != '>')
+	len = ft_strdlen(str);
+	ret = ft_calloc(len, sizeof(char *));
+	i = 0;
+	while (i < len - 1)
 	{
-		len++;
-		pos++;
+		ret[i] = ft_strdup(str[i]);
+		i++;
 	}
-	return (len);
+	ft_strdfree(str);
+	return (ret);
 }
 
-char	*if_char(char *prompt, int *pos)
+// 
+char	**ft_str_add_back(char **str, char *add)
 {
-	char	*aux;
+	int		temp_len;
+	int		len;
+	char	**ret;
 
-	aux = process_char(prompt, *pos);
-	*pos += ft_strlen(aux);
-	return (aux);
+	len = ft_strdlen(str);
+	temp_len = len;
+	ret = ft_calloc(sizeof(char *), len + 2);
+	while (len--)
+		ret[len] = ft_strdup(str[len]);
+	ret[temp_len] = ft_strdup(add);
+	ft_strdfree(str);
+	free(add);
+	return (ret);
 }
 
-char	*process_char(char *prompt, int pos)
+char	*ft_get_var(char *cmd)
 {
-	int		w_len;
-	int		w_pos;
-	char	*word;
+	t_master	mas;
 
-	w_len = strlen_end_word(prompt, pos);
-	word = ft_calloc(w_len + 2, sizeof(char));
-	w_pos = 0;
-	while (prompt[pos]
-		&& prompt[pos] != ' ' && prompt[pos] != '\"' && prompt[pos] != '\'')
+	init_all(&mas, cmd);
+	if (cmd[0] == SQ && condition2(cmd, mas))
+		return (mas.strs.cpy);
+	while (mas.strs.cpy[mas.count.i])
 	{
-		word[w_pos] = prompt[pos];
-		pos++;
-		w_pos++;
+		if (condition3(mas))
+		{
+			if_dollar_int(&mas);
+			continue ;
+		}
+		mas.strs.aux = ft_strchr(mas.strs.cpy + mas.count.i, '$');
+		if (!mas.strs.aux)
+			break ;
+		mas.count.j = ft_get_index(mas.strs.cpy,
+				ft_strchr(mas.strs.cpy + mas.count.i, '$'));
+		if (ft_isspace(mas.strs.aux[1]) || condition(mas))
+		{
+			mas.count.i++;
+			continue ;
+		}
+		ft_aux_get_var(&mas);
 	}
-	return (word);
+	return (mas.strs.cpy);
+}
+
+char	**ft_expand_vars(char **cmd) // VAYA IDA DE OLLA!!!
+{
+	char	**ret;
+	int		i;
+
+	i = -1;
+	ret = NULL;
+	if (!cmd)
+		return (NULL);
+	while (cmd[++i])
+		ret = ft_str_add_back(ret, ft_get_var(cmd[i]));
+	ft_strdfree(cmd);
+	return (ret);
 }

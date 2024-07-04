@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substrlen.c                                     :+:      :+:    :+:   */
+/*   ft_strdfree.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/04 19:08:35 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/04 22:41:22 by jmartos-         ###   ########.fr       */
+/*   Created: 2024/07/04 22:46:19 by jmartos-          #+#    #+#             */
+/*   Updated: 2024/07/04 22:46:36 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h" /* Libreria 42 "jmartos-". */
 
-int ft_substrlen(char *str, int start, char chr)
+void	ft_strdfree(char **str)
 {
-	int	len;
+	int	pos;
 
-	len = 0;
-	while (str[start] && str[start] != chr)
+	pos = 0;
+	while (str[pos])
 	{
-		len++;
-		start++;
+		free(str[pos]);
+		pos++;
 	}
-	len++;
-	return (len);
+	free(str);
 }

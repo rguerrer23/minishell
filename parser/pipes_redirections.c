@@ -6,14 +6,14 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 21:34:18 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/04 18:09:54 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/04 22:11:38 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
 /* Comprobamos que no haya un pipe en el primer caracter valido. */
-static int	check_first_pipe(char *prompt)
+int	check_first_pipe(char *prompt)
 {
 	int	pos;
 

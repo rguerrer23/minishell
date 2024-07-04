@@ -1,5 +1,10 @@
 {
     "files.associations": {
-        "minishell.h": "c"
+        "minishell.h": "c",
+        "get_next_line.h": "c",
+        "ctype.h": "c",
+        "stdlib.h": "c",
+        "stdio.h": "c",
+        "stddef.h": "c"
     }
 }
