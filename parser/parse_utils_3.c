@@ -6,46 +6,47 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 21:21:51 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/04 22:59:14 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/05 17:52:42 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
+// Borramos el ultimo array de un array bidimensional.
 char	**ft_charpp_del_back(char **str)
 {
-	char	**ret;
+	char	**new;
 	int		len;
-	int		i;
+	int		c;
 
 	len = ft_strdlen(str);
-	ret = ft_calloc(len, sizeof(char *));
-	i = 0;
-	while (i < len - 1)
+	new = ft_calloc(len, sizeof(char *));
+	c = 0;
+	while (c < len - 1)
 	{
-		ret[i] = ft_strdup(str[i]);
-		i++;
+		new[c] = ft_strdup(str[c]);
+		c++;
 	}
 	ft_strdfree(str);
-	return (ret);
+	return (new);
 }
 
-// 
+// Añadimos un string a la ultima posicion del array bidimensional.
 char	**ft_str_add_back(char **str, char *add)
 {
 	int		temp_len;
 	int		len;
-	char	**ret;
+	char	**new;
 
 	len = ft_strdlen(str);
 	temp_len = len;
-	ret = ft_calloc(sizeof(char *), len + 2);
+	new = ft_calloc(sizeof(char *), len + 2);
 	while (len--)
-		ret[len] = ft_strdup(str[len]);
-	ret[temp_len] = ft_strdup(add);
+		new[len] = ft_strdup(str[len]);
+	new[temp_len] = ft_strdup(add);
 	ft_strdfree(str);
 	free(add);
-	return (ret);
+	return (new);
 }
 
 char	*ft_get_var(char *cmd)
@@ -53,7 +54,7 @@ char	*ft_get_var(char *cmd)
 	t_master	mas;
 
 	init_all(&mas, cmd);
-	if (cmd[0] == SQ && condition2(cmd, mas))
+	if (cmd[0] == '\'' && condition2(cmd, mas))
 		return (mas.strs.cpy);
 	while (mas.strs.cpy[mas.count.i])
 	{
@@ -77,7 +78,8 @@ char	*ft_get_var(char *cmd)
 	return (mas.strs.cpy);
 }
 
-char	**ft_expand_vars(char **cmd) // VAYA IDA DE OLLA!!!
+// 
+char	**ft_expand_vars(char **cmd)
 {
 	char	**ret;
 	int		i;
