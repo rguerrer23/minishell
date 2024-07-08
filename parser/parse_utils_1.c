@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils_1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:46:21 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/04 21:59:59 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/08 09:54:20 by kevlar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
 /*
-	Extrae una subcadena que está encerrada entre comillas dobles.
+	Extrae la parte de un array que está encerrada entre comillas dobles.
 */
 char	*process_dq(char *prompt, int *pos)
 {
@@ -40,7 +40,7 @@ char	*process_dq(char *prompt, int *pos)
 }
 
 /*
-	Extrae una subcadena que está encerrada entre comillas simples.
+	Extrae la parte de un array que está encerrada entre comillas simples.
 */
 char	*process_sq(char *prompt, int *pos)
 {
@@ -67,7 +67,7 @@ char	*process_sq(char *prompt, int *pos)
 }
 
 /*
-	Extrae una subcadena de caracteres pipes consecutivos.
+	Extrae una parte de caracteres que sean pipes consecutivos.
 */
 char	*process_pipe(char *prompt, int *pos)
 {
@@ -88,7 +88,7 @@ char	*process_pipe(char *prompt, int *pos)
 }
 
 /*
-	Extrae una subcadena de caracteres "<" consecutivos.
+	Extrae una parte de caracteres que sean "<" consecutivos.
 */
 char	*process_red1(char *prompt, int *pos)
 {
@@ -109,7 +109,7 @@ char	*process_red1(char *prompt, int *pos)
 }
 
 /*
-	Extrae una subcadena de caracteres ">" consecutivos.
+	Extrae una parte de caracteres que sean ">" consecutivos.
 */
 char	*process_red2(char *prompt, int *pos)
 {

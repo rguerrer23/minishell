@@ -23,8 +23,10 @@ FUNCTIONS = src/ft_isalpha.c src/ft_isdigit.c src/ft_isalnum.c src/ft_isascii.c 
 			src/ft_word_counter.c \
 			src/ft_matrixdup.c \
 			src/ft_substrlen.c \
-			src/ft_strdlen.c \
-			src/ft_strdfree.c
+			src/ft_strd_len.c \
+			src/ft_strd_free.c \
+			src/ft_strd_add.c \
+			src/ft_strd_lastdel.c
 			
 # (Variable) Convierte todos los archivos ".c" de FUNCTIONS en ".o", por motivos de optimizacion.
 OBJECTS = $(FUNCTIONS:.c=.o)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/04 22:15:18 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/08 14:26:44 by kevlar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,18 @@ typedef struct s_pipe_red
 }				t_pipe_red;
 
 /*
+	Esta estructura definira la expansion de las variabes de entorno.
+*/
+typedef struct s_var
+{
+	char		*var_copy;
+	int			var_pos_1;
+	int			var_pos_2;
+	int			exit_status;
+	char		*aux;
+}				t_var;
+
+/*
 	- *prompt	= linea de comandos leida por el shell, sin parsear.
 	- 
 	- **env		= matriz de punteros a las variables de entorno del shell.
@@ -88,8 +100,9 @@ int		main(int ac, char **av, char **envp);
 /* FUNCIONES JMARTOS- (PARSER) */
 /*******************************/
 /* init.c */
-void	init_pipe_red (t_pipe_red *value);
+void	init_pipe_red(t_pipe_red *value);
 void	init_prompt(char **av);
+void	init_var(t_var *var, char *cmd);
 /* command.c */
 int		check_cmd(t_shell *shell);
 /* check_quotes.c */
@@ -98,8 +111,8 @@ int		check_quotes(char quote, int state);
 int		check_first_pipe(char *prompt);
 int		validating_pipes_reds(char *prompt);
 /* parse.c */
-char	**parse_input(char *prompt);
 char	**cmd_trim(char *prompt);
+char	**parse_input(char *prompt);
 /* parse_utils_1.c */
 char	*process_dq(char *prompt, int *pos);
 char	*process_sq(char *prompt, int *pos);
@@ -107,8 +120,16 @@ char	*process_pipe(char *prompt, int *pos);
 char	*process_red1(char *prompt, int *pos);
 char	*process_red2(char *prompt, int *pos);
 /* parse_utils_2.c */
-int	strlen_end_word(char *prompt, int pos);
+int		strlen_end_word(char *prompt, int pos);
 char	*process_char(char *prompt, int *pos);
 /* parse_utils_3.c */
+int		check_condition(t_var *var);
+void	is_dolar(t_var *var);
+char	*get_var(char *cmd);
+char	**expand_var(char **cmd);
+/* parse_utils_4.c */
+// HAY QUE REVISAR ESTAS FUNCIONES, SOLO COPIADAS PARA ENTENDER CODIGO!!!
+int		ft_get_index(char *str, char *index);
+char	*ft_replace(char *str, char *start, char *end, char *replace);
 
 #endif

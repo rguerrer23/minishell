@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:59:05 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/04 21:59:58 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/08 14:49:24 by kevlar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ char	**cmd_trim(char *prompt)
 	char	**new;
 
 	pos = 0;
-	new = NULL;
 	while (prompt[pos]) // el valor de pos se actualiza en cada funcion.
 	{
 		while (prompt[0] && prompt[pos] == ' ')
@@ -49,7 +48,7 @@ char	**parse_input(char *prompt)
 
 	cmd = cmd_trim(prompt);
 	if (prompt[ft_strlen(prompt) - 1] == ' ')
-		cmd = ft_charpp_del_back(cmd); // POR AQUI!!!
-	cmd = ft_expand_vars(cmd);
+		cmd = ft_strd_lastdel(cmd);
+	cmd = expand_var(cmd); // REVISAR!!!
 	return (cmd);
 }

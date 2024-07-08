@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:51:25 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/04 22:47:10 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/08 10:16:37 by kevlar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,17 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 int		ft_isdigit_str(char *str);
 // Cuenta las palabras de un string usando un delimitador.
 int		ft_word_counter(char const *s, char c);
-// (minishell) Duplica con seguridad una matriz bidimensional, similar a "ft_strdup".
+// (minishell) Duplica un array bidimensional, similar a "ft_strdup".
 char	**ft_matrixdup(char **matrix);
-// (minishell) Calcula la longuitud de una parte de "str", desde "start" y hasta encontrar "c"
+// (minishell) Calcula la longuitud en "str", desde "start" hasta encontrar "c".
 int		ft_substrlen(char *str, int start, char chr);
 // (minishell) Calcula la longitud de un array bidimensional.
-int		ft_strdlen(char **str);
-// (minishell) Libera un array bidimensional, primero por cadena y luego general.
-void	ft_strdfree(char **str);
+int		ft_strd_len(char **str);
+// (minishell) Libera un array bidimensional con seguridad.
+void	ft_strd_free(char **str);
+// (minishell)Añadimos un string a la ultima posicion del array bidimensional.
+char	**ft_strd_add(char **str, char *add);
+// (minishell) Borramos el ultimo array de un array bidimensional.
+char	**ft_strd_lastdel(char **str);
 
 #endif

@@ -3,83 +3,60 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils_3.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 21:21:51 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/05 17:52:42 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/08 14:48:17 by kevlar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-// Borramos el ultimo array de un array bidimensional.
-char	**ft_charpp_del_back(char **str)
+int	check_condition(t_var *var)
 {
-	char	**new;
-	int		len;
-	int		c;
-
-	len = ft_strdlen(str);
-	new = ft_calloc(len, sizeof(char *));
-	c = 0;
-	while (c < len - 1)
-	{
-		new[c] = ft_strdup(str[c]);
-		c++;
-	}
-	ft_strdfree(str);
-	return (new);
+	return (var->aux[1] == '\0' || var->aux[1] == ' '
+		|| var->aux[1] == '=' || var->aux[1] == '\"'
+		|| var->aux[1] == '\'' || var->aux[1] == '?'
+		|| var->aux[1] == '|' || var->aux[1] == '$');
 }
 
-// Añadimos un string a la ultima posicion del array bidimensional.
-char	**ft_str_add_back(char **str, char *add)
+// Si encontramos un carater dolar $ ...
+void	is_dolar(t_var *var)
 {
-	int		temp_len;
-	int		len;
-	char	**new;
+	char	*tmp;
 
-	len = ft_strdlen(str);
-	temp_len = len;
-	new = ft_calloc(sizeof(char *), len + 2);
-	while (len--)
-		new[len] = ft_strdup(str[len]);
-	new[temp_len] = ft_strdup(add);
-	ft_strdfree(str);
-	free(add);
-	return (new);
+	tmp = ft_itoa(var->exit_status);
+	var->var_copy = ft_replace(var->var_copy, var->var_copy + var->var_pos_1, var->var_copy + var->var_pos_1 + 2, tmp);
+	var->var_pos_1 += ft_strlen(tmp);
+	free(tmp);
 }
 
-char	*ft_get_var(char *cmd)
+char	*get_var(char *cmd)
 {
-	t_master	mas;
+	t_var	var;
 
-	init_all(&mas, cmd);
-	if (cmd[0] == '\'' && condition2(cmd, mas))
-		return (mas.strs.cpy);
-	while (mas.strs.cpy[mas.count.i])
+	init_var(&var, &cmd);
+	if (cmd[0] == '\''
+		&& ((cmd[ft_strlen(cmd) - 1] == '\'') || !ft_strchr(var.var_copy, '$')))
+		return (var.var_copy);
+	while (var.var_copy[var.var_pos_1])
 	{
-		if (condition3(mas))
-		{
-			if_dollar_int(&mas);
-			continue ;
-		}
-		mas.strs.aux = ft_strchr(mas.strs.cpy + mas.count.i, '$');
-		if (!mas.strs.aux)
+		if (var.var_copy[var.var_pos_1] == '$'
+			&& var.var_copy[var.var_pos_1 + 1] == '?')
+			is_dolar(&var);
+		var.aux = ft_strchr(var.var_copy + var.var_pos_1, '$');
+		if (!var.aux)
 			break ;
-		mas.count.j = ft_get_index(mas.strs.cpy,
-				ft_strchr(mas.strs.cpy + mas.count.i, '$'));
-		if (ft_isspace(mas.strs.aux[1]) || condition(mas))
-		{
-			mas.count.i++;
-			continue ;
-		}
-		ft_aux_get_var(&mas);
+		var.var_pos_2 = ft_get_index(var.var_copy,
+				ft_strchr(var.var_copy + var.var_pos_1, '$'));
+		if (check_condition(&var))
+			var.var_pos_1++;
+		ft_aux_get_var(&var);
 	}
-	return (mas.strs.cpy);
+	return (var.var_copy);
 }
 
-// 
-char	**ft_expand_vars(char **cmd)
+char	**expand_var(char **cmd)
 {
 	char	**ret;
 	int		i;
@@ -89,7 +66,7 @@ char	**ft_expand_vars(char **cmd)
 	if (!cmd)
 		return (NULL);
 	while (cmd[++i])
-		ret = ft_str_add_back(ret, ft_get_var(cmd[i]));
+		ret = ft_str_add_back(ret, get_var(cmd[i]));
 	ft_strdfree(cmd);
 	return (ret);
 }

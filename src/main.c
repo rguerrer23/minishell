@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/04 22:11:41 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/08 12:04:45 by kevlar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,10 @@ int	main(int ac, char **av, char **envp)
 	return (0);
 }
 */
-
-int main() {
-    char *prompt = "ls | grep .c > output.txt";
+/*
+int main()
+{
+    char *prompt = readline("Minishell$~ ");
 
     // Ejemplo de uso de las funciones principales
     printf("Prompt original: %s\n", prompt);
@@ -89,3 +90,4 @@ int main() {
 
     return 0;
 }
+*/
