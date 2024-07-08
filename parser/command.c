@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 15:59:54 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/08 18:32:04 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/08 19:15:22 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	check_cmd(t_shell *shell)
 		printf(RED"ERROR! (check_cmd)\n"NC);
 		return (-1);
 	}
-	if (check_first_pipe(shell->prompt))
+	if (check_first_pipe(shell->prompt) == 0)
 		return (0);
 	else
 		return (validating_pipes_reds(shell->prompt));

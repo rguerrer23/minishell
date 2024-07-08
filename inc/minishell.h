@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/08 14:26:44 by kevlar           ###   ########.fr       */
+/*   Updated: 2024/07/08 19:58:47 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int		main(int argc, char **argv __attribute__((unused)), char **envp);
 /*******************************/
 /* init.c */
 void	init_pipe_red(t_pipe_red *value);
-void	init_prompt(t_shell *shell);
+void	init_prompt(t_shell *shell, t_cmd *cmd, char **envp);
 void	init_var(t_var *var, char *cmd);
 /* command.c */
 int		check_cmd(t_shell *shell);

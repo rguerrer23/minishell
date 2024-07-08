@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:59:05 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/08 14:49:24 by kevlar           ###   ########.fr       */
+/*   Updated: 2024/07/08 19:41:58 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,16 @@
 	Separamos por los caracteres que estamos validando, teniendo en cuenta
 	los espacios y las comillas que pudieran haber al principio.
 */
+
+char	**ft_strd_new(char *str)
+{
+	char	**new;
+
+	new = ft_calloc(sizeof(char *), 2);
+	new[0] = ft_strdup(str);
+	return (new);
+}
+
 char	**cmd_trim(char *prompt)
 {
 	int		pos;
@@ -39,7 +49,10 @@ char	**cmd_trim(char *prompt)
 			aux = process_red2(prompt, &pos); // ...
 		else
 			aux = process_char(prompt, &pos); // OK
-		new = ft_strd_add(new, aux);
+		if (new == NULL)
+			new = ft_strd_new(aux);
+		else if (aux != NULL)
+			new = ft_strd_add(new, aux);
 	}
 	return (new);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strd_add.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 09:58:01 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/08 10:18:33 by kevlar           ###   ########.fr       */
+/*   Updated: 2024/07/08 19:34:24 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,5 @@ char	**ft_strd_add(char **str, char *add)
 		new[len] = ft_strdup(str[len]);
 	new[temp_len] = ft_strdup(add);
 	ft_strd_free(str);
-	free(add);
 	return (new);
 }

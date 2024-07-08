@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/08 18:24:47 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/08 19:58:00 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,33 +39,17 @@ int	main(int ac, char **av, char **envp)
 int	main(int argc, char **argv __attribute__((unused)), char **envp)
 {
 	char	*line;
-	char	**cmds;
-	int		check;
     t_shell shell;
     t_cmd   cmd;
-    (void)envp;
 
-    check = 0;
 	if (argc != 1)
 		exit(0);
 	while (1)
 	{
 		line = readline("Minishell$~ ");
 		shell.prompt = line;
-		init_prompt(&shell);
+		init_prompt(&shell, &cmd, envp);
         execute(&shell, &cmd);
-		if (check == 1)
-		{
-			cmds = parse_input(line);
-			ft_strd_free(cmds);
-			free(line);
-		}
-		/*
-		else if (check == 0)
-        {
-			ft_printf(RED"minishell syntax error\n"NC);
-            exit (0);
-        }
-		*/
+		free(line);
     }
 }
