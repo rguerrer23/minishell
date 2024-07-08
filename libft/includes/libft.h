@@ -103,5 +103,7 @@ void	ft_strd_free(char **str);
 char	**ft_strd_add(char **str, char *add);
 // (minishell) Borramos el ultimo array de un array bidimensional.
 char	**ft_strd_lastdel(char **str);
+//
+int		ft_strcmp(const char *s1, const char *s2);
 
 #endif

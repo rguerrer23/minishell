@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../inc/minishell.h"
+
 /*
 	Separamos por los caracteres que estamos validando, teniendo en cuenta
 	los espacios y las comillas que pudieran haber al principio.
@@ -37,7 +39,7 @@ char	**cmd_trim(char *prompt)
 			aux = process_red2(prompt, &pos); // ...
 		else
 			aux = process_char(prompt, &pos); // OK
-		new = ft_str_add_back(new, aux);
+		new = ft_strd_add(new, aux);
 	}
 	return (new);
 }
@@ -49,6 +51,6 @@ char	**parse_input(char *prompt)
 	cmd = cmd_trim(prompt);
 	if (prompt[ft_strlen(prompt) - 1] == ' ')
 		cmd = ft_strd_lastdel(cmd);
-	cmd = expand_var(cmd); // REVISAR!!!
+	// cmd = expand_var(cmd); // REVISAR!!!
 	return (cmd);
 }

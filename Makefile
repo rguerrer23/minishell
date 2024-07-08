@@ -4,7 +4,17 @@ CFLAGS		= -Wall -Wextra -Werror
 
 INC			= -I.
 
-SRC			= src/main.c \
+SRC			=	src/main.c \
+				parser/init.c \
+				parser/command.c \
+				parser/quotes.c \
+				parser/pipes_redirections.c \
+				parser/parse.c \
+				parser/parse_utils_1.c \
+				parser/parse_utils_2.c \
+				parser/parse_utils_3.c \
+				parser/parse_utils_4.c \
+				executor/builtins/cd.c executor/utils.c executor/builtins/echo.c executor/builtins/env.c executor/builtins/exit.c executor/builtins/export.c executor/builtins/pwd.c executor/builtins/unset.c executor/execute.c executor/exec_ins.c executor/builtins.c
 
 LIBFT		= libft/libft.a
 

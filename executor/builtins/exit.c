@@ -10,12 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 /* Esta funcion sale del minishell. */
 
 void	ft_exit(t_shell *shell)
 {
 	// liberar memoria antes de salir
+	free(shell->prompt);
 	exit(EXIT_SUCCESS);
 }

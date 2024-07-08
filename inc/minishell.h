@@ -86,7 +86,7 @@ typedef struct s_shell
 */
 typedef struct s_cmd
 {
-	char	**checked_prompt; // jmartos-
+	char	**full_cmd; // jmartos-
 	char	*cmd_path;
 	int		infile;
 	int		outfile;
@@ -95,13 +95,13 @@ typedef struct s_cmd
 /*********************/
 /* FUNCIONES COMUNES */
 /*********************/
-int		main(int ac, char **av, char **envp);
+int		main(int argc, char **argv __attribute__((unused)), char **envp);
 /*******************************/
 /* FUNCIONES JMARTOS- (PARSER) */
 /*******************************/
 /* init.c */
 void	init_pipe_red(t_pipe_red *value);
-void	init_prompt(char **av);
+void	init_prompt(t_shell *shell);
 void	init_var(t_var *var, char *cmd);
 /* command.c */
 int		check_cmd(t_shell *shell);
@@ -131,5 +131,18 @@ char	**expand_var(char **cmd);
 // HAY QUE REVISAR ESTAS FUNCIONES, SOLO COPIADAS PARA ENTENDER CODIGO!!!
 int		ft_get_index(char *str, char *index);
 char	*ft_replace(char *str, char *start, char *end, char *replace);
+int	ft_cd(char *path);
+int	ft_echo(char **args);
+void	ft_env(t_shell *shell);
+void	ft_exit(t_shell *shell);
+void	ft_export(char *name_var, char *value_var, t_shell *shell);
+int	ft_pwd(void);
+int	ft_unset(char *name_var, t_shell *shell);
+void	execute_builtin(char **full_cmd, t_shell *shell);
+int	is_builtin(char *cmd);
+void	execute_ins(t_shell *shell, t_cmd *cmd);
+int has_pipe(char **cmd);
+void	execute(t_shell *shell, t_cmd *cmds);
+
 
 #endif

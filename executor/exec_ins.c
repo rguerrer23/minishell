@@ -58,7 +58,7 @@ void	exc(char *path, char **cmd, char **env, t_shell *shell)
 	{
 		if (ft_strchr(path, '/') != NULL)
 			execve(path, cmd, env);
-		status = error_msg(cmd[0], 0);
+		//status = error_msg(cmd[0], 0);
 		exit(status);
 	}
 	else

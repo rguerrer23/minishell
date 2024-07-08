@@ -35,7 +35,7 @@ char	*get_var(char *cmd)
 {
 	t_var	var;
 
-	init_var(&var, &cmd);
+	init_var(&var, cmd);
 	if (cmd[0] == '\''
 		&& ((cmd[ft_strlen(cmd) - 1] == '\'') || !ft_strchr(var.var_copy, '$')))
 		return (var.var_copy);
@@ -51,7 +51,7 @@ char	*get_var(char *cmd)
 				ft_strchr(var.var_copy + var.var_pos_1, '$'));
 		if (check_condition(&var))
 			var.var_pos_1++;
-		ft_aux_get_var(&var);
+		//ft_aux_get_var(&var);
 	}
 	return (var.var_copy);
 }
@@ -66,7 +66,7 @@ char	**expand_var(char **cmd)
 	if (!cmd)
 		return (NULL);
 	while (cmd[++i])
-		ret = ft_str_add_back(ret, get_var(cmd[i]));
-	ft_strdfree(cmd);
+		ret = ft_strd_add(ret, get_var(cmd[i]));
+	ft_strd_free(cmd);
 	return (ret);
 }

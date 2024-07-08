@@ -15,25 +15,6 @@
 int g_mutex = 0;
 
 /*
-void	shell_prompt(void)
-{
-	//char	*user;
-	//user = getcwd(NULL, 0);
-	ft_printf("Minishell$~ ");
-}
-
-void	shell_read(t_shell *shell)
-{
-	shell->prompt = readline("Minishell$~ ");
-	if (!shell->prompt)
-	{
-		ft_putstr_fd("exit\n", STDOUT_FILENO);
-		exit(EXIT_SUCCESS);
-	}
-	if (ft_strlen(shell->prompt) > 0)
-		add_history(shell->prompt);
-}
-
 int	main(int ac, char **av, char **envp)
 {
 	t_cmd		prompt;
@@ -54,40 +35,33 @@ int	main(int ac, char **av, char **envp)
 	return (0);
 }
 */
-/*
-int main()
+int	main(int argc, char **argv __attribute__((unused)), char **envp)
 {
-    char *prompt = readline("Minishell$~ ");
+	char	*line;
+	char	**cmds;
+	int		check;
+    t_shell shell;
+    t_cmd   cmd;
+    (void)envp;
 
-    // Ejemplo de uso de las funciones principales
-    printf("Prompt original: %s\n", prompt);
-
-    // Validación de pipes y redirecciones
-    if (validating_pipes_reds(prompt)) {
-        printf("Pipes y redirecciones válidos.\n");
-    } else {
-        printf("Error en la validación de pipes y redirecciones.\n");
-        return 1;
+    check = 0;
+	if (argc != 1)
+		exit(0);
+	while (1)
+	{
+		line = readline("Minishell$~ ");
+		init_prompt(&shell);
+        execute(&shell, &cmd);
+		if (check == 1)
+		{
+			cmds = parse_input(line);
+			ft_strd_free(cmds);
+			free(line);
+		}
+		else if (check == 0)
+        {
+			ft_printf(RED"minishell syntax error\n"NC);
+            exit (0);
+        }
     }
-
-    // Separación del prompt en comandos individuales
-    char **commands = cmd_trim(prompt);
-    printf("Comandos separados:\n");
-    for (int i = 0; commands[i] != NULL; i++) {
-        printf("- %s\n", commands[i]);
-    }
-
-    // Expansión de variables en los comandos
-    char **expanded_commands = ft_expand_vars(commands);
-    printf("Comandos expandidos:\n");
-    for (int i = 0; expanded_commands[i] != NULL; i++) {
-        printf("- %s\n", expanded_commands[i]);
-    }
-
-    // Limpieza de memoria
-    ft_charppfree(commands);
-    ft_charppfree(expanded_commands);
-
-    return 0;
 }
-*/
