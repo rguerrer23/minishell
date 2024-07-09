@@ -6,12 +6,12 @@
 /*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 12:49:08 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/08 14:24:14 by kevlar           ###   ########.fr       */
+/*   Updated: 2024/07/09 19:26:21 by kevlar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
+/*
 int	ft_get_index(char *str, char *index)
 {
 	int	i;
@@ -42,3 +42,4 @@ char	*ft_replace(char *str, char *start, char *end, char *replace)
 	free(final);
 	return (left);
 }
+*/

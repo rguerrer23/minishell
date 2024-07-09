@@ -1,36 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/09 19:32:43 by kevlar           ###   ########.fr       */
+/*   Created: 2024/07/09 19:30:25 by kevlar            #+#    #+#             */
+/*   Updated: 2024/07/09 21:19:20 by kevlar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	g_mutex = 0;
-
-int	main(int argc, char **argv __attribute__((unused)), char **envp)
+char	*check_var(char *env_var)
 {
-	char	*line;
-	t_shell	shell;
-	t_cmd	cmd;
+	int		c;
+	char	*var;
 
-	if (argc != 1)
+	c = 1;
+	ft_strdup();
+}
+
+char	**expand_env_var(t_cmd *cmd)
+{
+	int	c1;
+	int	c2;
+
+	c1 = 0;
+	c2 = 0;
+	while (cmd->full_cmd)
 	{
-		ft_putstr_fd(RED "minishell: invalid arguments\n" NC, STDERR_FILENO);
-		return (EXIT_FAILURE);
-	}
-	while (1)
-	{
-		line = readline("Minishell$~ ");
-		shell.prompt = line;
-		init_prompt(&shell, &cmd, envp);
-		execute(&shell, &cmd);
-		free(line);
+		c2 = 0;
+		while (cmd->full_cmd[c1])
+		{
+			if (cmd->full_cmd[c1][0] == '$')
+				check_var(cmd_full_cmd[c1]);
+			c2++;
+		}
+		c1++;
 	}
 }

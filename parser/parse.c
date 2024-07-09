@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:59:05 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/08 19:41:58 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/09 21:06:02 by kevlar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 	Separamos por los caracteres que estamos validando, teniendo en cuenta
 	los espacios y las comillas que pudieran haber al principio.
 */
-
 char	**ft_strd_new(char *str)
 {
 	char	**new;
@@ -26,7 +25,7 @@ char	**ft_strd_new(char *str)
 	return (new);
 }
 
-char	**cmd_trim(char *prompt)
+char	**super_split(char *prompt)
 {
 	int		pos;
 	char	*aux;
@@ -38,17 +37,17 @@ char	**cmd_trim(char *prompt)
 		while (prompt[0] && prompt[pos] == ' ')
 			pos++;
 		if (prompt[pos] == '\"')
-			aux = process_dq(prompt, &pos); // ...
+			aux = process_dq(prompt, &pos);
 		else if (prompt[pos] == '\'')
-			aux = process_sq(prompt, &pos); // ...
+			aux = process_sq(prompt, &pos);
 		else if (prompt[pos] == '|')
-			aux = process_pipe(prompt, &pos); // ...
+			aux = process_pipe(prompt, &pos);
 		else if (prompt[pos] == '<')
-			aux = process_red1(prompt, &pos); // ...
+			aux = process_red1(prompt, &pos);
 		else if (prompt[pos] == '>')
-			aux = process_red2(prompt, &pos); // ...
+			aux = process_red2(prompt, &pos);
 		else
-			aux = process_char(prompt, &pos); // OK
+			aux = process_char(prompt, &pos);
 		if (new == NULL)
 			new = ft_strd_new(aux);
 		else if (aux != NULL)
@@ -61,9 +60,8 @@ char	**parse_input(char *prompt)
 {
 	char	**cmd;
 
-	cmd = cmd_trim(prompt);
+	cmd = super_split(prompt);
 	if (prompt[ft_strlen(prompt) - 1] == ' ')
 		cmd = ft_strd_lastdel(cmd);
-	// cmd = expand_var(cmd); // REVISAR!!!
 	return (cmd);
 }

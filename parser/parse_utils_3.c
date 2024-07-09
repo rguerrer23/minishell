@@ -6,12 +6,12 @@
 /*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 21:21:51 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/08 14:48:17 by kevlar           ###   ########.fr       */
+/*   Updated: 2024/07/09 19:26:02 by kevlar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
+/*
 int	check_condition(t_var *var)
 {
 	return (var->aux[1] == '\0' || var->aux[1] == ' '
@@ -70,3 +70,5 @@ char	**expand_var(char **cmd)
 	ft_strd_free(cmd);
 	return (ret);
 }
+*/
+
