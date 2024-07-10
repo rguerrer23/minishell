@@ -6,17 +6,11 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/07/10 11:42:49 by rguerrer         ###   ########.fr       */
-=======
-/*   Updated: 2024/07/10 00:26:44 by kevlar           ###   ########.fr       */
->>>>>>> f23add2 (jmartos-)
+/*   Updated: 2024/07/10 12:23:59 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-int	g_mutex = 0;
 
 int	main(int argc, char **argv __attribute__((unused)), char **envp)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/10 12:16:57 by kevlar           ###   ########.fr       */
+/*   Updated: 2024/07/10 12:24:13 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ void		execute_builtin(char **full_cmd, t_shell *shell);
 int			is_builtin(char *cmd);
 void		execute_ins(t_shell *shell, t_cmd *cmd);
 int			has_pipe(char **cmd);
-void		exec_choose(t_shell *shell, t_cmd *cmds)
+void		exec_choose(t_shell *shell, t_cmd *cmds);
 /* env_var.c */
 t_var		**parse_envp(char **envp);
 char		*get_var(t_var **list_var, char *key);
