@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/10 13:00:22 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/10 13:18:01 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,19 @@
 
 int	g_status;
 
+int	ft_check_line(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] != ' ' && line[i] != '\t')
+			return (0);
+		i++;
+	}
+	return (1);
+}
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
@@ -29,12 +42,15 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		line = readline("Minishell$~ ");
-		shell.prompt = line;
-		add_history(line);
-		shell.env = envp;
-		init_prompt(&shell, &cmd, envp);
-		exec_choose(&shell, &cmd);
-		free(line);
+		if(ft_check_line(line) == 0)
+		{
+			shell.prompt = line;
+			add_history(line);
+			shell.env = envp;
+			init_prompt(&shell, &cmd, envp);
+			exec_choose(&shell, &cmd);
+			free(line);
+		}
 	}
 	return (0);
 }
