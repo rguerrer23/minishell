@@ -6,13 +6,13 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:13:05 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/10 14:23:25 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/10 14:42:10 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void remove_quotes(char *str)
+void remove_dquotes(char *str)
 {
 	int len;
 

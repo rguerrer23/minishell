@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 19:30:25 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/10 14:25:35 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/10 14:42:14 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ char *replace_value_var(t_var **env_list, char *str)
 		str = tmp;					 // "hello user test"
 		varname = find_varname(str); // find next var
 	}
-	remove_quotes(str);
+	remove_dquotes(str);
 	return (str);
 }
 

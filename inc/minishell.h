@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/10 14:16:35 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/10 14:42:18 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,6 @@ char		*find_varname(char *str);
 char		*replace_value_var(t_var **env_list, char *str);
 void		expand_env_var(t_cmd *cmd, char **envp);
 /* env_var_utils.c */
-void		remove_quotes(char *str);
+void		remove_dquotes(char *str);
 
 #endif
