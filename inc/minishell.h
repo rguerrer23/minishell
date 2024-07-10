@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/10 12:04:07 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/10 12:16:57 by kevlar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,8 @@ typedef struct s_pipe_red
 */
 typedef struct s_var
 {
-	char	*var_copy;
-	int		var_pos_1;
-	int		var_pos_2;
-	int		exit_status;
-	char	*aux;
+	char	*key;
+	char	*value;
 }			t_var;
 
 /*
@@ -104,7 +101,6 @@ int			main(int argc, char **argv __attribute__((unused)), char **envp);
 /* init.c */
 void		init_pipe_red(t_pipe_red *value);
 void		init_prompt(t_shell *shell, t_cmd *cmd, char **envp);
-void		init_var(t_var *var, char *cmd);
 /* command.c */
 int			check_cmd(t_shell *shell);
 /* check_quotes.c */
@@ -124,12 +120,6 @@ char		*process_red2(char *prompt, int *pos);
 /* parse_utils_2.c */
 int			strlen_end_word(char *prompt, int pos);
 char		*process_char(char *prompt, int *pos);
-/* parse_utils_3.c */
-int			check_condition(t_var *var);
-void		is_dolar(t_var *var);
-char		*get_var(char *cmd);
-char		**expand_var(char **cmd);
-/* parse_utils_4.c */
 // PARTE PARA EXPANDIR LAS VARIAVLES DE ENTORNO: EXTENDER
 // (HAY QUE REVISAR ESTAS FUNCIONES, SOLO COPIADAS PARA ENTENDER CODIGO EXTENDER)
 int			ft_get_index(char *str, char *index);
@@ -148,6 +138,12 @@ void		execute_ins(t_shell *shell, t_cmd *cmd);
 int			has_pipe(char **cmd);
 void		exec_choose(t_shell *shell, t_cmd *cmds)
 /* env_var.c */
-char		**expand_env_var(t_cmd *cmd);
+t_var		**parse_envp(char **envp);
+char		*get_var(t_var **list_var, char *key);
+//
+char		*find_varname(char *str);
+char		*replace_value_var(t_var **env_list, char *str);
+//
+void		expand_env_var(t_cmd *cmd, char **envp);
 
 #endif

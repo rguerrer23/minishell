@@ -6,7 +6,7 @@
 /*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 21:40:30 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/09 21:07:17 by kevlar           ###   ########.fr       */
+/*   Updated: 2024/07/10 00:24:35 by kevlar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,7 @@ void	init_prompt(t_shell *shell, t_cmd *cmd, char **envp)
 		exit (EXIT_FAILURE);
 	}
 	cmd->full_cmd = parse_input(shell->prompt);
-	expand_env_var(cmd);
+	expand_env_var(cmd, envp);
 	cmd->infile = STDIN_FILENO;
 	cmd->outfile = STDOUT_FILENO;
-}
-
-void	init_var(t_var *var, char *cmd)
-{
-	var->var_copy = ft_strdup(cmd);
-	var->var_pos_1 = 0;
-	var->var_pos_2 = 0;
-	var->exit_status = 0;
 }

@@ -6,37 +6,118 @@
 /*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 19:30:25 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/09 21:19:20 by kevlar           ###   ########.fr       */
+/*   Updated: 2024/07/10 03:15:30 by kevlar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-char	*check_var(char *env_var)
+t_var	**parse_envp(char **envp)
 {
+	t_var	**list_var;
 	int		c;
-	char	*var;
+	int		i;
 
-	c = 1;
-	ft_strdup();
+	i = 0;
+	c = ft_strd_len(envp);
+	list_var = ft_calloc(sizeof(t_var *), c);
+	while (i < c)
+	{
+		list_var[i] = ft_calloc(sizeof(t_var), 1);
+		list_var[i]->key = ft_strndup(envp[i], ft_strchr(envp[i], '=')
+				- envp[i]);
+		list_var[i]->value = ft_strdup(ft_strchr(envp[i], '=') + 1);
+		i++;
+	}
+	return (list_var);
 }
 
-char	**expand_env_var(t_cmd *cmd)
+char	*get_var(t_var **list_var, char *key)
 {
-	int	c1;
-	int	c2;
+	int	i;
 
-	c1 = 0;
-	c2 = 0;
-	while (cmd->full_cmd)
+	i = 0;
+	while (list_var[i])
 	{
-		c2 = 0;
-		while (cmd->full_cmd[c1])
+		if (ft_strcmp(list_var[i]->key, key) == 0)
+			return (ft_strdup(list_var[i]->value));
+		i++;
+	}
+	return (ft_strdup(""));
+}
+
+char	*find_varname(char *str)
+{
+	int	start;
+	int	started_var;
+
+	start = 0;
+	started_var = 0;
+	for (int i = 0; str[i]; i++)
+	{
+		if (str[i] == '$' && (ft_isalpha(str[i + 1]) || str[i + 1] == '_'))
 		{
-			if (cmd->full_cmd[c1][0] == '$')
-				check_var(cmd_full_cmd[c1]);
-			c2++;
+			start = i + 1;
+			started_var = 1;
 		}
-		c1++;
+		if (i > start && started_var && !(ft_isalnum(str[i + 1]) || str[i + 1] == '_'))
+			return (strndup(str + start - 1, (i - start) + 2));
+	}
+	return (NULL);
+}
+
+char	*replace_value_var(t_var **env_list, char *str)
+{
+	char	*varname;
+	char	*start;
+	char	*end;
+	char	*tmp2;
+	char	*tmp;
+
+	varname = find_varname(str); // $VAR
+	while (varname)
+	{
+		start = ft_strnstr(str, varname, ft_strlen(str));
+		// find where the var starts: "hello $USER test" -> "$USER test"
+		if (start)
+			end = start + ft_strlen(varname);
+		// find where the var ends: "$USER test" -> "USER test"
+		else
+			return (NULL);
+		// Panic, we should never reach this point
+		tmp = ft_strndup(str, start - str);
+		// left side of the var: "hello $USER test" -> "hello "
+		tmp2 = ft_strjoin(tmp, get_var(env_list, varname + 1));
+		// "hello " + "user" -> "hello user"
+		free(tmp);
+		tmp = ft_strjoin(tmp2, end); // "hello user" + " test" -> "hello user test"
+		free(tmp2);
+		free(str);
+		str = tmp;                   // "hello user test"
+		varname = find_varname(str); // find next var
+	}
+	return (str);
+}
+
+void	expand_env_var(t_cmd *cmd, char **envp)
+{
+	t_var	**list_var;
+	int		i;
+	char	*key;
+
+	i = 0;
+	list_var = parse_envp(envp); // VARIABLES DE ENTORNO
+	while (cmd->full_cmd[i])
+	{
+		if (cmd->full_cmd[i][0] == '$')
+		{
+			key = cmd->full_cmd[i];
+			cmd->full_cmd[i] = get_var(list_var, key + 1); // SOBREESCRIBIENDO!
+			free(key);
+		}
+		else if (cmd->full_cmd[i][0] == '"')
+			cmd->full_cmd[i] = replace_value_var(list_var, cmd->full_cmd[i]);
+		// SOBREESCRIBIENDO!
+		i++;
 	}
 }
