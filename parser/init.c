@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 21:40:30 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/08 19:58:31 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/09 21:07:17 by kevlar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,16 @@ void	init_pipe_red(t_pipe_red *value)
 
 void	init_prompt(t_shell *shell, t_cmd *cmd, char **envp)
 {
+	(void)envp;
 	if (!check_cmd(shell))
 	{
 		ft_printf(RED"ERROR! (init_prompt)"NC);
 		exit (EXIT_FAILURE);
 	}
 	cmd->full_cmd = parse_input(shell->prompt);
+	expand_env_var(cmd);
 	cmd->infile = STDIN_FILENO;
 	cmd->outfile = STDOUT_FILENO;
-	shell->env = envp;
 }
 
 void	init_var(t_var *var, char *cmd)
