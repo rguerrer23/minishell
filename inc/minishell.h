@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/10 12:24:13 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/10 12:42:35 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ typedef struct s_cmd
 {
 	char **full_cmd; // jmartos-
 	char	*cmd_path;
+	int		g_status;
 	int		infile;
 	int		outfile;
 }			t_cmd;
@@ -132,9 +133,9 @@ void		ft_exit(t_shell *shell);
 void		ft_export(char *name_var, char *value_var, t_shell *shell);
 int			ft_pwd(void);
 int			ft_unset(char *name_var, t_shell *shell);
-void		execute_builtin(char **full_cmd, t_shell *shell);
+int			execute_builtin(char **full_cmd, t_shell *shell);
 int			is_builtin(char *cmd);
-void		execute_ins(t_shell *shell, t_cmd *cmd);
+int			execute_ins(t_shell *shell, t_cmd *cmd);
 int			has_pipe(char **cmd);
 void		exec_choose(t_shell *shell, t_cmd *cmds);
 /* env_var.c */

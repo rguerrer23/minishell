@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 21:40:30 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/10 00:24:35 by kevlar           ###   ########.fr       */
+/*   Updated: 2024/07/10 12:38:52 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	init_pipe_red(t_pipe_red *value)
 
 void	init_prompt(t_shell *shell, t_cmd *cmd, char **envp)
 {
-	(void)envp;
 	if (!check_cmd(shell))
 	{
 		ft_printf(RED"ERROR! (init_prompt)"NC);

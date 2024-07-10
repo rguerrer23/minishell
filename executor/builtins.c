@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:54:02 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/03 12:27:10 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/10 12:28:05 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /* Esta funcion elige el builtin a ejecutar. */
 
-void	execute_builtin(char **full_cmd, t_shell *shell)
+int	execute_builtin(char **full_cmd, t_shell *shell)
 {
 	char	*builtins;
 
@@ -33,6 +33,7 @@ void	execute_builtin(char **full_cmd, t_shell *shell)
 		ft_unset(full_cmd[1], shell);
 	else if (!ft_strcmp(builtins, "pwd"))
 		ft_pwd();
+	return (0);
 }
 
 /* Esta funcion comprueba si el comando es un builtin o no. */
