@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/10 12:42:35 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/10 14:16:35 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,10 +141,10 @@ void		exec_choose(t_shell *shell, t_cmd *cmds);
 /* env_var.c */
 t_var		**parse_envp(char **envp);
 char		*get_var(t_var **list_var, char *key);
-//
 char		*find_varname(char *str);
 char		*replace_value_var(t_var **env_list, char *str);
-//
 void		expand_env_var(t_cmd *cmd, char **envp);
+/* env_var_utils.c */
+void		remove_quotes(char *str);
 
 #endif

@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 19:30:25 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/10 03:15:30 by kevlar           ###   ########.fr       */
+/*   Updated: 2024/07/10 14:25:35 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-t_var	**parse_envp(char **envp)
+t_var **parse_envp(char **envp)
 {
-	t_var	**list_var;
-	int		c;
-	int		i;
+	t_var **list_var;
+	int c;
+	int i;
 
 	i = 0;
 	c = ft_strd_len(envp);
@@ -24,17 +24,16 @@ t_var	**parse_envp(char **envp)
 	while (i < c)
 	{
 		list_var[i] = ft_calloc(sizeof(t_var), 1);
-		list_var[i]->key = ft_strndup(envp[i], ft_strchr(envp[i], '=')
-				- envp[i]);
+		list_var[i]->key = ft_strndup(envp[i], ft_strchr(envp[i], '=') - envp[i]);
 		list_var[i]->value = ft_strdup(ft_strchr(envp[i], '=') + 1);
 		i++;
 	}
 	return (list_var);
 }
 
-char	*get_var(t_var **list_var, char *key)
+char *get_var(t_var **list_var, char *key)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (list_var[i])
@@ -46,14 +45,13 @@ char	*get_var(t_var **list_var, char *key)
 	return (ft_strdup(""));
 }
 
-char	*find_varname(char *str)
+char *find_varname(char *str)
 {
-	int	start;
-	int	started_var;
+	int start = 0;
+	int started_var = 0;
+	int i = 0;
 
-	start = 0;
-	started_var = 0;
-	for (int i = 0; str[i]; i++)
+	while (str[i])
 	{
 		if (str[i] == '$' && (ft_isalpha(str[i + 1]) || str[i + 1] == '_'))
 		{
@@ -61,49 +59,48 @@ char	*find_varname(char *str)
 			started_var = 1;
 		}
 		if (i > start && started_var && !(ft_isalnum(str[i + 1]) || str[i + 1] == '_'))
-			return (strndup(str + start - 1, (i - start) + 2));
+		{
+			return strndup(str + start - 1, (i - start) + 2);
+		}
+		i++;
 	}
-	return (NULL);
+	return NULL;
 }
 
-char	*replace_value_var(t_var **env_list, char *str)
+char *replace_value_var(t_var **env_list, char *str)
 {
-	char	*varname;
-	char	*start;
-	char	*end;
-	char	*tmp2;
-	char	*tmp;
+	char *varname;
+	char *start;
+	char *end;
+	char *tmp2;
+	char *tmp;
 
 	varname = find_varname(str); // $VAR
 	while (varname)
 	{
-		start = ft_strnstr(str, varname, ft_strlen(str));
-		// find where the var starts: "hello $USER test" -> "$USER test"
+		start = ft_strnstr(str, varname, ft_strlen(str)); // find where the var starts: "hello $USER test" -> "$USER test"
 		if (start)
-			end = start + ft_strlen(varname);
-		// find where the var ends: "$USER test" -> "USER test"
+			end = start + ft_strlen(varname); // find where the var ends: "$USER test" -> "USER test"
 		else
-			return (NULL);
-		// Panic, we should never reach this point
-		tmp = ft_strndup(str, start - str);
-		// left side of the var: "hello $USER test" -> "hello "
-		tmp2 = ft_strjoin(tmp, get_var(env_list, varname + 1));
-		// "hello " + "user" -> "hello user"
+			return (NULL);										// Panic, we should never reach this point
+		tmp = ft_strndup(str, start - str);						// left side of the var: "hello $USER test" -> "hello "
+		tmp2 = ft_strjoin(tmp, get_var(env_list, varname + 1)); // "hello " + "user" -> "hello user"
 		free(tmp);
 		tmp = ft_strjoin(tmp2, end); // "hello user" + " test" -> "hello user test"
 		free(tmp2);
 		free(str);
-		str = tmp;                   // "hello user test"
+		str = tmp;					 // "hello user test"
 		varname = find_varname(str); // find next var
 	}
+	remove_quotes(str);
 	return (str);
 }
 
-void	expand_env_var(t_cmd *cmd, char **envp)
+void expand_env_var(t_cmd *cmd, char **envp)
 {
-	t_var	**list_var;
-	int		i;
-	char	*key;
+	t_var **list_var;
+	int i;
+	char *key;
 
 	i = 0;
 	list_var = parse_envp(envp); // VARIABLES DE ENTORNO
@@ -116,8 +113,7 @@ void	expand_env_var(t_cmd *cmd, char **envp)
 			free(key);
 		}
 		else if (cmd->full_cmd[i][0] == '"')
-			cmd->full_cmd[i] = replace_value_var(list_var, cmd->full_cmd[i]);
-		// SOBREESCRIBIENDO!
+			cmd->full_cmd[i] = replace_value_var(list_var, cmd->full_cmd[i]); // SOBREESCRIBIENDO!
 		i++;
 	}
 }
