@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:43:22 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/03 13:06:30 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/10 11:33:27 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,17 @@ extern int	g_status;
 
 /* Esta funcion ejecuta un comando de sistema. */
 
-void	get_pid(t_shell *shell)
+int	error_msg(char *cmd)
 {
-	pid_t pid;
-
-	pid = fork();
-	if (pid == 0)
-		shell->pid = 0;
-	else if (pid < 0)
-		shell->pid = -1;
-	else
-		shell->pid = pid;
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(cmd, 2);
+	ft_putstr_fd(": command not found\n", 2);
+	return (1);
 }
 
-char *get_cmd_path(char *cmd, char *bin)
+char	*get_cmd_path(char *cmd, char *bin)
 {
-	char *path;
+	char	*path;
 
 	path = malloc(ft_strlen(bin) + ft_strlen(cmd) + 2);
 	if (path == NULL)
@@ -48,28 +43,26 @@ char *get_cmd_path(char *cmd, char *bin)
 	}
 }
 
-void	exc(char *path, char **cmd, char **env, t_shell *shell)
+int	exc(char *path, char **cmd, char **env, t_shell *shell)
 {
-	int status;
-
-	status = 0;
-	get_pid(shell);
-	if(shell->pid == 0)
+	g_status = 0;
+	shell->pid = fork();
+	if (shell->pid == 0)
 	{
 		if (ft_strchr(path, '/') != NULL)
 			execve(path, cmd, env);
-		//status = error_msg(cmd[0], 0);
-		exit(status);
+		g_status = error_msg(path);
+		exit(g_status);
 	}
 	else
-		waitpid(shell->pid, &status, 0);
-	//return (status);
+		waitpid(shell->pid, &g_status, 0);
+	return (g_status);
 }
 
-void	execute_ins(t_shell *shell, t_cmd *cmd)
+int	execute_ins(t_shell *shell, t_cmd *cmd)
 {
-	int	i;
-	char **bin;
+	int		i;
+	char	**bin;
 
 	i = 0;
 	while (shell->env && shell->env[i])
@@ -84,15 +77,17 @@ void	execute_ins(t_shell *shell, t_cmd *cmd)
 		return ;
 	}
 	bin = ft_split(shell->env[i], ':');
-	//if (!cmd->full_cmd[0] && !bin)
-	//error
+	if (!cmd->full_cmd[0] && !bin)
+		return (1);
 	i = 1;
 	cmd->cmd_path = get_cmd_path(cmd->full_cmd[0], bin[0] + 5);
-	while(cmd->full_cmd[0] && bin[i] && cmd->cmd_path == NULL)
+	while (cmd->full_cmd[0] && bin[i] && cmd->cmd_path == NULL)
 		cmd->cmd_path = get_cmd_path(cmd->full_cmd[0], bin[i++]);
 	if (cmd->cmd_path != NULL)
-		exc(cmd->cmd_path, cmd->full_cmd, shell->env, shell);
+		g_status = exc(cmd->cmd_path, cmd->full_cmd, shell->env, shell);
 	else
-		exc(cmd->full_cmd[0], cmd->full_cmd, shell->env, shell);
-	//liberar memoria utilizada
+		g_status = exc(cmd->full_cmd[0], cmd->full_cmd, shell->env, shell);
+	// liberar memoria bin
+	// liberar memoria utilizada
+	return (g_status);
 }

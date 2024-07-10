@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/09 21:09:15 by kevlar           ###   ########.fr       */
+/*   Updated: 2024/07/10 11:42:23 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ void		execute_builtin(char **full_cmd, t_shell *shell);
 int			is_builtin(char *cmd);
 void		execute_ins(t_shell *shell, t_cmd *cmd);
 int			has_pipe(char **cmd);
-void		execute(t_shell *shell, t_cmd *cmds);
+void		exec_choose(t_shell *shell, t_cmd *cmds)
 /* env_var.c */
 char		**expand_env_var(t_cmd *cmd);
 

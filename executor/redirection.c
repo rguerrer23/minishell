@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_parms.c                                        :+:      :+:    :+:   */
+/*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 17:37:00 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/08 18:48:50 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/10 11:33:46 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	get_pipe(t_cmd *cmds)
 	pid = fork();
 	if (pid == 0)
 	{
-		if(pipefd[1] != STDOUT_FILENO)
+		if (pipefd[1] != STDOUT_FILENO)
 			close(pipefd[1]);
 		dup2(pipefd[0], STDIN);
 		close(pipefd[1]);
@@ -69,4 +69,3 @@ void	get_pipe(t_cmd *cmds)
 		close(pipefd[0]);
 	}
 }
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/09 19:32:43 by kevlar           ###   ########.fr       */
+/*   Updated: 2024/07/10 11:42:49 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	main(int argc, char **argv __attribute__((unused)), char **envp)
 		line = readline("Minishell$~ ");
 		shell.prompt = line;
 		init_prompt(&shell, &cmd, envp);
-		execute(&shell, &cmd);
+		exec_choose(&shell, &cmd);
 		free(line);
 	}
 }
