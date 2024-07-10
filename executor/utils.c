@@ -36,3 +36,4 @@ int	error_msg(char *cmd, int status)
 		ft_putstr_fd(": No such file or directory\n", 2);
 	return (127);
 }
+

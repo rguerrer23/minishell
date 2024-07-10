@@ -11,29 +11,23 @@
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
 /*
 
-void	get_params(char **promt, t_cmd *cmds)
+void	apply_redirections(char **promt, t_cmd *cmds)
 {
 	int i;
 
 	i = 0;
 	while(promt[i])
 	{
-		if (ft_strcmp(promt[i], ">>") == 0)
-			get_outfile2(promt, cmds, i);
-		else if (ft_strcmp(promt[i], ">") == 0)
+		if (ft_strcmp(promt[i], ">") == 0)
 			get_outfile(promt, cmds, i);
 		else if (ft_strcmp(promt[i], "<") == 0)
 			get_infile(promt, cmds, i);
-		else if (ft_strcmp(promt[i], "<<") == 0)
-			get_infile2(promt, cmds, i);
 		else if (ft_strcmp(promt[i], "|") == 0)
 			get_pipe(promt, cmds, i);
-		else
-			//error
 		i++;
-	
 	}
 }
 */
@@ -44,7 +38,7 @@ void	execute(t_shell *shell, t_cmd *cmds)
 	char	**cmd;
 
 	cmd = cmds->full_cmd;
-	//get_params(cmd, cmds);
+	//apply_redirections(cmd, cmds);
 	if (cmd && ft_strcmp(cmd[0], "exit") == 0 && has_pipe(cmd) == 0)
 		ft_exit(shell);
 		//liberar memoria cmd
