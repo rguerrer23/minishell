@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:46:21 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/10 14:51:30 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/10 14:57:17 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char *process_dq(char *prompt, int *pos)
 
 /*
 	Extrae la parte de un array que está encerrada entre comillas simples,
-	y ademas no las interpreta.
+	y ademas no las interpreta, ya que con las sq se imprime tal cual.
 */
 char *process_sq(char *prompt, int *pos)
 {
