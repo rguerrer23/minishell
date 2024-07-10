@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 11:37:06 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/10 11:41:53 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/10 12:01:44 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,17 @@ void	apply_redirections(char **promt, t_cmd *cmds)
 /* Esta funcion comprueba si existe un builtin y escoje*/
 void	exec_choose(t_shell *shell, t_cmd *cmds)
 {
-	char	**cmd;
+	char	**prompt;
 
-	cmd = cmds->full_cmd;
-	// apply_redirections(cmd, cmds);
-	if (cmd && ft_strcmp(cmd[0], "exit") == 0 && has_pipe(cmd) == 0)
+	prompt = cmds->full_cmd;
+	// apply_redirections(prompt, cmds);
+	if (prompt && ft_strcmp(prompt[0], "exit") == 0 && has_pipe(prompt) == 0)
 		ft_exit(shell);
-	// liberar memoria cmd
-	else if (cmd && is_builtin(cmd[0]) == 1)
-		g_status = execute_builtin(cmd, shell);
-	else if (cmd)
+	// liberar memoria prompt
+	else if (prompt && is_builtin(prompt[0]) == 1)
+		g_status = execute_builtin(prompt, shell);
+	else if (prompt)
 		g_status = execute_ins(shell, cmds);
-	// liberar memoria cmd
+	// liberar memoria prompt
 	// despues liberar memoria y dejar igual que antes
 }
