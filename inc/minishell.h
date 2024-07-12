@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/12 15:35:15 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/12 17:24:13 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ typedef struct s_cmd
 	char	**full_cmd; // jmartos-
 	char	*cmd_path;
 	int		g_status;
+	int		cmd_exit_status;
 	int		infile;
 	int		outfile;
 }			t_cmd;
@@ -141,10 +142,11 @@ void		exec_choose(t_shell *shell, t_cmd *cmds);
 t_var		**parse_envp(char **envp);
 char		*get_var(t_var **list_var, char *key);
 char		*find_varname(char *str);
-char		*replace_value_var(t_var **env_list, char *str);
+char 		*replace_value_var(t_cmd *cmd, t_var **env_list, char *str);
 void		expand_env_var(t_cmd *cmd, char **envp);
 /* env_var_utils.c */
 void		remove_dquotes(char *str);
+char 		*implement_dolar_question(char *str, char *start, char *end, int cmd_exit_status);
 /* signal.c */
 void	handle_SIGINT(int sig);
 void	handle_EOF(char *line);

@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/12 15:48:13 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/12 17:34:20 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,20 +57,22 @@ int	main(int argc, char **argv, char **envp)
 	}
 	g_signal_mutex = 0;
 	if_signal();
+	cmd.cmd_exit_status = 0;
 	while (1)
 	{
 		line = readline("Minishell$~ ");
 		if (line == NULL)
 			handle_EOF(line);
-		if(ft_check_line(line) == 0)
+		else if(ft_check_line(line) == 0)
 		{
 			shell.prompt = line;
 			add_history(line);
 			shell.env = envp;
 			init_prompt(&shell, &cmd, envp);
 			exec_choose(&shell, &cmd);
-			free(line);
+            // cmd.cmd_exit_status = NI PUTA IDEA DE COMO OBTENER EL ESTADOD E SALIDA DEL ULTIMO COMANDO.
 		}
+		free(line);
 	}
 	return (0);
 }

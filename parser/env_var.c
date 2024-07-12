@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 19:30:25 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/10 14:42:14 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/12 17:21:17 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char *find_varname(char *str)
 	return NULL;
 }
 
-char *replace_value_var(t_var **env_list, char *str)
+char *replace_value_var(t_cmd *cmd, t_var **env_list, char *str)
 {
 	char *varname;
 	char *start;
@@ -78,18 +78,23 @@ char *replace_value_var(t_var **env_list, char *str)
 	varname = find_varname(str); // $VAR
 	while (varname)
 	{
-		start = ft_strnstr(str, varname, ft_strlen(str)); // find where the var starts: "hello $USER test" -> "$USER test"
-		if (start)
-			end = start + ft_strlen(varname); // find where the var ends: "$USER test" -> "USER test"
+		if (strcmp(varname, "$?") == 0)
+			tmp = implement_dolar_question(str, start, end, cmd->cmd_exit_status);
 		else
-			return (NULL);										// Panic, we should never reach this point
-		tmp = ft_strndup(str, start - str);						// left side of the var: "hello $USER test" -> "hello "
-		tmp2 = ft_strjoin(tmp, get_var(env_list, varname + 1)); // "hello " + "user" -> "hello user"
-		free(tmp);
-		tmp = ft_strjoin(tmp2, end); // "hello user" + " test" -> "hello user test"
-		free(tmp2);
-		free(str);
-		str = tmp;					 // "hello user test"
+		{
+			start = ft_strnstr(str, varname, ft_strlen(str)); // find where the var starts: "hello $USER test" -> "$USER test"
+			if (start)
+				end = start + ft_strlen(varname); // find where the var ends: "$USER test" -> "USER test"
+			else
+				return (NULL);										// Panic, we should never reach this point
+			tmp = ft_strndup(str, start - str);						// left side of the var: "hello $USER test" -> "hello "
+			tmp2 = ft_strjoin(tmp, get_var(env_list, varname + 1)); // "hello " + "user" -> "hello user"
+			free(tmp);
+			tmp = ft_strjoin(tmp2, end); // "hello user" + " test" -> "hello user test"
+			free(tmp2);
+			free(str);
+			str = tmp;					 // "hello user test"
+		}
 		varname = find_varname(str); // find next var
 	}
 	remove_dquotes(str);
@@ -113,7 +118,7 @@ void expand_env_var(t_cmd *cmd, char **envp)
 			free(key);
 		}
 		else if (cmd->full_cmd[i][0] == '"')
-			cmd->full_cmd[i] = replace_value_var(list_var, cmd->full_cmd[i]); // SOBREESCRIBIENDO!
+			cmd->full_cmd[i] = replace_value_var(cmd, list_var, cmd->full_cmd[i]); // SOBREESCRIBIENDO!
 		i++;
 	}
 }

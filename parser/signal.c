@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:32:27 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/12 15:45:02 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/12 17:34:56 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	handle_SIGINT(int sig)
 // CTRL + 'D': termina el shell.
 void	handle_EOF(char *line)
 {
-	free(line);
+    (void)line;
 	//free_env();
 	exit(0);
 }
