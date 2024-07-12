@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/10 17:38:52 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/12 15:48:13 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,17 @@
 */
 int	g_signal_mutex;
 
-static void	handle(int sig)
+// CTRL + 'C': nueva linea con nueva entrada.
+// CTRL + '\': termina el shell.
+void	if_signal(void)
 {
-	g_signal_mutex = 1;
-	if (sig == SIGINT)
+	signal(SIGQUIT, SIG_IGN); // CTRL + '\'
+	if (SIGINT) // CTRL + 'C'
 	{
-		rl_on_new_line();
-		rl_redisplay();
-		ft_putstr_fd("   ", 1);
-		ft_printf("\n");
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
+		g_signal_mutex = 1;
+		signal(SIGINT, handle_SIGINT);
 	}
-}
-
-static void	if_signal(void)
-{
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, handle);
+	g_signal_mutex = 0;
 }
 
 static int	ft_check_line(char *line)
@@ -58,16 +50,18 @@ int	main(int argc, char **argv, char **envp)
 	t_shell	shell;
 	t_cmd	cmd;
 	
-	g_signal_mutex = 0;
 	if (argc != 1 || argv[1] != NULL)
 	{
 		ft_putstr_fd(RED "minishell: invalid arguments\n" NC, STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}
+	g_signal_mutex = 0;
 	if_signal();
 	while (1)
 	{
 		line = readline("Minishell$~ ");
+		if (line == NULL)
+			handle_EOF(line);
 		if(ft_check_line(line) == 0)
 		{
 			shell.prompt = line;

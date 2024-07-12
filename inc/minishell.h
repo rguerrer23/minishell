@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/10 17:05:47 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/12 15:35:15 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ typedef struct s_cmd
 /*********************/
 /* FUNCIONES COMUNES */
 /*********************/
+void		if_signal(void);
 int			main(int argc, char **argv __attribute__((unused)), char **envp);
 /*******************************/
 /* FUNCIONES JMARTOS- (PARSER) */
@@ -144,5 +145,8 @@ char		*replace_value_var(t_var **env_list, char *str);
 void		expand_env_var(t_cmd *cmd, char **envp);
 /* env_var_utils.c */
 void		remove_dquotes(char *str);
+/* signal.c */
+void	handle_SIGINT(int sig);
+void	handle_EOF(char *line);
 
 #endif
