@@ -3,18 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/10 13:18:01 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/10 17:38:52 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	g_status;
+/*
+	0 = close
+	1 = open
+*/
+int	g_signal_mutex;
 
-int	ft_check_line(char *line)
+static void	handle(int sig)
+{
+	g_signal_mutex = 1;
+	if (sig == SIGINT)
+	{
+		rl_on_new_line();
+		rl_redisplay();
+		ft_putstr_fd("   ", 1);
+		ft_printf("\n");
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
+}
+
+static void	if_signal(void)
+{
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, handle);
+}
+
+static int	ft_check_line(char *line)
 {
 	int	i;
 
@@ -33,12 +58,13 @@ int	main(int argc, char **argv, char **envp)
 	t_shell	shell;
 	t_cmd	cmd;
 	
-	g_status = 0;
+	g_signal_mutex = 0;
 	if (argc != 1 || argv[1] != NULL)
 	{
 		ft_putstr_fd(RED "minishell: invalid arguments\n" NC, STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}
+	if_signal();
 	while (1)
 	{
 		line = readline("Minishell$~ ");

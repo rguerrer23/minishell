@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/10 14:42:18 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/10 17:05:47 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # include <fcntl.h>
 # include <readline/history.h>  // redline
 # include <readline/readline.h> // redline
-# include <signal.h>            // señales (server/client)
 # include <stdio.h>             // redline
+# include <signal.h>            // señales (server/client)
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -68,11 +68,9 @@ typedef struct s_var
 */
 typedef struct s_shell
 {
-	char *prompt;        // jmartos-
-	char *parsed_prompt; // jmartos-
+	char	*prompt;        // jmartos-
+	char	*parsed_prompt; // jmartos-
 	char	**env;
-
-	
 	pid_t	pid;
 	t_list	*cmd;
 }			t_shell;
@@ -85,7 +83,7 @@ typedef struct s_shell
 */
 typedef struct s_cmd
 {
-	char **full_cmd; // jmartos-
+	char	**full_cmd; // jmartos-
 	char	*cmd_path;
 	int		g_status;
 	int		infile;
