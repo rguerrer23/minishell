@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:46:21 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/10 14:57:17 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/13 17:37:02 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@
 */
 char *process_dq(char *prompt, int *pos)
 {
-	char *aux;
-	int aux_pos;
-	int len;
+	char	*word;
+	char	*aux;
+	int		aux_pos;
+	int		len;
+	
 
 	len = ft_substrlen(prompt, *pos + 1, '\"');
 	aux = ft_calloc(len + 2, sizeof(char));
@@ -36,7 +38,9 @@ char *process_dq(char *prompt, int *pos)
 	}
 	aux[aux_pos] = '\"';
 	(*pos)++;
-	return (aux);
+	word = ft_strdup(aux);
+	free(aux);
+	return (word);
 }
 
 /*
@@ -45,9 +49,10 @@ char *process_dq(char *prompt, int *pos)
 */
 char *process_sq(char *prompt, int *pos)
 {
-	char *aux;
-	int aux_pos;
-	int len;
+	char	*word;
+	char	*aux;
+	int		aux_pos;
+	int		len;
 
 	len = ft_substrlen(prompt, *pos + 1, '\'');
 	aux = ft_calloc(len + 1, sizeof(char)); // Ajustar el tamaño de aux
@@ -61,7 +66,9 @@ char *process_sq(char *prompt, int *pos)
 	}
 	if (prompt[*pos] == '\'')
 		(*pos)++; // Saltar la comilla de cierre si existe
-	return aux;
+	word = ft_strdup(aux);
+	free(aux);
+	return (word);
 }
 
 /*

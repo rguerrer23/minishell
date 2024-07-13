@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:51:25 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/09 22:51:35 by kevlar           ###   ########.fr       */
+/*   Updated: 2024/07/13 17:23:07 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	ft_strd_free(char **str);
 char	**ft_strd_add(char **str, char *add);
 // (minishell) Borramos el ultimo array de un array bidimensional.
 char	**ft_strd_lastdel(char **str);
-//
+// (minishell) Compara ambos string hasta que coincidan o alguno termine.
 int		ft_strcmp(const char *s1, const char *s2);
 // (minishell) Igual que strdup pero le especificamos los que queremos copiar.
 char	*ft_strndup(const char *s1, int n);

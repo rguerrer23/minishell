@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 19:05:40 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/08 10:19:49 by kevlar           ###   ########.fr       */
+/*   Updated: 2024/07/13 16:42:44 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,20 @@ char	*process_char(char *prompt, int *pos)
 {
 	int		w_len;
 	int		w_pos;
+	char	*aux;
 	char	*word;
 
 	w_len = strlen_end_word(prompt, *pos);
 	w_pos = 0;
-	word = ft_calloc(w_len + 2, sizeof(char));
+	aux = ft_calloc(w_len + 2, sizeof(char));
 	while (prompt[*pos]
 		&& prompt[*pos] != ' ' && prompt[*pos] != '\"' && prompt[*pos] != '\'')
 	{
-		word[w_pos] = prompt[*pos];
+		aux[w_pos] = prompt[*pos];
 		(*pos)++;
 		w_pos++;
 	}
+	word = ft_strdup(aux);
+	free(aux);
 	return (word);
 }

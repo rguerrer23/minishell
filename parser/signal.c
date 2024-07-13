@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:32:27 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/12 17:36:12 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/13 16:37:01 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,6 @@ void	handle_SIGINT(int sig)
 void	handle_EOF(char *line)
 {
     (void)line;
-	// AQUI TENEMOS QUE LIBERAR MEMORIA DE TODO.
+	// AQUI TENEMOS QUE LIBERAR MEMORIA DE TODO SI FUERA NECESARIO.
 	exit(0);
 }

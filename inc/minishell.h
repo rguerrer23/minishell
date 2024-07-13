@@ -6,9 +6,13 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/12 17:24:13 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/13 18:39:04 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/*
+	valgrind --leak-check=full ./minishell
+*/
 
 #ifndef MINI_H
 # define MINI_H
@@ -86,7 +90,7 @@ typedef struct s_cmd
 	char	**full_cmd; // jmartos-
 	char	*cmd_path;
 	int		g_status;
-	int		cmd_exit_status;
+	int		cmd_exit_status; // jmartos-
 	int		infile;
 	int		outfile;
 }			t_cmd;
@@ -121,23 +125,6 @@ char		*process_red2(char *prompt, int *pos);
 /* parse_utils_2.c */
 int			strlen_end_word(char *prompt, int pos);
 char		*process_char(char *prompt, int *pos);
-// PARTE PARA EXPANDIR LAS VARIAVLES DE ENTORNO: EXTENDER
-// (HAY QUE REVISAR ESTAS FUNCIONES, SOLO COPIADAS PARA ENTENDER CODIGO EXTENDER)
-int			ft_get_index(char *str, char *index);
-char		*ft_replace(char *str, char *start, char *end, char *replace);
-/* PARTE EXECUTOR */
-int			ft_cd(char *path);
-int			ft_echo(char **args);
-void		ft_env(t_shell *shell);
-void		ft_exit(t_shell *shell);
-void		ft_export(char *name_var, char *value_var, t_shell *shell);
-int			ft_pwd(void);
-int			ft_unset(char *name_var, t_shell *shell);
-int			execute_builtin(char **full_cmd, t_shell *shell);
-int			is_builtin(char *cmd);
-int			execute_ins(t_shell *shell, t_cmd *cmd);
-int			has_pipe(char **cmd);
-void		exec_choose(t_shell *shell, t_cmd *cmds);
 /* env_var.c */
 t_var		**parse_envp(char **envp);
 char		*get_var(t_var **list_var, char *key);
@@ -150,5 +137,20 @@ char 		*implement_dolar_question(char *str, char *start, char *end, int cmd_exit
 /* signal.c */
 void	handle_SIGINT(int sig);
 void	handle_EOF(char *line);
+/*********************************/
+/* FUNCIONES RGUERRER (EXECUTOR) */
+/*********************************/
+int			ft_cd(char *path);
+int			ft_echo(char **args);
+void		ft_env(t_shell *shell);
+void		ft_exit(t_shell *shell);
+void		ft_export(char *name_var, char *value_var, t_shell *shell);
+int			ft_pwd(void);
+int			ft_unset(char *name_var, t_shell *shell);
+int			execute_builtin(char **full_cmd, t_shell *shell);
+int			is_builtin(char *cmd);
+int			execute_ins(t_shell *shell, t_cmd *cmd);
+int			has_pipe(char **cmd);
+void		exec_choose(t_shell *shell, t_cmd *cmds);
 
 #endif

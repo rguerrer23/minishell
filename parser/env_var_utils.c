@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:13:05 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/12 17:26:49 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/13 17:30:38 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void remove_dquotes(char *str)
 	if (len > 1 && str[0] == '"' && str[len - 1] == '"')
 	{
 		// Mueve el contenido hacia la izquierda para sobrescribir la primera comilla
-		memmove(str, str + 1, len - 2);
+		ft_memmove(str, str + 1, len - 2);
 		str[len - 2] = '\0'; // Añade el terminador nulo
 	}
 }

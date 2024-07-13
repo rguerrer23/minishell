@@ -1,3 +1,5 @@
+
+
 NAME		= minishell
 
 CFLAGS		= -Wall -Wextra -Werror

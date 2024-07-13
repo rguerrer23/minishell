@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 19:30:25 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/12 17:21:17 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/13 18:51:22 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,29 @@ t_var **parse_envp(char **envp)
 
 	i = 0;
 	c = ft_strd_len(envp);
-	list_var = ft_calloc(sizeof(t_var *), c);
+	list_var = ft_calloc(sizeof(t_var *), c + 1); // +1 para NULL.
+	if (!list_var)
+        return (NULL); // error por falta de memoria.
 	while (i < c)
 	{
 		list_var[i] = ft_calloc(sizeof(t_var), 1);
+		if (!list_var[i])
+        {
+            while (i-- > 0)
+            {
+                free(list_var[i]->key);
+                free(list_var[i]->value);
+                free(list_var[i]);
+				
+            }
+            free(list_var);
+            return (NULL); // error por falta de memoria.
+		}
 		list_var[i]->key = ft_strndup(envp[i], ft_strchr(envp[i], '=') - envp[i]);
 		list_var[i]->value = ft_strdup(ft_strchr(envp[i], '=') + 1);
 		i++;
 	}
+	list_var[i] = NULL;
 	return (list_var);
 }
 
@@ -60,7 +75,7 @@ char *find_varname(char *str)
 		}
 		if (i > start && started_var && !(ft_isalnum(str[i + 1]) || str[i + 1] == '_'))
 		{
-			return strndup(str + start - 1, (i - start) + 2);
+			return ft_strndup(str + start - 1, (i - start) + 2);
 		}
 		i++;
 	}
@@ -78,7 +93,7 @@ char *replace_value_var(t_cmd *cmd, t_var **env_list, char *str)
 	varname = find_varname(str); // $VAR
 	while (varname)
 	{
-		if (strcmp(varname, "$?") == 0)
+		if (ft_strcmp(varname, "$?") == 0)
 			tmp = implement_dolar_question(str, start, end, cmd->cmd_exit_status);
 		else
 		{

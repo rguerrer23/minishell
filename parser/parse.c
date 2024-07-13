@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:59:05 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/10 13:09:31 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/13 18:33:21 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ char	**super_split(char *prompt)
 	char	**new;
 
 	pos = 0;
+	new = NULL;
 	while (prompt[pos]) // el valor de pos se actualiza en cada funcion.
 	{
 		while (prompt[0] && prompt[pos] == ' ')
@@ -48,10 +49,10 @@ char	**super_split(char *prompt)
 			aux = process_red2(prompt, &pos);
 		else
 			aux = process_char(prompt, &pos);
-		if (new == NULL)
-			new = ft_strd_new(aux);
-		else if (aux != NULL)
-			new = ft_strd_add(new, aux);
+		if (!new)
+            new = ft_strd_new(aux);
+		else if (aux)
+			new = ft_strd_add(new, aux); // añadimos aux al final de new.
 	}
 	return (new);
 }
