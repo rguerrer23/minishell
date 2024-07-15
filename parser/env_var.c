@@ -6,7 +6,7 @@
 /*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 19:30:25 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/15 20:02:41 by kevlar           ###   ########.fr       */
+/*   Updated: 2024/07/15 21:08:08 by kevlar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,11 +94,7 @@ char *replace_value_var(t_cmd *cmd, t_var **env_list, char *str)
 	while (varname)
 	{
 		if (ft_strcmp(varname, "$?") == 0)
-		{
 			tmp = implement_dolar_question(str, start, end, cmd->g_status);
-			ft_printf("%s\n", tmp);
-			free(tmp);
-		}
 		else
 		{
 			start = ft_strnstr(str, varname, ft_strlen(str)); // find where the var starts: "hello $USER test" -> "$USER test"
@@ -112,6 +108,7 @@ char *replace_value_var(t_cmd *cmd, t_var **env_list, char *str)
 			tmp = ft_strjoin(tmp2, end); // "hello user" + " test" -> "hello user test"
 			free(tmp2);
 		}
+		free(tmp);
         free(str);
         str = tmp; // Actualizar la cadena original con la nueva cadena
         free(varname); // Liberar la memoria asignada a varname

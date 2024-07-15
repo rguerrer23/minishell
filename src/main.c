@@ -6,7 +6,7 @@
 /*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/15 20:02:59 by kevlar           ###   ########.fr       */
+/*   Updated: 2024/07/15 21:09:48 by kevlar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,7 @@ int	main(int argc, char **argv, char **envp)
 			shell.env = envp;
 			init_prompt(&shell, &cmd, envp);
 			exec_choose(&shell, &cmd);
-			cmd.cmd_exit_status = shell.pid;
-			ft_printf("pid = %i\n", cmd.g_status);
+			cmd.cmd_exit_status = cmd.g_status;
 		}
 		free(line);
 	}
