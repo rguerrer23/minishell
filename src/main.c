@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/13 18:41:43 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/15 20:02:59 by kevlar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,15 @@ int	main(int argc, char **argv, char **envp)
 		line = readline("Minishell$~ ");
 		if (line == NULL)
 			handle_EOF(line);
-		else if(ft_check_line(line) == 0)
+		else if (ft_check_line(line) == 0)
 		{
 			shell.prompt = line;
 			add_history(line);
 			shell.env = envp;
 			init_prompt(&shell, &cmd, envp);
 			exec_choose(&shell, &cmd);
-            // cmd.cmd_exit_status = NI IDEA DE COMO OBTENER EL ESTADOD DE SALIDA DEL ULTIMO COMANDO.
+			cmd.cmd_exit_status = shell.pid;
+			ft_printf("pid = %i\n", cmd.g_status);
 		}
 		free(line);
 	}
