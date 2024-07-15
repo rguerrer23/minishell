@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 19:30:25 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/13 18:51:22 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/15 20:02:41 by kevlar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,11 @@ char *replace_value_var(t_cmd *cmd, t_var **env_list, char *str)
 	while (varname)
 	{
 		if (ft_strcmp(varname, "$?") == 0)
-			tmp = implement_dolar_question(str, start, end, cmd->cmd_exit_status);
+		{
+			tmp = implement_dolar_question(str, start, end, cmd->g_status);
+			ft_printf("%s\n", tmp);
+			free(tmp);
+		}
 		else
 		{
 			start = ft_strnstr(str, varname, ft_strlen(str)); // find where the var starts: "hello $USER test" -> "$USER test"
@@ -107,10 +111,11 @@ char *replace_value_var(t_cmd *cmd, t_var **env_list, char *str)
 			free(tmp);
 			tmp = ft_strjoin(tmp2, end); // "hello user" + " test" -> "hello user test"
 			free(tmp2);
-			free(str);
-			str = tmp;					 // "hello user test"
 		}
-		varname = find_varname(str); // find next var
+        free(str);
+        str = tmp; // Actualizar la cadena original con la nueva cadena
+        free(varname); // Liberar la memoria asignada a varname
+        varname = find_varname(str); // Buscar la siguiente variable
 	}
 	remove_dquotes(str);
 	return (str);
