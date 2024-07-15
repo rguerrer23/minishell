@@ -24,9 +24,9 @@
 # include <readline/readline.h> // redline
 # include <stdio.h>             // redline
 # include <signal.h>            // señales (server/client)
-# include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <dirent.h>
 
 # define EXIT_SUCCESS 0
 # define EXIT_FAILURE 1
@@ -152,5 +152,8 @@ int			is_builtin(char *cmd);
 int			execute_ins(t_shell *shell, t_cmd *cmd);
 int			has_pipe(char **cmd);
 void		exec_choose(t_shell *shell, t_cmd *cmds);
+void		get_outfile(char **name, t_cmd *cmds, int i);
+void		get_infile(char **name, t_cmd *cmds, int i);
+void		get_pipe(t_shell *shell);
 
 #endif

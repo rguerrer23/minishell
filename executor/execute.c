@@ -12,9 +12,7 @@
 
 #include "../inc/minishell.h"
 
-/*
-
-void	apply_redirections(char **promt, t_cmd *cmds)
+void	apply_redirections(char **promt, t_cmd *cmds, t_shell *shell)
 {
 	int	i;
 
@@ -26,11 +24,11 @@ void	apply_redirections(char **promt, t_cmd *cmds)
 		else if (ft_strcmp(promt[i], "<") == 0)
 			get_infile(promt, cmds, i);
 		else if (ft_strcmp(promt[i], "|") == 0)
-			get_pipe(promt, cmds, i);
+			get_pipe(shell);
 		i++;
 	}
 }
-*/
+
 
 /* Esta funcion comprueba si existe un builtin y escoje*/
 void	exec_choose(t_shell *shell, t_cmd *cmds)
@@ -39,7 +37,7 @@ void	exec_choose(t_shell *shell, t_cmd *cmds)
 
 	prompt = cmds->full_cmd;
 	cmds->g_status = 0;
-	// apply_redirections(prompt, cmds);
+	apply_redirections(prompt, cmds, shell);
 	if (prompt && ft_strcmp(prompt[0], "exit") == 0 && has_pipe(prompt) == 0)
 		ft_exit(shell);
 	// liberar memoria prompt
