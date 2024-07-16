@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/15 20:01:01 by kevlar           ###   ########.fr       */
+/*   Updated: 2024/07/16 16:24:09 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <readline/history.h>  // redline
 # include <readline/readline.h> // redline
 # include <stdio.h>             // redline
-# include <signal.h>            // señales (server/client)
+# include <signal.h>            // señales
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <dirent.h>
@@ -44,6 +44,13 @@
 
 # define NC "\033[0m"
 # define RED "\033[31;1m"
+
+/*
+	Variable Global:
+		0 = close
+		1 = open
+*/
+extern int	g_error;
 
 /*
 	Usaremos esta estructura para guardar los estados de pipes y redirecciones.
@@ -90,7 +97,6 @@ typedef struct s_cmd
 	char	**full_cmd; // jmartos-
 	char	*cmd_path;
 	int		g_status;
-	int		cmd_exit_status; // jmartos-
 	int		infile;
 	int		outfile;
 }			t_cmd;
@@ -98,7 +104,6 @@ typedef struct s_cmd
 /*********************/
 /* FUNCIONES COMUNES */
 /*********************/
-void		if_signal(void);
 int			main(int argc, char **argv __attribute__((unused)), char **envp);
 /*******************************/
 /* FUNCIONES JMARTOS- (PARSER) */
@@ -135,8 +140,8 @@ void		expand_env_var(t_cmd *cmd, char **envp);
 void		remove_dquotes(char *str);
 char 		*implement_dolar_question(char *str, char *start, char *end, int cmd_exit_status);
 /* signal.c */
-void	handle_SIGINT(int sig);
-void	handle_EOF(char *line);
+void		handler(int signal);
+void		if_signal(void);
 /*********************************/
 /* FUNCIONES RGUERRER (EXECUTOR) */
 /*********************************/

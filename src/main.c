@@ -3,33 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/15 21:09:48 by kevlar           ###   ########.fr       */
+/*   Updated: 2024/07/16 16:44:53 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-/*
-	0 = close
-	1 = open
-*/
-int	g_signal_mutex;
-
-// CTRL + 'C': nueva linea con nueva entrada.
-// CTRL + '\': termina el shell.
-void	if_signal(void)
-{
-	signal(SIGQUIT, SIG_IGN); // CTRL + '\'
-	if (SIGINT) // CTRL + 'C'
-	{
-		g_signal_mutex = 1;
-		signal(SIGINT, handle_SIGINT);
-	}
-	g_signal_mutex = 0;
-}
+int g_error = 0;
 
 static int	ft_check_line(char *line)
 {
@@ -55,14 +38,12 @@ int	main(int argc, char **argv, char **envp)
 		ft_putstr_fd(RED "minishell: invalid arguments\n" NC, STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}
-	g_signal_mutex = 0;
-	cmd.cmd_exit_status = 0;
 	while (1)
 	{
 		if_signal();
 		line = readline("Minishell$~ ");
 		if (line == NULL)
-			handle_EOF(line);
+			exit (0);
 		else if (ft_check_line(line) == 0)
 		{
 			shell.prompt = line;
@@ -70,7 +51,7 @@ int	main(int argc, char **argv, char **envp)
 			shell.env = envp;
 			init_prompt(&shell, &cmd, envp);
 			exec_choose(&shell, &cmd);
-			cmd.cmd_exit_status = cmd.g_status;
+			//ft_printf("g_error = %i\n", g_error);
 		}
 		free(line);
 	}
