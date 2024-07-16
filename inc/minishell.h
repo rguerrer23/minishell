@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/16 20:48:12 by kevlar           ###   ########.fr       */
+/*   Updated: 2024/07/16 21:24:49 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+# define _XOPEN_SOURCE 700	// Macro utilizada para evitar errores por
+							// inicializaciones o estructuras incompletas.
 
 # include "libft/includes/libft.h" // libft
 # include <errno.h>
