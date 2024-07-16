@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:32:27 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/16 21:17:48 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/16 21:45:42 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,6 @@ void	if_signal(void)
 	sig.sa_handler = &handler;
 	sig.sa_flags = SA_RESTART;
 	sigemptyset(&sig.sa_mask);
-	signal(SIGINT, &sig);
-	signal(SIGQUIT, &sig);
+	sigaction(SIGINT, &sig, NULL);
+	sigaction(SIGQUIT, &sig, NULL);
 }
