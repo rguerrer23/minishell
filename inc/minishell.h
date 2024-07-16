@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/16 16:24:09 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/16 18:18:26 by kevlar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 	valgrind --leak-check=full ./minishell
 */
 
-#ifndef MINI_H
-# define MINI_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
 # include "libft/includes/libft.h" // libft
 # include <errno.h>
@@ -134,7 +134,7 @@ char		*process_char(char *prompt, int *pos);
 t_var		**parse_envp(char **envp);
 char		*get_var(t_var **list_var, char *key);
 char		*find_varname(char *str);
-char 		*replace_value_var(t_cmd *cmd, t_var **env_list, char *str);
+char		*replace_value_var(t_cmd *cmd, t_var **env_list, char *str);
 void		expand_env_var(t_cmd *cmd, char **envp);
 /* env_var_utils.c */
 void		remove_dquotes(char *str);
