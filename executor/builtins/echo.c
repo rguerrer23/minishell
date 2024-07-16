@@ -29,7 +29,7 @@ int	ft_echo(char **args)
 	while (args[i])
 	{
 		ft_putstr_fd(args[i], STDOUT_FILENO);
-		if (args[i + 1])
+		if (args[i + 1] && args[i][0] != '\0')
 			ft_putstr_fd(" ", STDOUT_FILENO);
 		i++;
 	}

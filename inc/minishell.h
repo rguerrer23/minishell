@@ -98,7 +98,9 @@ typedef struct s_cmd
 	char	*cmd_path;
 	int		g_status;
 	int		infile;
+	int		fdin;
 	int		outfile;
+	int		fdout;
 }			t_cmd;
 
 /*********************/
@@ -157,8 +159,9 @@ int			is_builtin(char *cmd);
 int			execute_ins(t_shell *shell, t_cmd *cmd);
 int			has_pipe(char **cmd);
 void		exec_choose(t_shell *shell, t_cmd *cmds);
-void		get_outfile(char **name, t_cmd *cmds, int i);
-void		get_infile(char **name, t_cmd *cmds, int i);
-void		get_pipe(t_shell *shell);
+void		apply_outfile(char **name, t_cmd *cmds, int i);
+void		apply_infile(char **name, t_cmd *cmds, int i);
+void		apply_pipe(t_shell *shell);
+void		ft_close_resets(t_cmd *cmds, t_shell *shell);
 
 #endif

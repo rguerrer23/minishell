@@ -56,6 +56,8 @@ char	*get_cmd_path(char *cmd, char *bin)
 
 int	exc(char *path, t_cmd *cmd, t_shell *shell)
 {
+	int status;
+
 	shell->pid = fork();
 	if (shell->pid == 0)
 	{
@@ -65,8 +67,10 @@ int	exc(char *path, t_cmd *cmd, t_shell *shell)
 		exit(cmd->g_status);
 	}
 	else
-		waitpid(shell->pid, 0, 0);
-	return (0);
+		waitpid(shell->pid, &status, 0);
+	if (WIFEXITED(status))
+		cmd->g_status = WEXITSTATUS(status);
+	return (cmd->g_status);
 }
 
 int	execute_ins(t_shell *shell, t_cmd *cmd)
