@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/16 21:24:49 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/17 16:56:05 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,12 +159,13 @@ int			ft_pwd(void);
 int			ft_unset(char *name_var, t_shell *shell);
 int			execute_builtin(char **full_cmd, t_shell *shell);
 int			is_builtin(char *cmd);
-int			execute_ins(t_shell *shell, t_cmd *cmd);
+int			execute_ins(t_shell *shell, t_cmd *cmds, char **cmd);
 int			has_pipe(char **cmd);
-void		exec_choose(t_shell *shell, t_cmd *cmds);
+void		exec_choose(t_shell *shell, t_cmd *cmds, char **cmd);
 void		apply_outfile(char **name, t_cmd *cmds, int i);
 void		apply_infile(char **name, t_cmd *cmds, int i);
 void		apply_pipe(t_shell *shell);
 void		ft_close_resets(t_cmd *cmds, t_shell *shell);
+void		execute(t_shell *shell, t_cmd *cmds);
 
 #endif
