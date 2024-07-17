@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/17 16:56:05 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/17 17:33:50 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ int			has_pipe(char **cmd);
 void		exec_choose(t_shell *shell, t_cmd *cmds, char **cmd);
 void		apply_outfile(char **name, t_cmd *cmds, int i);
 void		apply_infile(char **name, t_cmd *cmds, int i);
-void		apply_pipe(t_shell *shell);
+int			apply_pipe(t_shell *shell, t_cmd *cmds);
 void		ft_close_resets(t_cmd *cmds, t_shell *shell);
 void		execute(t_shell *shell, t_cmd *cmds);
 

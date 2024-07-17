@@ -17,7 +17,7 @@ SRC			=	src/main.c \
 				parser/env_var.c \
 				parser/env_var_utils.c \
 				parser/signal.c \
-				executor/builtins/cd.c executor/utils.c executor/builtins/echo.c executor/builtins/env.c executor/builtins/exit.c executor/builtins/export.c executor/builtins/pwd.c executor/builtins/unset.c executor/execute.c executor/exec_ins.c executor/builtins.c executor/redirection.c executor/close.c
+				executor/builtins/cd.c executor/utils.c executor/builtins/echo.c executor/builtins/env.c executor/builtins/exit.c executor/builtins/export.c executor/builtins/pwd.c executor/builtins/unset.c executor/execute.c executor/exec_ins.c executor/builtins.c executor/redirection.c executor/close.c executor/pipe.c
 
 LIBFT		= libft/libft.a
 
