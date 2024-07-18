@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 10:53:27 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/06/19 12:15:46 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/18 14:12:03 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 /* Esta funcion sale del minishell. */
 
-void	ft_exit(t_shell *shell)
+void	ft_exit(int status)
 {
 	// liberar memoria antes de salir
-	free(shell->prompt);
-	exit(EXIT_SUCCESS);
+	exit(status);
 }

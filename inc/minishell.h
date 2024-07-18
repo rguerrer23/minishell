@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/17 17:33:50 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/18 15:10:47 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ typedef struct s_shell
 	char	*parsed_prompt; // jmartos-
 	char	**env;
 	pid_t	pid;
-	t_list	*cmd;
 }			t_shell;
 
 /*
@@ -102,8 +101,10 @@ typedef struct s_cmd
 	int		g_status;
 	int		infile;
 	int		fdin;
+	int		pin;
 	int		outfile;
 	int		fdout;
+	int		pout;
 }			t_cmd;
 
 /*********************/
@@ -153,7 +154,7 @@ void		if_signal(void);
 int			ft_cd(char *path);
 int			ft_echo(char **args);
 void		ft_env(t_shell *shell);
-void		ft_exit(t_shell *shell);
+void		ft_exit(int status);
 void		ft_export(char *name_var, char *value_var, t_shell *shell);
 int			ft_pwd(void);
 int			ft_unset(char *name_var, t_shell *shell);
@@ -164,7 +165,7 @@ int			has_pipe(char **cmd);
 void		exec_choose(t_shell *shell, t_cmd *cmds, char **cmd);
 void		apply_outfile(char **name, t_cmd *cmds, int i);
 void		apply_infile(char **name, t_cmd *cmds, int i);
-int			apply_pipe(t_shell *shell, t_cmd *cmds);
+void		apply_pipe(t_shell *shell, t_cmd *cmds, char **cmd, int *prev_fd);
 void		ft_close_resets(t_cmd *cmds, t_shell *shell);
 void		execute(t_shell *shell, t_cmd *cmds);
 

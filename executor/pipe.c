@@ -12,29 +12,31 @@
 
 #include "../inc/minishell.h"
 
-int	apply_pipe(t_shell *shell, t_cmd *cmds)
+void	apply_pipe(t_shell *shell, t_cmd *cmds, char **cmd, int *prev_fd)
 {
-	int		fd[2];
-	pid_t	pid;
-
+	int fd[2];
 	pipe(fd);
-	pid = fork();
+
+	pid_t pid = fork();
 	if (pid == 0)
 	{
-		if(fd[0] > 0)
-			close(fd[0]);
+		if (*prev_fd != -1)
+		{
+			dup2(*prev_fd, STDIN_FILENO);
+			close(*prev_fd);
+		}
 		dup2(fd[1], STDOUT_FILENO);
-		cmds->fdout = fd[1];
-		shell->pid = pid;
-		return (1);
+		close(fd[0]);
+		close(fd[1]);
+		exec_choose(shell, cmds, cmd);
+		exit(EXIT_SUCCESS);
 	}
 	else
 	{
-		if(fd[1] > 0)
-			close(fd[1]);
-		dup2(fd[0], STDIN_FILENO);
-		cmds->fdin = fd[0];
-		shell->pid = -1;
-		return (2);
+		waitpid(pid, &cmds->g_status, 0);
+		close(fd[1]);
+		if (*prev_fd != -1)
+			close(*prev_fd);
 	}
+	*prev_fd = fd[0];
 }

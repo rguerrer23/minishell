@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:49:15 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/16 17:49:15 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/18 12:13:30 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,22 @@ void	reset_std(t_cmd *cmds)
 
 void	close_fds(t_cmd *cmds)
 {
-	close(cmds->fdin);
-	close(cmds->fdout);
+	if (cmds->fdin > 0)
+		close(cmds->fdin);
+	if (cmds->fdout > 0)
+		close(cmds->fdout);
+	if (cmds->pin > 0)
+		close(cmds->pin);
+	if (cmds->pout > 0)
+		close(cmds->pout);
 }
 
 void reset_fds(t_cmd *cmds, t_shell *shell)
 {
 	cmds->fdin = -1;
 	cmds->fdout = -1;
+	cmds->pin = -1;
+	cmds->pout = -1;
 	shell->pid = -1;
 }
 

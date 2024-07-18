@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 11:37:06 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/17 20:34:46 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/18 15:15:09 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,40 +41,38 @@ void exclude_redirections(char **prompt)
 	}
 }
 
-int	apply_redirections(char **promt, t_cmd *cmds, t_shell *shell)
+int apply_redirections(char **prompt, t_cmd *cmds)
 {
-	int	pipe;
 	int i;
 	int j;
 
-	pipe = 0;
 	i = 0;
-	while (promt[i])
+	j = 0;
+	while (prompt[i])
 	{
-		if (ft_strcmp(promt[i], ">") == 0 || ft_strcmp(promt[i], "<") == 0 || ft_strcmp(promt[i], ">>") == 0 || ft_strcmp(promt[i], "<<") == 0)
+		if (ft_strcmp(prompt[i], ">") == 0 || ft_strcmp(prompt[i], ">>") == 0)
 		{
-			if (ft_strcmp(promt[i], ">") == 0 || ft_strcmp(promt[i], ">>") == 0)
-				apply_outfile(promt, cmds, i);
-			else if (ft_strcmp(promt[i], "<") == 0 || ft_strcmp(promt[i], "<<") == 0)
-			apply_infile(promt, cmds, i);
+			apply_outfile(prompt, cmds, i);
 			j = i;
-			while (promt[j] != NULL)
+			while (prompt[j] != NULL)
 			{
-				promt[j] = promt[j + 2];
+				prompt[j] = prompt[j + 2];
 				j++;
 			}
-		}
-		else if (ft_strcmp(promt[i], "|") == 0)
+		} else if (ft_strcmp(prompt[i], "<") == 0 || ft_strcmp(prompt[i], "<<") == 0)
 		{
-			pipe = apply_pipe(shell, cmds);
-			i++;
-		}
+			apply_infile(prompt, cmds, i);
+			j = i;
+			while(prompt[j] != NULL)
+			{
+				prompt[j] = prompt[j + 2];
+				j++;
+			}
+		} 
 		else
-		{
 			i++;
-		}
 	}
-	return(pipe);
+	return 0;
 }
 
 /* Esta funcion comprueba si existe un builtin y escoje*/
@@ -84,52 +82,72 @@ void	exec_choose(t_shell *shell, t_cmd *cmds, char **cmd)
 	cmds->g_status = 0;
 
 	exclude_redirections(cmd);
-	if (cmd && ft_strcmp(cmd[0], "exit") == 0 && has_pipe(cmd) == 0)
-		ft_exit(shell);
+	if (cmd && ft_strcmp(cmd[0], "exit") == 0 && has_pipe(cmds->full_cmd) == 0)
+		ft_exit(EXIT_SUCCESS);
 	else if (cmd && is_builtin(cmd[0]) == 1)
 		cmds->g_status = execute_builtin(cmd, shell);
 	else if (cmd)
 		cmds->g_status = execute_ins(shell, cmds, cmd);
+	if (cmds->pin > 0)
+		close(cmds->pin);
+	if (cmds->pout > 0)
+		close(cmds->pout);
+	cmds->pin = -1;
+	cmds->pout = -1;
 	// despues liberar memoria y dejar igual que antes
 }
 
-void	execute(t_shell *shell, t_cmd *cmds)
+void execute(t_shell *shell, t_cmd *cmds)
 {
 	char **cmd;
-	int i;
-	int j;
-	int pipe;
-	int k;
+	int i = 0, j = 0, k = 0;
+	int prev_fd = -1;
 
-	i = 0;
-	j = 0;	
-	pipe = 0;
-	k = 0;
+	cmds->infile = dup(STDIN_FILENO);
+	cmds->outfile = dup(STDOUT_FILENO);
 	while (cmds->full_cmd[i] != NULL)
 	{
-		while (cmds->full_cmd[i] != NULL && cmds->full_cmd[i][0] != '|')
+		while (cmds->full_cmd[i] != NULL && ft_strcmp(cmds->full_cmd[i], "|") != 0)
 			i++;
 		cmd = malloc(sizeof(char *) * (i - j + 1));
 		k = 0;
-		while(j < i)
+		while (k < i - j) 
 		{
-			cmd[k] = cmds->full_cmd[j];
-			j++;
+			cmd[k] = cmds->full_cmd[j + k];
 			k++;
 		}
 		cmd[k] = NULL;
-		cmds->infile = dup(STDIN_FILENO);
-		cmds->outfile = dup(STDOUT_FILENO);
-		pipe = apply_redirections(cmd, cmds, shell);
-		if (pipe == 1 || cmds->full_cmd[i] == NULL)
+        apply_redirections(cmd, cmds);
+        if (cmds->full_cmd[i] != NULL)
+			apply_pipe(shell, cmds, cmd, &prev_fd);
+		else
 		{
-			exec_choose(shell, cmds, cmd);
+			pid_t pid = fork();
+			if (pid == 0)
+			{
+				if (prev_fd != -1)
+				{
+					dup2(prev_fd, STDIN_FILENO);
+					close(prev_fd);
+				}
+				exec_choose(shell, cmds, cmd);
+				exit(EXIT_SUCCESS);
+			}
+			else
+			{
+				if (prev_fd != -1)
+					close(prev_fd);
+				waitpid(pid, &cmds->g_status, 0);
+				cmds->g_status = WEXITSTATUS(cmds->g_status);
+			}
 		}
+		free(cmd);
 		if (cmds->full_cmd[i] != NULL)
 			i++;
 		j = i;
-		if (cmd)
-			ft_free(cmd);
 	}
-	ft_close_resets(cmds, shell);
+	dup2(cmds->infile, STDIN_FILENO);
+	dup2(cmds->outfile, STDOUT_FILENO);
+	close(cmds->infile);
+	close(cmds->outfile);
 }
