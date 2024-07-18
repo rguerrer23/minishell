@@ -6,24 +6,11 @@
 /*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 11:37:06 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/18 15:15:09 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/18 19:12:06 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-void	ft_free(char **cmd)
-{
-	int i;
-
-	i = 0;
-	while (cmd[i])
-	{
-		free(cmd[i]);
-		i++;
-	}
-	free(cmd);
-}
 
 void exclude_redirections(char **prompt)
 {
@@ -78,13 +65,12 @@ int apply_redirections(char **prompt, t_cmd *cmds)
 /* Esta funcion comprueba si existe un builtin y escoje*/
 void	exec_choose(t_shell *shell, t_cmd *cmds, char **cmd)
 {
-
 	cmds->g_status = 0;
 
 	exclude_redirections(cmd);
-	if (cmd && ft_strcmp(cmd[0], "exit") == 0 && has_pipe(cmds->full_cmd) == 0)
-		ft_exit(EXIT_SUCCESS);
-	else if (cmd && is_builtin(cmd[0]) == 1)
+	if (cmd && strcmp(cmd[0], "exit") == 0)
+		ft_exit(shell, 1);
+	if (cmd && is_builtin(cmd[0]) == 1)
 		cmds->g_status = execute_builtin(cmd, shell);
 	else if (cmd)
 		cmds->g_status = execute_ins(shell, cmds, cmd);
@@ -94,7 +80,6 @@ void	exec_choose(t_shell *shell, t_cmd *cmds, char **cmd)
 		close(cmds->pout);
 	cmds->pin = -1;
 	cmds->pout = -1;
-	// despues liberar memoria y dejar igual que antes
 }
 
 void execute(t_shell *shell, t_cmd *cmds)
@@ -131,17 +116,20 @@ void execute(t_shell *shell, t_cmd *cmds)
 					close(prev_fd);
 				}
 				exec_choose(shell, cmds, cmd);
-				exit(EXIT_SUCCESS);
+				exit(cmds->g_status);
 			}
 			else
 			{
 				if (prev_fd != -1)
 					close(prev_fd);
 				waitpid(pid, &cmds->g_status, 0);
-				cmds->g_status = WEXITSTATUS(cmds->g_status);
+				if (WIFEXITED(cmds->g_status))
+					cmds->g_status = WEXITSTATUS(cmds->g_status);
+				else
+					cmds->g_status = 1;
 			}
 		}
-		free(cmd);
+		ft_strd_free(cmd);
 		if (cmds->full_cmd[i] != NULL)
 			i++;
 		j = i;

@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:43:22 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/18 12:06:53 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/18 19:12:39 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*get_cmd_path(char *cmd, char *bin)
 	}
 }
 
-int	exc(char *path, char **cmd, t_shell *shell)
+int	exc(char *path, char **cmd, t_cmd *cmds, t_shell *shell)
 {
 	int status;
 
@@ -70,8 +70,14 @@ int	exc(char *path, char **cmd, t_shell *shell)
 		exit(status);
 	}
 	else
+	{
 		waitpid(shell->pid, &status, 0);
-	return (status);
+		if (WIFEXITED(status))
+			cmds->g_status = WEXITSTATUS(status);
+		else
+			cmds->g_status = 1;
+	}
+	return (cmds->g_status);
 }
 
 int	execute_ins(t_shell *shell, t_cmd *cmds, char **cmd)
@@ -88,7 +94,7 @@ int	execute_ins(t_shell *shell, t_cmd *cmds, char **cmd)
 		i++;
 	}
 	if (shell->env[i] == NULL)
-		return (exc(cmd[0], cmd, shell));
+		return (exc(cmd[0], cmd, cmds, shell));
 	bin = ft_split(shell->env[i], ':');
 	if (!cmd[0] && !bin)
 		return (1);
@@ -97,10 +103,10 @@ int	execute_ins(t_shell *shell, t_cmd *cmds, char **cmd)
 	while (cmd[0] && bin[i] && cmds->cmd_path == NULL)
 		cmds->cmd_path = get_cmd_path(cmd[0], bin[i++]);
 	if (cmds->cmd_path != NULL)
-		status = exc(cmds->cmd_path, cmd, shell);
+		status = exc(cmds->cmd_path, cmd, cmds, shell);
 	else
-		status = exc(cmd[0], cmd, shell);
-	// liberar memoria bin
-	// liberar memoria utilizada
+		status = exc(cmd[0], cmd, cmds, shell);
+	ft_strd_free(bin);
+	free(cmds->cmd_path);
 	return (status);
 }

@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/17 16:56:44 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/18 19:14:09 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,13 @@ int	main(int argc, char **argv, char **envp)
 		ft_putstr_fd(RED "minishell: invalid arguments\n" NC, STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}
-	while (1)
+	cmd.g_status = 0;
+	while (cmd.g_status != 1)
 	{
 		if_signal();
 		line = readline("Minishell$~ ");
 		if (line == NULL)
-			exit (0);
+			break;
 		else if (ft_check_line(line) == 0)
 		{
 			shell.prompt = line;
@@ -51,7 +52,6 @@ int	main(int argc, char **argv, char **envp)
 			shell.env = envp;
 			init_prompt(&shell, &cmd, envp);
 			execute(&shell, &cmd);
-			//ft_printf("g_status = %i\n", cmd.g_status);
 		}
 		free(line);
 	}

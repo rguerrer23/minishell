@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/18 15:10:47 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/18 19:05:55 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ void		if_signal(void);
 int			ft_cd(char *path);
 int			ft_echo(char **args);
 void		ft_env(t_shell *shell);
-void		ft_exit(int status);
+void		ft_exit(t_shell *shell, int status);
 void		ft_export(char *name_var, char *value_var, t_shell *shell);
 int			ft_pwd(void);
 int			ft_unset(char *name_var, t_shell *shell);

@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:54:02 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/18 15:17:37 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/18 19:02:12 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	execute_builtin(char **full_cmd, t_shell *shell)
 	else if (!ft_strcmp(builtins, "env"))
 		ft_env(shell);
 	else if (!ft_strcmp(builtins, "exit"))
-		ft_exit(EXIT_SUCCESS);
+		ft_exit(shell, 1);
 	else if (!ft_strcmp(builtins, "export"))
 		ft_export(full_cmd[1], full_cmd[3], shell);
 	else if (!ft_strcmp(builtins, "unset"))
