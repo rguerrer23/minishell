@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/18 19:14:09 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/19 15:33:57 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,9 @@ int	main(int argc, char **argv, char **envp)
 			add_history(line);
 			shell.env = envp;
 			init_prompt(&shell, &cmd, envp);
+			//ft_printf("- (main.c) g_error = %i\n", g_error);
 			execute(&shell, &cmd);
+			//ft_printf("- (main.c) cmd.g_status = %i\n", cmd.g_status);
 		}
 		free(line);
 	}

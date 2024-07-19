@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:46:21 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/13 17:37:02 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/19 17:12:40 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ char *process_dq(char *prompt, int *pos)
 	char	*aux;
 	int		aux_pos;
 	int		len;
-	
 
 	len = ft_substrlen(prompt, *pos + 1, '\"');
 	aux = ft_calloc(len + 2, sizeof(char));
