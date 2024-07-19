@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/18 19:05:55 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/19 18:24:05 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ typedef struct s_shell
 	char	*parsed_prompt; // jmartos-
 	char	**env;
 	pid_t	pid;
+	int		exit;
 }			t_shell;
 
 /*
@@ -154,11 +155,11 @@ void		if_signal(void);
 int			ft_cd(char *path);
 int			ft_echo(char **args);
 void		ft_env(t_shell *shell);
-void		ft_exit(t_shell *shell, int status);
+void		ft_exit(char **cmd, t_shell *shell, t_cmd *cmds);
 void		ft_export(char *name_var, char *value_var, t_shell *shell);
 int			ft_pwd(void);
 int			ft_unset(char *name_var, t_shell *shell);
-int			execute_builtin(char **full_cmd, t_shell *shell);
+int			execute_builtin(char **full_cmd, t_shell *shell, t_cmd *cmds);
 int			is_builtin(char *cmd);
 int			execute_ins(t_shell *shell, t_cmd *cmds, char **cmd);
 int			has_pipe(char **cmd);

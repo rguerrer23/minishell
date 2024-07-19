@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 11:37:06 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/18 19:12:06 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/19 18:30:14 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,8 @@ void	exec_choose(t_shell *shell, t_cmd *cmds, char **cmd)
 	cmds->g_status = 0;
 
 	exclude_redirections(cmd);
-	if (cmd && strcmp(cmd[0], "exit") == 0)
-		ft_exit(shell, 1);
 	if (cmd && is_builtin(cmd[0]) == 1)
-		cmds->g_status = execute_builtin(cmd, shell);
+		cmds->g_status = execute_builtin(cmd, shell, cmds);
 	else if (cmd)
 		cmds->g_status = execute_ins(shell, cmds, cmd);
 	if (cmds->pin > 0)
@@ -116,7 +114,6 @@ void execute(t_shell *shell, t_cmd *cmds)
 					close(prev_fd);
 				}
 				exec_choose(shell, cmds, cmd);
-				exit(cmds->g_status);
 			}
 			else
 			{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 19:30:25 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/19 16:02:37 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/19 17:51:34 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ char *replace_value_var(t_cmd *cmd, t_var **env_list, char *str)
 	varname = find_varname(str); // $VAR
 	while (varname)
 	{
-		ft_printf("TENEMOS VARIABLE\n");
 		start = ft_strnstr(str, varname, ft_strlen(str)); // find where the var starts: "hello $USER test" -> "$USER test"
 		if (start)
 			end = start + ft_strlen(varname); // find where the var ends: "$USER test" -> "USER test"
@@ -102,7 +101,6 @@ char *replace_value_var(t_cmd *cmd, t_var **env_list, char *str)
 			return (NULL);										// Panic, we should never reach this point
 		if (ft_strlen(varname) == 2 && ft_strcmp(varname, "$?") == 0)
 		{
-			ft_printf("ENTIENDE QUE ES UN $?\n");
 			ft_printf("%i\n",cmd->g_status);
 			tmp1 = implement_dolar_question(str, start, end, cmd->g_status);
 			ft_printf("%s\n",tmp1);

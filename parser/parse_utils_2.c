@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 19:05:40 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/19 17:40:43 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/19 17:50:36 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ char	*process_char(char *prompt, int *pos)
 	aux = ft_calloc(w_len + 2, sizeof(char));
 	while (prompt[*pos] && prompt[*pos] != ' ' && prompt[*pos] != '\'')
 	{
-		printf("pos = %c\n", prompt[*pos]);
 		if (prompt[*pos] == '\"')
 		{
 			if (prompt[(*pos) + 1] == '\"')
