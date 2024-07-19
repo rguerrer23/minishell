@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 19:30:25 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/19 20:24:57 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/19 21:00:23 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,36 +128,25 @@ void expand_env_var(t_cmd *cmd, char **envp)
 {
 	t_var **list_var;
 	int i;
-	//char *key;
+	char *key;
 	char *status;
 
 	i = 0;
 	list_var = parse_envp(envp); // INICIALIZAMOS VARIABLES DE ENTORNO
 	status = ft_itoa(cmd->g_status);
-	printf("cmd: %s\n", cmd->full_cmd[0]);
-	printf("cmd: %s\n", cmd->full_cmd[1]);
-	printf("cmd: %s\n", cmd->full_cmd[2]);
 	
 	while (cmd->full_cmd[i])
 	{
-		if (ft_strcmp(cmd->full_cmd[i], "$?"))
-			ft_strcpy(cmd->full_cmd[i], status);
-		/*else if (cmd->full_cmd[i][0] == '$')
+		if (ft_strcmp(cmd->full_cmd[i], "$?") == 0)
+			cmd->full_cmd[i] = ft_strdup(status);
+		else if (cmd->full_cmd[i][0] == '$')
 		{
 			key = cmd->full_cmd[i];
 			cmd->full_cmd[i] = get_var(list_var, key + 1); // SOBREESCRIBIENDO!
 			free(key);
 		}
-		*/
-		else if (cmd->full_cmd[i][0] == '"')
-		{
-			if (ft_strcmp(cmd->full_cmd[i], "$?"))
-				printf("%i", cmd->g_status); // CAMBIARLO Y PASARSSEL A RICARDO!!!
-			cmd->full_cmd[i] = replace_value_var(list_var, cmd->full_cmd[i]); // SOBREESCRIBIENDO!
-		}
+		else if (ft_strchr(cmd->full_cmd[i], '\"'))
+			cmd->full_cmd[i] = replace_value_var(list_var, cmd->full_cmd[i]);
 		i++;
 	}
-	printf("cmd: %s\n", cmd->full_cmd[0]);
-	printf("cmd: %s\n", cmd->full_cmd[1]);
-	printf("cmd: %s\n", cmd->full_cmd[2]);
 }

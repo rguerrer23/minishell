@@ -71,8 +71,8 @@ INDICE DE "MINISHELL"
     - BUILTINS
 *********************************************************************************
 
-1- echo hola""mundo -> jmartos (pendiente)
-2- codigo de salido ($?) -> jmartos (pendiente)
+1- echo hola""mundo -> jmartos (OK)
+2- codigo de salido ($?) -> jmartos (OK)
 3- heredoc revisar -> rguerrer (pendiente)
-4- echo '$PWD' -> jmartos (pendiente)
+4- echo '$PWD' -> jmartos (OK)
 5- error cuando hay dos o mas | entre comillas -> jmartos

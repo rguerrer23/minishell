@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:13:05 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/19 15:35:00 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/19 21:00:05 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	remove_dquotes(char *str)
 	int	len;
 
 	len = strlen(str);
-	if (len > 1 && str[0] == '"' && str[len - 1] == '"')
+	if (len > 1 && ((str[0] == '"' && str[len - 1] == '"') || (str[0] == '\'' && str[len - 1] == '\'')))
 	{
 		// Mueve todo a la izquierda para sobrescribir la primera comilla.
 		ft_memmove(str, str + 1, len - 2);

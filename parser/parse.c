@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:59:05 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/19 18:09:56 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/19 20:44:50 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ char	**super_split(char *prompt)
 			pos++;
 		//if (prompt[pos] == '\"')
 			//aux = process_dq(prompt, &pos);
-		if (prompt[pos] == '\'')
-			aux = process_sq(prompt, &pos);
-		else if (prompt[pos] == '|')
+		//if (prompt[pos] == '\'')
+			//aux = process_sq(prompt, &pos);
+		if (prompt[pos] == '|')
 			aux = process_pipe(prompt, &pos);
 		else if (prompt[pos] == '<')
 			aux = process_red1(prompt, &pos);

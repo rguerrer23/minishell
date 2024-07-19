@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 19:05:40 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/19 19:17:04 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/19 20:53:07 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ char    *process_char(char *prompt, int *pos)
         if (prompt[*pos] == '\'' || prompt[*pos] == '\"')
         {
             quote = prompt[*pos];
+            aux[w_pos] = prompt[*pos];
+            w_pos++;
             (*pos)++;
             while (prompt[*pos] && prompt[*pos] != quote)
             {
@@ -57,8 +59,6 @@ char    *process_char(char *prompt, int *pos)
                 (*pos)++;
                 w_pos++;
             }
-            if (prompt[*pos] == quote)
-                (*pos)++;
         }
         else
         {
