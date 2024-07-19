@@ -6,7 +6,7 @@ CFLAGS		= -Wall -Wextra -Werror
 
 INC			= -I.
 
-SRC			=	src/main.c \
+SRC			=	main.c \
 				parser/init.c \
 				parser/command.c \
 				parser/quotes.c \

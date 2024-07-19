@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 19:30:25 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/19 17:51:34 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/19 20:24:57 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,7 @@ char *find_varname(char *str)
     return NULL;
 }
 
-
-
-char *replace_value_var(t_cmd *cmd, t_var **env_list, char *str)
+char *replace_value_var(t_var **env_list, char *str)
 {
 	char *varname;
 	char *start;
@@ -99,20 +97,11 @@ char *replace_value_var(t_cmd *cmd, t_var **env_list, char *str)
 			end = start + ft_strlen(varname); // find where the var ends: "$USER test" -> "USER test"
 		else
 			return (NULL);										// Panic, we should never reach this point
-		if (ft_strlen(varname) == 2 && ft_strcmp(varname, "$?") == 0)
-		{
-			ft_printf("%i\n",cmd->g_status);
-			tmp1 = implement_dolar_question(str, start, end, cmd->g_status);
-			ft_printf("%s\n",tmp1);
-        }
-		else
-		{
-			tmp2 = ft_strndup(str, start - str);						// left side of the var: "hello $USER test" -> "hello "
-			tmp1 = ft_strjoin(tmp2, get_var(env_list, varname + 1)); // "hello " + "user" -> "hello user"
-			free(tmp2);
-			tmp2 = ft_strjoin(tmp1, end); // "hello user" + " test" -> "hello user test"
-			free(tmp1);
-		}
+		tmp2 = ft_strndup(str, start - str);						// left side of the var: "hello $USER test" -> "hello "
+		tmp1 = ft_strjoin(tmp2, get_var(env_list, varname + 1)); // "hello " + "user" -> "hello user"
+		free(tmp2);
+		tmp2 = ft_strjoin(tmp1, end); // "hello user" + " test" -> "hello user test"
+		free(tmp1);
         free(str);
         str = tmp2; // Actualizar la cadena original con la nueva cadena
         free(varname); // Liberar la memoria asignada a varname
@@ -122,25 +111,53 @@ char *replace_value_var(t_cmd *cmd, t_var **env_list, char *str)
 	return (str);
 }
 
+void ft_strcpy(char *dst, char *org)
+{
+	int x;
+
+	x = 0;
+	while (org[x] != '\0')
+	{
+		dst[x] = org[x];
+		x++;
+	}
+	dst[x] = '\0';
+}
+
 void expand_env_var(t_cmd *cmd, char **envp)
 {
 	t_var **list_var;
 	int i;
-	char *key;
+	//char *key;
+	char *status;
 
 	i = 0;
-	list_var = parse_envp(envp); // VARIABLES DE ENTORNO
+	list_var = parse_envp(envp); // INICIALIZAMOS VARIABLES DE ENTORNO
+	status = ft_itoa(cmd->g_status);
+	printf("cmd: %s\n", cmd->full_cmd[0]);
+	printf("cmd: %s\n", cmd->full_cmd[1]);
+	printf("cmd: %s\n", cmd->full_cmd[2]);
+	
 	while (cmd->full_cmd[i])
 	{
-		if (cmd->full_cmd[i][0] == '$')
+		if (ft_strcmp(cmd->full_cmd[i], "$?"))
+			ft_strcpy(cmd->full_cmd[i], status);
+		/*else if (cmd->full_cmd[i][0] == '$')
 		{
 			key = cmd->full_cmd[i];
 			cmd->full_cmd[i] = get_var(list_var, key + 1); // SOBREESCRIBIENDO!
-			//ft_printf("- (env_var.c) cmd->full_cmd[i] = %s\n", cmd->full_cmd[i]);
 			free(key);
 		}
+		*/
 		else if (cmd->full_cmd[i][0] == '"')
-			cmd->full_cmd[i] = replace_value_var(cmd, list_var, cmd->full_cmd[i]); // SOBREESCRIBIENDO!
+		{
+			if (ft_strcmp(cmd->full_cmd[i], "$?"))
+				printf("%i", cmd->g_status); // CAMBIARLO Y PASARSSEL A RICARDO!!!
+			cmd->full_cmd[i] = replace_value_var(list_var, cmd->full_cmd[i]); // SOBREESCRIBIENDO!
+		}
 		i++;
 	}
+	printf("cmd: %s\n", cmd->full_cmd[0]);
+	printf("cmd: %s\n", cmd->full_cmd[1]);
+	printf("cmd: %s\n", cmd->full_cmd[2]);
 }
