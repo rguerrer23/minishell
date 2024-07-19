@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/19 18:24:05 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/19 19:55:22 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int			main(int argc, char **argv __attribute__((unused)), char **envp);
 /*******************************/
 /* init.c */
 void		init_pipe_red(t_pipe_red *value);
-void		init_prompt(t_shell *shell, t_cmd *cmd, char **envp);
+void		init_prompt(t_shell *shell, t_cmd *cmd);
 /* command.c */
 int			check_cmd(t_shell *shell);
 /* check_quotes.c */
@@ -141,7 +141,7 @@ char		*process_char(char *prompt, int *pos);
 t_var		**parse_envp(char **envp);
 char		*get_var(t_var **list_var, char *key);
 char		*find_varname(char *str);
-char		*replace_value_var(t_cmd *cmd, t_var **env_list, char *str);
+char		*replace_value_var(t_var **env_list, char *str);
 void		expand_env_var(t_cmd *cmd, char **envp);
 /* env_var_utils.c */
 void		remove_dquotes(char *str);
