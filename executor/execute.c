@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 11:37:06 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/19 18:30:14 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/19 18:43:10 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,26 +105,12 @@ void execute(t_shell *shell, t_cmd *cmds)
 			apply_pipe(shell, cmds, cmd, &prev_fd);
 		else
 		{
-			pid_t pid = fork();
-			if (pid == 0)
+			if (prev_fd != -1)
 			{
-				if (prev_fd != -1)
-				{
-					dup2(prev_fd, STDIN_FILENO);
-					close(prev_fd);
-				}
-				exec_choose(shell, cmds, cmd);
+				dup2(prev_fd, STDIN_FILENO);
+				close(prev_fd);
 			}
-			else
-			{
-				if (prev_fd != -1)
-					close(prev_fd);
-				waitpid(pid, &cmds->g_status, 0);
-				if (WIFEXITED(cmds->g_status))
-					cmds->g_status = WEXITSTATUS(cmds->g_status);
-				else
-					cmds->g_status = 1;
-			}
+			exec_choose(shell, cmds, cmd);
 		}
 		ft_strd_free(cmd);
 		if (cmds->full_cmd[i] != NULL)

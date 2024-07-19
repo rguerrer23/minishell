@@ -76,4 +76,3 @@ INDICE DE "MINISHELL"
 3- heredoc revisar -> rguerrer (pendiente)
 4- echo '$PWD' -> jmartos (pendiente)
 5- error cuando hay dos o mas | entre comillas -> jmartos
-6- modificar funcion exit -> rguerrer
