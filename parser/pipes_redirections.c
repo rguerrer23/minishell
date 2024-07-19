@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 21:34:18 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/04 22:11:38 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/19 22:20:57 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,10 @@ int	validating_pipes_reds(char *prompt)
 				|| (!check_quotes(prompt[pos], NO_QUOTE) && !check_first_pipe(prompt)))
 				return (0);
 			else
+			{
 				set_pipe_red(&value, 1);
+				value.pipe = 0; //SOLUCION TEMPORAL NO 100% OPERATIVA!!!!!
+			}
 		}
 		else if (prompt[pos] == '<' || prompt[pos] == '>')
 		{
