@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_ins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:43:22 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/18 19:12:39 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/19 16:08:17 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,25 +58,9 @@ char	*get_cmd_path(char *cmd, char *bin)
 
 int	exc(char *path, char **cmd, t_cmd *cmds, t_shell *shell)
 {
-	int status;
-
-	status = 0;
-	shell->pid = fork();
-	if (shell->pid == 0)
-	{
-		if (ft_strchr(path, '/') != NULL)
-			execve(path, cmd, shell->env);
-		status = error_msg(path);
-		exit(status);
-	}
-	else
-	{
-		waitpid(shell->pid, &status, 0);
-		if (WIFEXITED(status))
-			cmds->g_status = WEXITSTATUS(status);
-		else
-			cmds->g_status = 1;
-	}
+	if (ft_strchr(path, '/') != NULL)
+		execve(path, cmd, shell->env);
+	cmds->g_status = error_msg(path);
 	return (cmds->g_status);
 }
 
