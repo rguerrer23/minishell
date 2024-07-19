@@ -6,11 +6,11 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/19 20:27:57 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/19 20:31:40 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "inc/minishell.h"
 
 int g_error = 0;
 
@@ -51,7 +51,7 @@ int	main(int argc, char **argv, char **envp)
 			shell.prompt = line;
 			add_history(line);
 			shell.env = envp;
-			init_prompt(&shell, &cmd, envp);
+			init_prompt(&shell, &cmd);
 			//ft_printf("- (main.c) g_error = %i\n", g_error);
 			execute(&shell, &cmd);
 			//ft_printf("- (main.c) cmd.g_status = %i\n", cmd.g_status);
