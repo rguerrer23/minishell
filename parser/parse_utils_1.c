@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:46:21 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/19 18:44:00 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/20 20:44:29 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,29 +17,22 @@
 */
 char *process_dq(char *prompt, int *pos)
 {
-	char	*word;
-	char	*aux;
-	int		aux_pos;
-	int		len;
+    int w_pos = 0;
+    char *aux = ft_calloc(ft_strlen(prompt) - *pos + 1, sizeof(char));
 
-	len = ft_substrlen(prompt, *pos + 1, '\"');
-	aux = ft_calloc(len + 2, sizeof(char));
-	aux_pos = 1;
-	(*pos)++;
-	aux[0] = '\"';
-	while (prompt[*pos] != '\"')
-	{
-		aux[aux_pos] = prompt[*pos];
-		if (prompt[*pos] == '\0')
-			return (aux);
-		(*pos)++;
-		aux_pos++;
-	}
-	aux[aux_pos] = '\"';
-	(*pos)++;
-	word = ft_strdup(aux);
-	free(aux);
-	return (word);
+    (*pos)++; // Saltar la comilla inicial
+    while (prompt[*pos] && prompt[*pos] != '\"')
+    {
+        aux[w_pos++] = prompt[*pos];
+        (*pos)++;
+    }
+    if (prompt[*pos] == '\"')
+    {
+        (*pos)++; // Saltar la comilla de cierre
+    }
+    char *word = ft_strdup(aux);
+    free(aux);
+    return word;
 }
 
 /*
@@ -48,27 +41,25 @@ char *process_dq(char *prompt, int *pos)
 */
 char *process_sq(char *prompt, int *pos)
 {
-	char	*word;
-	char	*aux;
-	int		aux_pos;
-	int		len;
+    int w_pos = 0;
+    char *aux = ft_calloc(ft_strlen(prompt) - *pos + 1, sizeof(char));
 
-	len = ft_substrlen(prompt, *pos + 1, '\'');
-	aux = ft_calloc(len + 1, sizeof(char)); // Ajustar el tamaño de aux
-	aux_pos = 0;
-	(*pos)++;
-	while (prompt[*pos] != '\'' && prompt[*pos] != '\0')
-	{
-		aux[aux_pos] = prompt[*pos];
-		(*pos)++;
-		aux_pos++;
-	}
-	if (prompt[*pos] == '\'')
-		(*pos)++; // Saltar la comilla de cierre si existe
-	word = ft_strdup(aux);
-	free(aux);
-	return (word);
+    (*pos)++; // Saltar la comilla inicial
+    while (prompt[*pos] && prompt[*pos] != '\'')
+    {
+		
+        aux[w_pos++] = prompt[*pos];
+        (*pos)++;
+    }
+    if (prompt[*pos] == '\'')
+    {
+        (*pos)++; // Saltar la comilla de cierre
+    }
+    char *word = ft_strdup(aux);
+    free(aux);
+    return word;
 }
+
 
 /*
 	Extrae una parte de caracteres que sean pipes consecutivos.
