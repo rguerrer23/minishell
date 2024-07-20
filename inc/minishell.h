@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/20 19:05:58 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/20 21:17:02 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ void		ft_env(t_shell *shell);
 void		ft_exit(char **cmd, t_shell *shell, t_cmd *cmds);
 void		ft_export(char **full_cmd, t_shell *shell, t_cmd *cmds);
 int			ft_pwd(void);
-void		ft_unset(char **name_var, t_shell *shell);
+void		ft_unset(char **name_var, t_shell *shell, t_cmd *cmds);
 int			execute_builtin(char **full_cmd, t_shell *shell, t_cmd *cmds);
 int			is_builtin(char *cmd);
 int			execute_ins(t_shell *shell, t_cmd *cmds, char **cmd);

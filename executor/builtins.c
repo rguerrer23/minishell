@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:54:02 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/20 19:02:39 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/20 21:16:28 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	execute_builtin(char **full_cmd, t_shell *shell, t_cmd *cmds)
 	else if (!ft_strcmp(builtins, "export"))
 		ft_export(full_cmd, shell, cmds);
 	else if (!ft_strcmp(builtins, "unset"))
-		ft_unset(full_cmd, shell);
+		ft_unset(full_cmd, shell, cmds);
 	else if (!ft_strcmp(builtins, "pwd"))
 		ft_pwd();
 	return (cmds->g_status);
