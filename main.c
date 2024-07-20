@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/19 20:31:40 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/20 18:16:53 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	main(int argc, char **argv, char **envp)
 	}
 	cmd.g_status = 0;
 	shell.exit = 0;
+	shell.env = envp;
 	while (shell.exit == 0)
 	{
 		if_signal();
@@ -50,10 +51,11 @@ int	main(int argc, char **argv, char **envp)
 		{
 			shell.prompt = line;
 			add_history(line);
-			shell.env = envp;
 			init_prompt(&shell, &cmd);
 			//ft_printf("- (main.c) g_error = %i\n", g_error);
 			execute(&shell, &cmd);
+			
+			
 			//ft_printf("- (main.c) cmd.g_status = %i\n", cmd.g_status);
 		}
 		free(line);

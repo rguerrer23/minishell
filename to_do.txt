@@ -76,3 +76,11 @@ INDICE DE "MINISHELL"
 3- heredoc revisar -> rguerrer (pendiente)
 4- echo '$PWD' -> jmartos (OK)
 5- error cuando hay dos o mas | entre comillas -> jmartos
+6- corregir tab
+7- verificar exit argumentos
+8- revisar ctrl-c
+9- verificar export con espacios
+10- unset sin nada igual que terminal
+11- cat | cat | ls verificar
+...
+12- VALGRIND

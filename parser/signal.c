@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:32:27 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/16 21:45:42 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/20 19:59:28 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	handler(int sig)
 	{
 		rl_on_new_line();
 			// Nos movemos a una nueva línea.
-		rl_redisplay();
+		//rl_redisplay();
 			// Refrescamos el buffer actual de entrada.
 		ft_putstr_fd("  \n", 1);	
 			// Pasamos esto al fd 1.
@@ -29,7 +29,7 @@ void	handler(int sig)
 			// Borramos el buffer, incluido el ^C.
 		rl_on_new_line();
 			// Nos movemos de nuevo a una nueva línea.
-		rl_redisplay();
+		//rl_redisplay();
 			// Refrescamos de nuevo el buffer para recibir nuevos comandos.
 		g_error = 130;
 	}

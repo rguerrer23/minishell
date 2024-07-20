@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:54:02 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/20 17:41:02 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/20 19:02:39 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	execute_builtin(char **full_cmd, t_shell *shell, t_cmd *cmds)
 	if (!ft_strcmp(builtins, "echo"))
 		ft_echo(full_cmd);
 	else if (!ft_strcmp(builtins, "cd"))
-		ft_cd(full_cmd[1]);
+		ft_cd(full_cmd, cmds);
 	else if (!ft_strcmp(builtins, "env"))
 		ft_env(shell);
 	else if (!ft_strcmp(builtins, "exit"))
@@ -30,10 +30,10 @@ int	execute_builtin(char **full_cmd, t_shell *shell, t_cmd *cmds)
 	else if (!ft_strcmp(builtins, "export"))
 		ft_export(full_cmd, shell, cmds);
 	else if (!ft_strcmp(builtins, "unset"))
-		ft_unset(full_cmd[1], shell);
+		ft_unset(full_cmd, shell);
 	else if (!ft_strcmp(builtins, "pwd"))
 		ft_pwd();
-	return (0);
+	return (cmds->g_status);
 }
 
 /* Esta funcion comprueba si el comando es un builtin o no. */

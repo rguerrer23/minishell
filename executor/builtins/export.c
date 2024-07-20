@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 17:59:23 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/20 17:44:53 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/20 18:25:08 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ void	ft_new_env(char *name_var, char *value_var, t_shell *shell)
 	}
 	new_env[i] = new_entry;
 	new_env[i + 1] = NULL;
-	free(shell->env);
 	shell->env = new_env;
 }
 
@@ -91,12 +90,6 @@ void	ft_export(char **full_cmd, t_shell *shell, t_cmd *cmds)
 	char	*equal_sign;
 
 	i = 0;
-	if (full_cmd[1] && full_cmd[2])
-	{
-		ft_putstr_fd("export: too many arguments\n", STDERR_FILENO);
-		cmds->g_status = 1;
-		return;
-	}
 	if (!full_cmd[1])
 	{
 		while (shell->env[i])

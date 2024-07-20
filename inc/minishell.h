@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/20 17:47:56 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/20 19:05:58 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,13 +152,13 @@ void		if_signal(void);
 /*********************************/
 /* FUNCIONES RGUERRER (EXECUTOR) */
 /*********************************/
-int			ft_cd(char *path);
+void		ft_cd(char **full_cmd, t_cmd *cmd);
 int			ft_echo(char **args);
 void		ft_env(t_shell *shell);
 void		ft_exit(char **cmd, t_shell *shell, t_cmd *cmds);
 void		ft_export(char **full_cmd, t_shell *shell, t_cmd *cmds);
 int			ft_pwd(void);
-int			ft_unset(char *name_var, t_shell *shell);
+void		ft_unset(char **name_var, t_shell *shell);
 int			execute_builtin(char **full_cmd, t_shell *shell, t_cmd *cmds);
 int			is_builtin(char *cmd);
 int			execute_ins(t_shell *shell, t_cmd *cmds, char **cmd);
