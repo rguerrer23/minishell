@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 19:05:40 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/19 20:53:07 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/20 17:16:11 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,15 @@ int	strlen_end_word(char *prompt, int pos)
 /*
 	Extrae una subcadena de caracteres "normales" consecutivos.
 */
-char    *process_char(char *prompt, int *pos)
+char *process_char(char *prompt, int *pos)
 {
-    int     w_len;
-    int     w_pos;
-    char    *aux;
-    char    *word;
-	char	quote;
+    int w_len;
+    int w_pos;
+    char *aux;
+    char *word;
+    char quote;
 
-    w_len = strlen_end_word(prompt, *pos);
+    w_len = ft_strlen(prompt) - *pos;
     w_pos = 0;
     aux = ft_calloc(w_len + 2, sizeof(char));
 
@@ -50,14 +50,16 @@ char    *process_char(char *prompt, int *pos)
         if (prompt[*pos] == '\'' || prompt[*pos] == '\"')
         {
             quote = prompt[*pos];
-            aux[w_pos] = prompt[*pos];
-            w_pos++;
             (*pos)++;
             while (prompt[*pos] && prompt[*pos] != quote)
             {
                 aux[w_pos] = prompt[*pos];
                 (*pos)++;
                 w_pos++;
+            }
+            if (prompt[*pos] == quote)
+            {
+                (*pos)++;
             }
         }
         else
@@ -69,6 +71,5 @@ char    *process_char(char *prompt, int *pos)
     }
     word = ft_strdup(aux);
     free(aux);
-    return (word);
+    return word;
 }
-

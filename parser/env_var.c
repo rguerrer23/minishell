@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 19:30:25 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/19 21:00:23 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/20 17:09:31 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-t_var **parse_envp(char **envp)
+t_var **init_envp(char **envp)
 {
 	t_var **list_var;
 	int c;
@@ -111,19 +111,6 @@ char *replace_value_var(t_var **env_list, char *str)
 	return (str);
 }
 
-void ft_strcpy(char *dst, char *org)
-{
-	int x;
-
-	x = 0;
-	while (org[x] != '\0')
-	{
-		dst[x] = org[x];
-		x++;
-	}
-	dst[x] = '\0';
-}
-
 void expand_env_var(t_cmd *cmd, char **envp)
 {
 	t_var **list_var;
@@ -132,13 +119,14 @@ void expand_env_var(t_cmd *cmd, char **envp)
 	char *status;
 
 	i = 0;
-	list_var = parse_envp(envp); // INICIALIZAMOS VARIABLES DE ENTORNO
+	list_var = init_envp(envp); // INICIALIZAMOS VARIABLES DE ENTORNO
 	status = ft_itoa(cmd->g_status);
-	
 	while (cmd->full_cmd[i])
 	{
-		if (ft_strcmp(cmd->full_cmd[i], "$?") == 0)
+		if ((ft_strcmp(cmd->full_cmd[i], "$?") == 0))
 			cmd->full_cmd[i] = ft_strdup(status);
+		else if (cmd->full_cmd[i][0] == '$' && !cmd->full_cmd[i][1])
+			cmd->full_cmd[i][0] = '$';
 		else if (cmd->full_cmd[i][0] == '$')
 		{
 			key = cmd->full_cmd[i];

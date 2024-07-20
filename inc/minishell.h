@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/19 19:55:22 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/20 17:05:33 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ char		*process_red2(char *prompt, int *pos);
 int			strlen_end_word(char *prompt, int pos);
 char		*process_char(char *prompt, int *pos);
 /* env_var.c */
-t_var		**parse_envp(char **envp);
+t_var		**init_envp(char **envp);
 char		*get_var(t_var **list_var, char *key);
 char		*find_varname(char *str);
 char		*replace_value_var(t_var **env_list, char *str);
