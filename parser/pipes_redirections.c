@@ -6,16 +6,16 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 21:34:18 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/19 22:20:57 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/20 13:21:44 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
 /* Comprobamos que no haya un pipe en el primer caracter valido. */
-int	check_first_pipe(char *prompt)
+int check_first_pipe(char *prompt)
 {
-	int	pos;
+	int pos;
 
 	pos = 0;
 	while (prompt[pos] == ' ' || prompt[pos] == '\t')
@@ -26,30 +26,30 @@ int	check_first_pipe(char *prompt)
 }
 
 /* Comprobamos que las combinaciones de pipes y redirecciones son correctas. */
-static int	check_mixes(char *prompt, int pos)
+static int check_mixes(char *prompt, int *pos)
 {
-	if (prompt[pos] == '<')
+	if (prompt[*pos] == '<')
 	{
-		if (prompt[pos + 1] == '<' || prompt[pos + 1] == '>')
-			pos += 2;
+		if (prompt[*pos + 1] == '<' || prompt[*pos + 1] == '>')
+			*pos += 2;
 		else
-			pos += 1;
+			*pos += 1;
 	}
-	else if (prompt[pos] == '>')
+	else if (prompt[*pos] == '>')
 	{
-		if (prompt[pos + 1] == '>')
-			pos += 2;
+		if (prompt[*pos + 1] == '>')
+			*pos += 2;
 		else
-			pos += 1;
+			*pos += 1;
 	}
-	while (prompt[pos] == ' ' || prompt[pos] == '\t')
-		pos += 1;
-	if (prompt[pos] == '<' || prompt[pos] == '>' || prompt[pos] == '|')
+	while (prompt[*pos] == ' ' || prompt[*pos] == '\t')
+		*pos += 1;
+	if (prompt[*pos] == '<' || prompt[*pos] == '>' || prompt[*pos] == '|')
 		return (0);
 	return (1);
 }
 
-static void	set_pipe_red(t_pipe_red *value, int flag)
+static void set_pipe_red(t_pipe_red *value, int flag)
 {
 	if (flag == 1)
 	{
@@ -68,9 +68,9 @@ static void	set_pipe_red(t_pipe_red *value, int flag)
 	}
 }
 /* Verificamos que el ultimo caracter valido no sea ni "|" ni "<" ni ">".  */
-static int	check_last_pipe_red(char *prompt)
+static int check_last_pipe_red(char *prompt)
 {
-	int	pos;
+	int pos;
 
 	if (ft_strlen(prompt) > 0)
 		pos = ft_strlen(prompt) - 1;
@@ -84,38 +84,40 @@ static int	check_last_pipe_red(char *prompt)
 }
 
 /* Validamos la posicion correcta de los pipes y las redirecciones. */
-int	validating_pipes_reds(char *prompt)
+int validating_pipes_reds(char *prompt)
 {
-	int			pos;
-	t_pipe_red	value;
+	int pos;
+	int quote_state;
+	t_pipe_red value;
 
 	pos = 0;
+	quote_state = NO_QUOTE;
 	init_pipe_red(&value);
 	while (prompt[pos])
 	{
-		if (prompt[pos] == '|')
+		quote_state = check_quotes(prompt[pos], quote_state);
+		if (quote_state == NO_QUOTE)
 		{
-			if (value.pipe == 1
-				|| (!check_quotes(prompt[pos], NO_QUOTE) && !check_first_pipe(prompt)))
-				return (0);
-			else
+			if (prompt[pos] == '|')
 			{
-				set_pipe_red(&value, 1);
-				value.pipe = 0; //SOLUCION TEMPORAL NO 100% OPERATIVA!!!!!
+				if (value.pipe == 1 || !check_first_pipe(prompt))
+					return 0;
+				else
+					set_pipe_red(&value, 1);
 			}
+			else if (prompt[pos] == '<' || prompt[pos] == '>')
+			{
+				if (value.red == 1 || !check_mixes(prompt, &pos))
+					return 0;
+				else
+					set_pipe_red(&value, 2);
+			}
+			else if (prompt[pos] != ' ' && prompt[pos] != '\t'
+				&& prompt[pos] != '|' && prompt[pos] != '<'
+				&& prompt[pos] != '>')
+				set_pipe_red(&value, 3);
 		}
-		else if (prompt[pos] == '<' || prompt[pos] == '>')
-		{
-			if (value.red == 1
-				&& (!check_quotes(prompt[pos], NO_QUOTE) && !check_mixes(prompt, pos)))
-				return (0);
-			else
-				set_pipe_red(&value, 2);
-		}
-		else if (prompt[pos] != ' ' && prompt[pos] != '\t'
-			&& prompt[pos] != '|' && prompt[pos] != '<' && prompt[pos] != '>')
-			set_pipe_red(&value, 3);
 		pos++;
 	}
-	return (check_last_pipe_red(prompt));
+	return check_last_pipe_red(prompt);
 }
