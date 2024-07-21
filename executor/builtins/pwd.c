@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 17:52:13 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/06/19 12:14:54 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/21 10:33:11 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /* Esta funcion imprime el directorio actual de trabajo. */
 
-int	ft_pwd(void)
+void	ft_pwd(void)
 {
 	char	*cwd;
 
@@ -22,5 +22,4 @@ int	ft_pwd(void)
 	ft_putstr_fd(cwd, STDOUT_FILENO);
 	ft_putstr_fd("\n", STDOUT_FILENO);
 	free(cwd);
-	return (EXIT_SUCCESS);
 }

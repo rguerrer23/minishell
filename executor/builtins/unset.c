@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 10:39:41 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/20 21:17:14 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/21 10:22:16 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	ft_unset(char **name_var, t_shell *shell, t_cmd *cmds)
+void	ft_unset(char **name_var, t_shell *shell)
 {
 	int		i;
 	int		len;
@@ -22,7 +22,7 @@ void	ft_unset(char **name_var, t_shell *shell, t_cmd *cmds)
 	if (!(name_var[1]))
 	{
 		ft_putstr_fd("unset: not enough arguments\n", STDERR_FILENO);
-		cmds->g_status = 1;
+		shell->g_status = 1;
 		return ;
 	}
 	while (shell->env[i] != NULL)

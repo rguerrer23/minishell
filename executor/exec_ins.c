@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_ins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:43:22 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/20 21:20:41 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/21 10:25:32 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*get_cmd_path(char *cmd, char *bin)
 	}
 }
 
-int	exc(char *path, char **cmd, t_cmd *cmds, t_shell *shell)
+int	exc(char *path, char **cmd, t_shell *shell)
 {
 	pid_t	pid;
 	int		status;
@@ -68,21 +68,21 @@ int	exc(char *path, char **cmd, t_cmd *cmds, t_shell *shell)
 	{
 		if (ft_strchr(path, '/') != NULL)
 			execve(path, cmd, shell->env);
-		cmds->g_status = error_msg(path);
-		exit(cmds->g_status);
+		shell->g_status = error_msg(path);
+		exit(shell->g_status);
 	}
 	else
 	{
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
-			cmds->g_status = WEXITSTATUS(status);
+			shell->g_status = WEXITSTATUS(status);
 		else
-			cmds->g_status = 1;
+			shell->g_status = 1;
 	}
-	return (cmds->g_status);
+	return (shell->g_status);
 }
 
-int	execute_ins(t_shell *shell, t_cmd *cmds, char **cmd)
+int	execute_ins(t_shell *shell, char **cmd)
 {
 	int		i;
 	char	**bin;
@@ -96,19 +96,19 @@ int	execute_ins(t_shell *shell, t_cmd *cmds, char **cmd)
 		i++;
 	}
 	if (shell->env[i] == NULL)
-		return (exc(cmd[0], cmd, cmds, shell));
+		return (exc(cmd[0], cmd, shell));
 	bin = ft_split(shell->env[i], ':');
 	if (!cmd[0] && !bin)
 		return (1);
 	i = 1;
-	cmds->cmd_path = get_cmd_path(cmd[0], bin[0] + 5);
-	while (cmd[0] && bin[i] && cmds->cmd_path == NULL)
-		cmds->cmd_path = get_cmd_path(cmd[0], bin[i++]);
-	if (cmds->cmd_path != NULL)
-		status = exc(cmds->cmd_path, cmd, cmds, shell);
+	shell->cmd_path = get_cmd_path(cmd[0], bin[0] + 5);
+	while (cmd[0] && bin[i] && shell->cmd_path == NULL)
+		shell->cmd_path = get_cmd_path(cmd[0], bin[i++]);
+	if (shell->cmd_path != NULL)
+		status = exc(shell->cmd_path, cmd, shell);
 	else
-		status = exc(cmd[0], cmd, cmds, shell);
+		status = exc(cmd[0], cmd, shell);
 	ft_strd_free(bin);
-	free(cmds->cmd_path);
+	free(shell->cmd_path);
 	return (status);
 }

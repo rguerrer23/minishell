@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 19:30:25 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/20 17:09:31 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/21 10:41:30 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ char *replace_value_var(t_var **env_list, char *str)
 	return (str);
 }
 
-void expand_env_var(t_cmd *cmd, char **envp)
+void expand_env_var(t_shell *shell, char **envp)
 {
 	t_var **list_var;
 	int i;
@@ -120,21 +120,21 @@ void expand_env_var(t_cmd *cmd, char **envp)
 
 	i = 0;
 	list_var = init_envp(envp); // INICIALIZAMOS VARIABLES DE ENTORNO
-	status = ft_itoa(cmd->g_status);
-	while (cmd->full_cmd[i])
+	status = ft_itoa(shell->g_status);
+	while (shell->full_cmd[i])
 	{
-		if ((ft_strcmp(cmd->full_cmd[i], "$?") == 0))
-			cmd->full_cmd[i] = ft_strdup(status);
-		else if (cmd->full_cmd[i][0] == '$' && !cmd->full_cmd[i][1])
-			cmd->full_cmd[i][0] = '$';
-		else if (cmd->full_cmd[i][0] == '$')
+		if ((ft_strcmp(shell->full_cmd[i], "$?") == 0))
+			shell->full_cmd[i] = ft_strdup(status);
+		else if (shell->full_cmd[i][0] == '$' && !shell->full_cmd[i][1])
+			shell->full_cmd[i][0] = '$';
+		else if (shell->full_cmd[i][0] == '$')
 		{
-			key = cmd->full_cmd[i];
-			cmd->full_cmd[i] = get_var(list_var, key + 1); // SOBREESCRIBIENDO!
+			key = shell->full_cmd[i];
+			shell->full_cmd[i] = get_var(list_var, key + 1); // SOBREESCRIBIENDO!
 			free(key);
 		}
-		else if (ft_strchr(cmd->full_cmd[i], '\"'))
-			cmd->full_cmd[i] = replace_value_var(list_var, cmd->full_cmd[i]);
+		else if (ft_strchr(shell->full_cmd[i], '\"'))
+			shell->full_cmd[i] = replace_value_var(list_var, shell->full_cmd[i]);
 		i++;
 	}
 }

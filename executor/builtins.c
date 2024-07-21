@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:54:02 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/20 21:16:28 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/21 10:46:33 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /* Esta funcion elige el builtin a ejecutar. */
 
-int	execute_builtin(char **full_cmd, t_shell *shell, t_cmd *cmds)
+void	execute_builtin(t_shell *shell, char **full_cmd)
 {
 	char	*builtins;
 
@@ -22,18 +22,17 @@ int	execute_builtin(char **full_cmd, t_shell *shell, t_cmd *cmds)
 	if (!ft_strcmp(builtins, "echo"))
 		ft_echo(full_cmd);
 	else if (!ft_strcmp(builtins, "cd"))
-		ft_cd(full_cmd, cmds);
+		ft_cd(full_cmd, shell);
 	else if (!ft_strcmp(builtins, "env"))
 		ft_env(shell);
 	else if (!ft_strcmp(builtins, "exit"))
-		ft_exit(full_cmd, shell, cmds);
+		ft_exit(full_cmd, shell);
 	else if (!ft_strcmp(builtins, "export"))
-		ft_export(full_cmd, shell, cmds);
+		ft_export(full_cmd, shell);
 	else if (!ft_strcmp(builtins, "unset"))
-		ft_unset(full_cmd, shell, cmds);
+		ft_unset(full_cmd, shell);
 	else if (!ft_strcmp(builtins, "pwd"))
 		ft_pwd();
-	return (cmds->g_status);
 }
 
 /* Esta funcion comprueba si el comando es un builtin o no. */

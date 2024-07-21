@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:52:32 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/19 16:20:59 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/21 10:31:55 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /* Esta funcion imprime en la salida estandar los argumentos que recibe. */
 
-int	ft_echo(char **args)
+void	ft_echo(char **args)
 {
 	int	i;
 	int	newline;
@@ -35,5 +35,4 @@ int	ft_echo(char **args)
 	}
 	if (newline)
 		ft_putstr_fd("\n", STDOUT_FILENO);
-	return (EXIT_SUCCESS);
 }

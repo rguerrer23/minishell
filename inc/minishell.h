@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/20 21:17:02 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/21 10:44:03 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,15 @@ typedef struct s_shell
 	char	*prompt;        // jmartos-
 	char	*parsed_prompt; // jmartos-
 	char	**env;
+	char	**full_cmd; // jmartos-
+	char	*cmd_path;
+	int		g_status;
+	int		infile;
+	int		fdin;
+	int		pin;
+	int		outfile;
+	int		fdout;
+	int		pout;
 	pid_t	pid;
 	int		exit;
 }			t_shell;
@@ -95,29 +104,17 @@ typedef struct s_shell
 	- inline		= (STDIN 0) file descriptor a leer para ejecutar un comando.
 	- outline		= (STDOUT 1)file descriptor a escribir para ejecutar un comando.
 */
-typedef struct s_cmd
-{
-	char	**full_cmd; // jmartos-
-	char	*cmd_path;
-	int		g_status;
-	int		infile;
-	int		fdin;
-	int		pin;
-	int		outfile;
-	int		fdout;
-	int		pout;
-}			t_cmd;
 
 /*********************/
 /* FUNCIONES COMUNES */
 /*********************/
-int			main(int argc, char **argv __attribute__((unused)), char **envp);
+int			main(int argc, char **argv, char **envp);
 /*******************************/
 /* FUNCIONES JMARTOS- (PARSER) */
 /*******************************/
 /* init.c */
 void		init_pipe_red(t_pipe_red *value);
-void		init_prompt(t_shell *shell, t_cmd *cmd);
+void		init_prompt(t_shell *shell);
 /* command.c */
 int			check_cmd(t_shell *shell);
 /* check_quotes.c */
@@ -142,7 +139,7 @@ t_var		**init_envp(char **envp);
 char		*get_var(t_var **list_var, char *key);
 char		*find_varname(char *str);
 char		*replace_value_var(t_var **env_list, char *str);
-void		expand_env_var(t_cmd *cmd, char **envp);
+void		expand_env_var(t_shell *shell, char **envp);
 /* env_var_utils.c */
 void		remove_dquotes(char *str);
 char 		*implement_dolar_question(char *str, char *start, char *end, int cmd_exit_status);
@@ -152,22 +149,25 @@ void		if_signal(void);
 /*********************************/
 /* FUNCIONES RGUERRER (EXECUTOR) */
 /*********************************/
-void		ft_cd(char **full_cmd, t_cmd *cmd);
-int			ft_echo(char **args);
+/* builtins */
+void		ft_cd(char **full_cmd, t_shell *shell);
+void		ft_echo(char **args);
 void		ft_env(t_shell *shell);
-void		ft_exit(char **cmd, t_shell *shell, t_cmd *cmds);
-void		ft_export(char **full_cmd, t_shell *shell, t_cmd *cmds);
-int			ft_pwd(void);
-void		ft_unset(char **name_var, t_shell *shell, t_cmd *cmds);
-int			execute_builtin(char **full_cmd, t_shell *shell, t_cmd *cmds);
+void		ft_exit(char **cmd, t_shell *shell);
+void		ft_export(char **full_cmd, t_shell *shell);
+void		ft_pwd(void);
+void		ft_unset(char **name_var, t_shell *shell);
 int			is_builtin(char *cmd);
-int			execute_ins(t_shell *shell, t_cmd *cmds, char **cmd);
-int			has_pipe(char **cmd);
-void		exec_choose(t_shell *shell, t_cmd *cmds, char **cmd);
-void		apply_outfile(char **name, t_cmd *cmds, int i);
-void		apply_infile(char **name, t_cmd *cmds, int i);
-void		apply_pipe(t_shell *shell, t_cmd *cmds, char **cmd, int *prev_fd);
-void		ft_close_resets(t_cmd *cmds, t_shell *shell);
-void		execute(t_shell *shell, t_cmd *cmds);
+void		execute_builtin(t_shell *shell, char **full_cmd);
+/* executor */
+int			execute_ins(t_shell *shell, char **cmd);
+void		exec_choose(t_shell *shell, char **cmd);
+void		execute(t_shell *shell);
+/*redirection*/
+void		apply_outfile(char **name, t_shell *shell, int i);
+void		apply_infile(char **name, t_shell *shell, int i);
+void		apply_pipe(t_shell *shell, char **cmd, int *prev_fd);
+/*clean*/
+void		ft_close_resets(t_shell *shell);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 17:59:23 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/20 18:25:08 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/21 10:21:46 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	ft_new_env(char *name_var, char *value_var, t_shell *shell)
 	shell->env = new_env;
 }
 
-void	ft_export(char **full_cmd, t_shell *shell, t_cmd *cmds)
+void	ft_export(char **full_cmd, t_shell *shell)
 {
 	int		i;
 	int		bad_env;
@@ -108,7 +108,7 @@ void	ft_export(char **full_cmd, t_shell *shell, t_cmd *cmds)
 		if(bad_env <= 0)
 		{
 			ft_env_error(bad_env, full_cmd[1]);
-			cmds->g_status = 1;
+			shell->g_status = 1;
 			return;
 		}
 		equal_sign = ft_strchr(full_cmd[1], '=');
@@ -133,12 +133,12 @@ void	ft_export(char **full_cmd, t_shell *shell, t_cmd *cmds)
 				shell->env[i] = ft_strjoin(name_var, "=");
 				if (value_var)
 					shell->env[i] = ft_strjoin(shell->env[i], value_var);
-				cmds->g_status = 0;
+				shell->g_status = 0;
 				return;
 			}
 			i++;
 		}
 		ft_new_env(name_var, value_var, shell);
-		cmds->g_status = 0;
+		shell->g_status = 0;
 	}
 }
