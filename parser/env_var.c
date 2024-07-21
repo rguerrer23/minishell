@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 19:30:25 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/21 22:04:21 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/22 00:32:33 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,11 @@ char *replace_value_var(t_var **list_var, char *str, t_shell *shell)
     while ((dollar = ft_strchr(str, '$')))
     {
         // Copiamos la parte antes del $
-        result = ft_strjoin(result, ft_strndup(str, dollar - str));
-
+        result = ft_insert_str(result, ft_strndup(str, dollar - str), ft_strlen(result));
         if (*(dollar + 1) == '?')
         {
             // Manejo de $?.
-            result = ft_strjoin(result, ft_itoa(shell->g_status));
+            result = ft_insert_str(result, ft_itoa(shell->g_status), ft_strlen(result));
             str = dollar + 2; // Avanzamos más allá de $?.
         }
         else
@@ -72,17 +71,13 @@ char *replace_value_var(t_var **list_var, char *str, t_shell *shell)
             
             char *key = ft_strndup(dollar + 1, end - dollar - 1);
             char *value = get_var(list_var, key);
-            
-            result = ft_strjoin(result, value);
+            result = ft_insert_str(result, value, ft_strlen(result));
             free(key);
-            
             str = end;
         }
     }
-
     // Añadimos cualquier texto restante.
-    result = ft_strjoin(result, ft_strdup(str));
-    
+    result = ft_insert_str(result, str, ft_strlen(result));
     return result;
 }
 
@@ -91,6 +86,7 @@ void expand_env_var(t_shell *shell, char **envp)
 {
     t_var **list_var;
     int i;
+    int j;
     char *key;
     char *status;
 
@@ -99,20 +95,30 @@ void expand_env_var(t_shell *shell, char **envp)
     status = ft_itoa(shell->g_status);
     while (shell->full_cmd[i])
     {
-        if ((ft_strcmp(shell->full_cmd[i], "$?") == 0))
-            shell->full_cmd[i] = ft_strdup(status);
-        else if (shell->full_cmd[i][0] == '$' && !shell->full_cmd[i][1])
-            shell->full_cmd[i][0] = '$';
-        else if (shell->full_cmd[i][0] == '$')
+        j = 0;
+        while (shell->full_cmd[i][j])
         {
-            key = shell->full_cmd[i];
-            shell->full_cmd[i] = get_var(list_var, key + 1);
-            free(key);
+            if (shell->full_cmd[i][j] == '$' && !shell->full_cmd[i][j + 1])
+                shell->full_cmd[i][j] = '$';
+            else if (shell->full_cmd[i][j] == '$')
+            {
+                if (shell->full_cmd[i][j + 1] == '?')
+                {   
+                    shell->full_cmd[i] = ft_insert_str(shell->full_cmd[i], status, j);
+                    //shell->full_cmd[i][j] = ft_strdup(status);
+                    j++;
+                }
+                else
+                {
+                    key = shell->full_cmd[i];
+                    shell->full_cmd[i] = get_var(list_var, key + 1);
+                    free(key);
+                }
+            }
+            j++;
         }
-        else if (strchr(shell->full_cmd[i], '\"'))
-        {
+        if (strchr(shell->full_cmd[i], '\"'))
             shell->full_cmd[i] = replace_value_var(list_var, shell->full_cmd[i], shell);
-        }
         i++;
     }
     free(status);

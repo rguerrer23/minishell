@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:51:25 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/13 17:23:07 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/22 00:13:11 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,9 @@ char	**ft_strd_lastdel(char **str);
 int		ft_strcmp(const char *s1, const char *s2);
 // (minishell) Igual que strdup pero le especificamos los que queremos copiar.
 char	*ft_strndup(const char *s1, int n);
+// (minishell) Introducimos un string dentro de otro en la posicion indicada.
+char	*ft_insert_str(char *main, char *piece, size_t pos);
+// (minishell) Borramos de un string desde start hasta finish.
+char	*ft_delete_str(char *main, size_t start, size_t finish);
 
 #endif
