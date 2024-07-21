@@ -82,11 +82,5 @@ revisar redirecciones
 ...
 12- VALGRIND
 
-
-
-rguerrer
-1-Ajustar errores de bash
-2-Revisar cd -
 3-Revisar env args
-4-Revisar export
-5-Revisar unset
+

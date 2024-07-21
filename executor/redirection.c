@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 17:37:00 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/21 16:04:29 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/21 20:34:15 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	apply_outfile(char **name, t_shell *shell, int i)
 void	apply_infile(char **name, t_shell *shell, int i)
 {
 	if (shell->fdin > 2)
-		close(shell->infile);
+		close(shell->fdin);
 	shell->fdin = open(name[i + 1], O_RDONLY, S_IRWXU);
 	if (shell->fdin == -1)
 	{
@@ -50,9 +50,23 @@ void	apply_infile(char **name, t_shell *shell, int i)
 void	apply_pipe(t_shell *shell, char **cmd, int *prev_fd)
 {
 	int fd[2];
-	pipe(fd);
 
+	pipe(fd);
+	if (fd[0] == -1 || fd[1] == -1)
+	{
+		ft_putstr_fd("zsh: pipe failed\n", 2);
+		shell->exec_signal = 1;
+		shell->g_status = 1;
+		return ;
+	}
 	pid_t pid = fork();
+	if (pid == -1)
+	{
+		ft_putstr_fd("zsh: fork failed\n", 2);
+		shell->exec_signal = 1;
+		shell->g_status = 1;
+		return ;
+	}
 	if (pid == 0)
 	{
 		if (*prev_fd != -1)
