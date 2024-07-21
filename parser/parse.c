@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:59:05 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/21 14:06:45 by kevlar           ###   ########.fr       */
+/*   Updated: 2024/07/21 19:19:37 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,11 @@ char **super_split(char *prompt)
     {
         while (prompt[pos] == ' ')
             pos++;
-
-        if (prompt[pos] == '|')
+        if (prompt[pos] == '\"')
+            aux = process_dq(prompt, &pos);
+        else if (prompt[pos] == '\'')
+            aux = process_sq(prompt, &pos);
+        else if (prompt[pos] == '|')
             aux = process_pipe(prompt, &pos);
         else if (prompt[pos] == '<')
             aux = process_red1(prompt, &pos);
@@ -62,7 +65,6 @@ char **super_split(char *prompt)
             aux = process_red2(prompt, &pos);
         else
             aux = process_char(prompt, &pos);
-
         if (aux && *aux)
         {
             if (!new)
@@ -70,7 +72,7 @@ char **super_split(char *prompt)
             else
                 new = ft_strd_add(new, aux);
         }
-        //printf("aux = %s\n", aux);
+        printf("(split = %s)\n", aux);
         free(aux);
     }
     return new;
