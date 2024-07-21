@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/21 21:37:45 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/21 22:04:37 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,9 +138,10 @@ char		*process_char(char *prompt, int *pos);
 /* env_var.c */
 t_var		**init_envp(char **envp);
 char		*get_var(t_var **list_var, char *key);
-char		*find_varname(char *str);
+char *find_varname(char *str, int pos);
 char 		*replace_value_var(t_var **env_list, char *str, t_shell *shell);
 void		expand_env_var(t_shell *shell, char **envp);
+void    mini_expand_env_var(char *prompt, char **env, int *pos, t_shell *shell);
 /* env_var_utils.c */
 void		remove_dquotes(char *str);
 char 		*implement_dolar_question(char *str, char *start, char *end, int cmd_exit_status);

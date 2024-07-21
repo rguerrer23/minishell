@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 19:05:40 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/21 21:32:38 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/21 21:54:07 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,13 @@ char *process_dq(char *prompt, int *pos, t_shell *shell)
 {
     char *word;
     int w_pos = 0;
-    int n = 0;
     char *aux = ft_calloc(ft_strlen(prompt) - *pos + 1, sizeof(char));
 
     (*pos)++; // Saltar la comilla inicial
     while (prompt[*pos] && prompt[*pos] != '\"')
     {
-        if (prompt[*pos] != '$')
-        {
-            n = *pos;
-            expand_env_var(shell, shell->env, n);
-        }
+        if (prompt[*pos] == '$')
+            mini_expand_env_var(prompt, shell->env, pos, shell);
         else
         {        
             aux[w_pos++] = prompt[*pos];

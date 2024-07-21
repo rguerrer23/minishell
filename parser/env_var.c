@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 19:30:25 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/21 21:31:41 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/21 22:04:21 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,24 @@ char *get_var(t_var **list_var, char *key)
 	return (ft_strdup(""));
 }
 
-char *find_varname(char *str)
+char *find_varname(char *str, int pos)
 {
-    int i = 0;
+    char *key;
+    int i;
+    int j;
 
-    while (str[i])
-    {
-        if (str[i] == '$' && (str[i + 1] == '?' || ft_isalpha(str[i + 1]) || str[i + 1] == '_'))
-        {
-            int start = i;
-            i++;
-            while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
-                i++;
-            if (str[start + 1] == '?')
-                return ft_strndup(str + start, 2); // Devuelve "$?"
-            return ft_strndup(str + start, i - start); // Devuelve "$VAR"
-        }
+    i = pos;
+    while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
         i++;
+    key = ft_calloc(i - pos + 1, sizeof(char));
+    j = 0;
+    while (pos < i)
+    {
+        key[j] = str[pos];
+        pos++;
+        j++;
     }
-    return NULL;
+    return key;
 }
 
 // Sobreescribimos la variable de entonrno despues de un $.
@@ -88,7 +87,7 @@ char *replace_value_var(t_var **list_var, char *str, t_shell *shell)
 }
 
 // Expande las variables de entorno.
-void expand_env_var(t_shell *shell, char **envp, int pos)
+void expand_env_var(t_shell *shell, char **envp)
 {
     t_var **list_var;
     int i;
