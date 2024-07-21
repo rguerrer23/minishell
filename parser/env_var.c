@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 19:30:25 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/21 10:41:30 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/21 14:37:05 by kevlar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,60 +81,75 @@ char *find_varname(char *str)
     return NULL;
 }
 
-char *replace_value_var(t_var **env_list, char *str)
-{
-	char *varname;
-	char *start;
-	char *end;
-	char *tmp1;
-	char *tmp2;
+char *replace_value_var(t_var **env_list, char *str, t_shell *shell) {
+    char *start = str;
+    char *dollar;
+    char *result = ft_strdup("");
 
-	varname = find_varname(str); // $VAR
-	while (varname)
-	{
-		start = ft_strnstr(str, varname, ft_strlen(str)); // find where the var starts: "hello $USER test" -> "$USER test"
-		if (start)
-			end = start + ft_strlen(varname); // find where the var ends: "$USER test" -> "USER test"
-		else
-			return (NULL);										// Panic, we should never reach this point
-		tmp2 = ft_strndup(str, start - str);						// left side of the var: "hello $USER test" -> "hello "
-		tmp1 = ft_strjoin(tmp2, get_var(env_list, varname + 1)); // "hello " + "user" -> "hello user"
-		free(tmp2);
-		tmp2 = ft_strjoin(tmp1, end); // "hello user" + " test" -> "hello user test"
-		free(tmp1);
-        free(str);
-        str = tmp2; // Actualizar la cadena original con la nueva cadena
-        free(varname); // Liberar la memoria asignada a varname
-        varname = find_varname(str); // Buscar la siguiente variable
-	}
-	remove_dquotes(str);
-	return (str);
+    while ((dollar = ft_strchr(start, '$'))) {
+        char *end = dollar + 1;
+
+        // Copiamos la parte antes del $
+        char *before_dollar = ft_strndup(start, dollar - start);
+        char *new_result = ft_strjoin(result, before_dollar);
+        free(result);
+        free(before_dollar);
+        result = new_result;
+
+        if (*end == '?') {
+            // Manejo de $?
+            char *tmp = implement_dolar_question(str, dollar, end + 1, shell->g_status);
+            new_result = ft_strjoin(result, tmp);
+            free(result);
+            free(tmp);
+            result = new_result;
+            start = end + 1;
+        } else {
+            while (*end && (ft_isalnum(*end) || *end == '_')) {
+                end++;
+            }
+
+            char *key = ft_strndup(dollar + 1, end - dollar - 1);
+            char *value = get_var(env_list, key);
+
+            new_result = ft_strjoin(result, value);
+            free(result);
+            free(value);
+            result = new_result;
+            free(key);
+            start = end;
+        }
+    }
+
+    char *final_result = ft_strjoin(result, start);
+    free(result);
+    return final_result;
 }
 
-void expand_env_var(t_shell *shell, char **envp)
-{
-	t_var **list_var;
-	int i;
-	char *key;
-	char *status;
 
-	i = 0;
-	list_var = init_envp(envp); // INICIALIZAMOS VARIABLES DE ENTORNO
-	status = ft_itoa(shell->g_status);
-	while (shell->full_cmd[i])
-	{
-		if ((ft_strcmp(shell->full_cmd[i], "$?") == 0))
-			shell->full_cmd[i] = ft_strdup(status);
-		else if (shell->full_cmd[i][0] == '$' && !shell->full_cmd[i][1])
-			shell->full_cmd[i][0] = '$';
-		else if (shell->full_cmd[i][0] == '$')
-		{
-			key = shell->full_cmd[i];
-			shell->full_cmd[i] = get_var(list_var, key + 1); // SOBREESCRIBIENDO!
-			free(key);
-		}
-		else if (ft_strchr(shell->full_cmd[i], '\"'))
-			shell->full_cmd[i] = replace_value_var(list_var, shell->full_cmd[i]);
-		i++;
-	}
+
+void expand_env_var(t_shell *shell, char **envp) {
+    t_var **list_var;
+    int i;
+    char *key;
+    char *status;
+
+    i = 0;
+    list_var = init_envp(envp); // INICIALIZAMOS LAS KEY Y VALUE CON ENVP
+    status = ft_itoa(shell->g_status);
+    while (shell->full_cmd[i]) {
+        if ((ft_strcmp(shell->full_cmd[i], "$?") == 0))
+            shell->full_cmd[i] = ft_strdup(status);
+        else if (shell->full_cmd[i][0] == '$' && !shell->full_cmd[i][1])
+            shell->full_cmd[i][0] = '$';
+        else if (shell->full_cmd[i][0] == '$') {
+            key = shell->full_cmd[i];
+            shell->full_cmd[i] = get_var(list_var, key + 1); // SOBREESCRIBIENDO!
+            free(key);
+        } else if (strchr(shell->full_cmd[i], '\"')) {
+            shell->full_cmd[i] = replace_value_var(list_var, shell->full_cmd[i], shell);
+        }
+        i++;
+    }
+    free(status);
 }

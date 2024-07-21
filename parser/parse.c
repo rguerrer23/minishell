@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:59:05 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/20 19:21:15 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/21 14:06:45 by kevlar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+/*
+	Calcula la longuitud de una palabra dentro de prompt, empezando en pos y
+	terminando cuando encuentre un espacio, "|", "<" o ">".
+*/
+int	strlen_end_word(char *prompt, int pos)
+{
+	int	w_len;
+
+	w_len = 0;
+	while (prompt[pos] && prompt[pos] != ' '
+		&& prompt[pos] != '|' && prompt[pos] != '<' && prompt[pos] != '>')
+	{
+		w_len++;
+		pos++;
+	}
+	return (w_len);
+}
 
 /*
 	Separamos por los caracteres que estamos validando, teniendo en cuenta
@@ -52,6 +70,7 @@ char **super_split(char *prompt)
             else
                 new = ft_strd_add(new, aux);
         }
+        //printf("aux = %s\n", aux);
         free(aux);
     }
     return new;

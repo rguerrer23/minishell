@@ -3,65 +3,60 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 19:05:40 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/20 19:20:56 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/21 13:45:05 by kevlar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
 /*
-	Calcula la longuitud de una palabra dentro de prompt, empezando en pos y
-	terminando cuando encuentre un espacio, "|", "<" o ">".
+	Extrae la parte de un array que está encerrada entre comillas dobles.
 */
-int	strlen_end_word(char *prompt, int pos)
+char *process_dq(char *prompt, int *pos)
 {
-	int	w_len;
+    int w_pos = 0;
+    char *aux = ft_calloc(ft_strlen(prompt) - *pos + 1, sizeof(char));
 
-	w_len = 0;
-	while (prompt[pos] && prompt[pos] != ' '
-		&& prompt[pos] != '|' && prompt[pos] != '<' && prompt[pos] != '>')
-	{
-		w_len++;
-		pos++;
-	}
-	return (w_len);
+    // (*pos)++; // Saltar la comilla inicial
+    //while (prompt[*pos] && prompt[*pos] != '\"')
+    while (prompt[*pos])
+    {
+        aux[w_pos++] = prompt[*pos];
+        (*pos)++;
+    }
+    //if (prompt[*pos] == '\"')
+    //{
+    //    (*pos)++; // Saltar la comilla de cierre
+    //}
+    char *word = ft_strdup(aux);
+    free(aux);
+    return word;
 }
 
 /*
-	Extrae una subcadena de caracteres "normales" consecutivos.
+	Extrae la parte de un array que está encerrada entre comillas simples,
+	y ademas no las interpreta, ya que con las sq se imprime tal cual.
 */
-char *process_char(char *prompt, int *pos)
+char *process_sq(char *prompt, int *pos)
 {
-    int w_len = ft_strlen(prompt) - *pos;
     int w_pos = 0;
-    char *aux = ft_calloc(w_len + 2, sizeof(char));
+    char *aux = ft_calloc(ft_strlen(prompt) - *pos + 1, sizeof(char));
 
-    while (prompt[*pos] && prompt[*pos] != ' ' && prompt[*pos] != '|' && prompt[*pos] != '<' && prompt[*pos] != '>')
+    //(*pos)++; // Saltar la comilla inicial
+    //while (prompt[*pos] && prompt[*pos] != '\'')
+    while (prompt[*pos])
     {
-        if (prompt[*pos] == '\'')
-        {
-            char *sq_word = process_sq(prompt, pos);
-            strcat(aux, sq_word);
-            w_pos += ft_strlen(sq_word);
-            free(sq_word);
-        }
-        else if (prompt[*pos] == '\"')
-        {
-            char *dq_word = process_dq(prompt, pos);
-            strcat(aux, dq_word);
-            w_pos += ft_strlen(dq_word);
-            free(dq_word);
-        }
-        else
-        {
-            aux[w_pos++] = prompt[*pos];
-            (*pos)++;
-        }
+		
+        aux[w_pos++] = prompt[*pos];
+        (*pos)++;
     }
-    aux[w_pos] = '\0';
+    //if (prompt[*pos] == '\'')
+    //{
+    //    (*pos)++; // Saltar la comilla de cierre
+    //}
     char *word = ft_strdup(aux);
     free(aux);
     return word;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kevlar <kevlar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:32:27 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/20 19:59:28 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/21 12:45:19 by kevlar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,17 @@ void	handler(int sig)
 	{
 		rl_on_new_line();
 			// Nos movemos a una nueva línea.
-		//rl_redisplay();
+		rl_redisplay();
 			// Refrescamos el buffer actual de entrada.
-		ft_putstr_fd("  \n", 1);	
+		ft_putstr_fd("  ", 1);
+		ft_printf("\n");	
 			// Pasamos esto al fd 1.
-		rl_replace_line("  ", 0);	
+		rl_replace_line("", 0);	
 			// Borramos el buffer, incluido el ^C.
 		rl_on_new_line();
 			// Nos movemos de nuevo a una nueva línea.
-		//rl_redisplay();
-			// Refrescamos de nuevo el buffer para recibir nuevos comandos.
+		rl_redisplay();
+			// Redibuja la línea de entrada, para recibir nuevos comandos.
 		g_error = 130;
 	}
 	else if (sig == SIGQUIT)
