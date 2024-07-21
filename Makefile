@@ -2,7 +2,7 @@
 
 NAME		= minishell
 
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -g -Wall -Wextra -Werror
 
 INC			= -I.
 

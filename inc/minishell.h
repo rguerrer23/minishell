@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/21 19:01:26 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/21 21:37:45 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,11 +124,11 @@ int			check_quotes(char quote, int state);
 int			check_first_pipe(char *prompt);
 int			validating_pipes_reds(char *prompt);
 /* parse.c */
-char		**super_split(char *prompt);
-char		**parse_input(char *prompt);
+char		**super_split(char *prompt, t_shell *shell);
+char		**parse_input(char *prompt, t_shell *shell);
 /* parse_utils_1.c */
-char		*process_dq(char *prompt, int *pos);
-char		*process_sq(char *prompt, int *pos);
+char 		*process_dq(char *prompt, int *pos, t_shell *shell);
+char 		*process_sq(char *prompt, int *pos);
 char		*process_pipe(char *prompt, int *pos);
 char		*process_red1(char *prompt, int *pos);
 char		*process_red2(char *prompt, int *pos);

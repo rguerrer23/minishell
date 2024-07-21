@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:59:05 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/21 19:19:37 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/21 21:04:30 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	**ft_strd_new(char *str)
 	return (new);
 }
 
-char **super_split(char *prompt)
+char **super_split(char *prompt, t_shell *shell)
 {
     int pos = 0;
     char *aux;
@@ -54,7 +54,7 @@ char **super_split(char *prompt)
         while (prompt[pos] == ' ')
             pos++;
         if (prompt[pos] == '\"')
-            aux = process_dq(prompt, &pos);
+            aux = process_dq(prompt, &pos, shell);
         else if (prompt[pos] == '\'')
             aux = process_sq(prompt, &pos);
         else if (prompt[pos] == '|')
@@ -72,17 +72,17 @@ char **super_split(char *prompt)
             else
                 new = ft_strd_add(new, aux);
         }
-        printf("(split = %s)\n", aux);
+        //printf("(split = %s)\n", aux);
         free(aux);
     }
     return new;
 }
 
-char	**parse_input(char *prompt)
+char	**parse_input(char *prompt, t_shell *shell)
 {
 	char	**cmd;
 
-	cmd = super_split(prompt);
+	cmd = super_split(prompt, shell);
 	if (prompt[ft_strlen(prompt) - 1] == ' ')
 		cmd = ft_strd_lastdel(cmd);
 	return (cmd);

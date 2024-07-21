@@ -6,45 +6,11 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 19:30:25 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/21 17:34:21 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/21 21:31:41 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-t_var **init_envp(char **envp)
-{
-	t_var **list_var;
-	int c;
-	int i;
-
-	i = 0;
-	c = ft_strd_len(envp);
-	list_var = ft_calloc(sizeof(t_var *), c + 1); // +1 para NULL.
-	if (!list_var)
-        return (NULL); // error por falta de memoria.
-	while (i < c)
-	{
-		list_var[i] = ft_calloc(sizeof(t_var), 1);
-		if (!list_var[i])
-        {
-            while (i-- > 0)
-            {
-                free(list_var[i]->key);
-                free(list_var[i]->value);
-                free(list_var[i]);
-				
-            }
-            free(list_var);
-            return (NULL); // error por falta de memoria.
-		}
-		list_var[i]->key = ft_strndup(envp[i], ft_strchr(envp[i], '=') - envp[i]);
-		list_var[i]->value = ft_strdup(ft_strchr(envp[i], '=') + 1);
-		i++;
-	}
-	list_var[i] = NULL;
-	return (list_var);
-}
 
 char *get_var(t_var **list_var, char *key)
 {
@@ -122,25 +88,30 @@ char *replace_value_var(t_var **list_var, char *str, t_shell *shell)
 }
 
 // Expande las variables de entorno.
-void expand_env_var(t_shell *shell, char **envp) {
+void expand_env_var(t_shell *shell, char **envp, int pos)
+{
     t_var **list_var;
     int i;
     char *key;
     char *status;
 
+    list_var = init_envp(envp);
     i = 0;
-    list_var = init_envp(envp); // INICIALIZAMOS LAS KEY Y VALUE CON ENVP
     status = ft_itoa(shell->g_status);
-    while (shell->full_cmd[i]) {
+    while (shell->full_cmd[i])
+    {
         if ((ft_strcmp(shell->full_cmd[i], "$?") == 0))
             shell->full_cmd[i] = ft_strdup(status);
         else if (shell->full_cmd[i][0] == '$' && !shell->full_cmd[i][1])
             shell->full_cmd[i][0] = '$';
-        else if (shell->full_cmd[i][0] == '$') {
+        else if (shell->full_cmd[i][0] == '$')
+        {
             key = shell->full_cmd[i];
             shell->full_cmd[i] = get_var(list_var, key + 1);
             free(key);
-        } else if (strchr(shell->full_cmd[i], '\"')) {
+        }
+        else if (strchr(shell->full_cmd[i], '\"'))
+        {
             shell->full_cmd[i] = replace_value_var(list_var, shell->full_cmd[i], shell);
         }
         i++;
