@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 21:40:30 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/21 21:00:47 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/22 01:00:26 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	init_prompt(t_shell *shell)
 	while(shell->full_cmd[i] != NULL)
 	{
 		remove_dquotes(shell->full_cmd[i]);
+		printf("prompt = %s\n", shell->full_cmd[i]);
 		i++;
 	}
 }

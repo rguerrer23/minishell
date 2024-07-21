@@ -3,14 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   env_var_mini.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 21:39:47 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/21 22:17:33 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/22 00:50:09 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+char *find_varname(char *str, int pos)
+{
+    char *key;
+    int i;
+    int j;
+
+    i = pos;
+    while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
+        i++;
+    key = ft_calloc(i - pos + 1, sizeof(char));
+    j = 0;
+    while (pos < i)
+    {
+        key[j] = str[pos];
+        pos++;
+        j++;
+    }
+    return key;
+}
 
 void    mini_expand_env_var(char *prompt, char **env, int *pos, t_shell *shell)
 {

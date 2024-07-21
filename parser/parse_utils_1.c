@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:46:21 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/21 19:13:10 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/22 00:52:08 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	*process_char(char *prompt, int *pos)
 			aux[aux_pos++] = prompt[*pos];
 			(*pos)++;
 	}
-	aux[aux_pos] = '\0';
+	//aux[aux_pos] = '\0';
 	char *word = ft_strdup(aux);
 	free(aux);
 	return (word);
