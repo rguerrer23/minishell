@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 17:52:13 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/21 10:33:11 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/21 11:32:09 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,18 @@
 
 /* Esta funcion imprime el directorio actual de trabajo. */
 
-void	ft_pwd(void)
+void	ft_pwd(t_shell *shell)
 {
-	char	*cwd;
+	char	cwd[PATH_MAX];
 
-	cwd = getcwd(NULL, 0);
+	if (getcwd(cwd, PATH_MAX) == NULL)
+	{
+		ft_putstr_fd("pwd: error retrieving current directory: ", STDERR_FILENO);
+		ft_putstr_fd(strerror(errno), STDERR_FILENO);
+		ft_putstr_fd("\n", STDERR_FILENO);
+		shell->g_status = 1;
+		return ;
+	}
 	ft_putstr_fd(cwd, STDOUT_FILENO);
 	ft_putstr_fd("\n", STDOUT_FILENO);
-	free(cwd);
 }

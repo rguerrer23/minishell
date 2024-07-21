@@ -74,10 +74,19 @@ INDICE DE "MINISHELL"
 2- codigo de salido ($?) -> jmartos (OK)
 3- heredoc revisar -> rguerrer (pendiente)
 4- echo '$PWD' -> jmartos (OK)
-6- corregir tab
+6- corregir tab (OK)
 8- revisar ctrl-c
 9- verificar export con espacios
 11- cat | cat | ls verificar
 revisar redirecciones
 ...
 12- VALGRIND
+
+
+
+rguerrer
+1-Ajustar errores de bash
+2-Revisar cd -
+3-Revisar env args
+4-Revisar export
+5-Revisar unset

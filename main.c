@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/21 10:43:21 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/21 12:33:08 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,19 @@ static int	ft_check_line(char *line)
 	}
 	return (1);
 }
+
+int	insert_tab(int count, int key)
+{
+	if (rl_line_buffer[0] == '\0' || strspn(rl_line_buffer, " \t") == strlen(rl_line_buffer))
+	{
+		rl_insert_text("\t");
+		rl_redisplay();
+		return 0;
+	}
+	else
+		return (rl_complete(count, key));
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
@@ -40,8 +53,11 @@ int	main(int argc, char **argv, char **envp)
 	shell.g_status = 0;
 	shell.exit = 0;
 	shell.env = envp;
+
+	rl_bind_key('\t', insert_tab);
 	while (shell.exit == 0)
 	{
+		shell.exec_signal = 0;
 		if_signal();
 		line = readline("Minishell$~ ");
 		if (line == NULL)
@@ -53,8 +69,6 @@ int	main(int argc, char **argv, char **envp)
 			init_prompt(&shell);
 			//ft_printf("- (main.c) g_error = %i\n", g_error);
 			execute(&shell);
-			
-			
 			//ft_printf("- (main.c) cmd.g_status = %i\n", cmd.g_status);
 		}
 		free(line);

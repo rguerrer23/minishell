@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/21 10:44:03 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/21 12:33:25 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ typedef struct s_shell
 	int		pout;
 	pid_t	pid;
 	int		exit;
+	int		exec_signal;
 }			t_shell;
 
 /*
@@ -155,7 +156,7 @@ void		ft_echo(char **args);
 void		ft_env(t_shell *shell);
 void		ft_exit(char **cmd, t_shell *shell);
 void		ft_export(char **full_cmd, t_shell *shell);
-void		ft_pwd(void);
+void		ft_pwd(t_shell *shell);
 void		ft_unset(char **name_var, t_shell *shell);
 int			is_builtin(char *cmd);
 void		execute_builtin(t_shell *shell, char **full_cmd);

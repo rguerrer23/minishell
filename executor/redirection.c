@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 17:37:00 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/21 10:37:02 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/21 12:39:35 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,16 @@ void	apply_outfile(char **name, t_shell *shell, int i)
 {
 	if (shell->fdout > 2)
 		close(shell->fdout);
-	shell->fdout = open(name[i + 1], O_WRONLY | O_CREAT | O_TRUNC, 0666);
+	if (ft_strcmp(name[i], ">>") == 0)
+		shell->fdout = open(name[i + 1], O_WRONLY | O_CREAT | O_APPEND, S_IRWXU);
+	else
+		shell->fdout = open(name[i + 1], O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU);
 	if (shell->fdout == -1)
 	{
 		ft_putstr_fd("zsh: no such file or directory: ", 2);
 		ft_putstr_fd(name[i + 1], 2);
 		ft_putchar_fd('\n', 2);
+		shell->exec_signal = 1;
 		shell->g_status = 1;
 	}
 	dup2(shell->fdout, STDOUT_FILENO);
@@ -31,12 +35,13 @@ void	apply_infile(char **name, t_shell *shell, int i)
 {
 	if (shell->fdin > 2)
 		close(shell->infile);
-	shell->fdin = open(name[i + 1], O_RDONLY);
+	shell->fdin = open(name[i + 1], O_RDONLY, S_IRWXU);
 	if (shell->fdin == -1)
 	{
 		ft_putstr_fd("zsh: no such file or directory: ", 2);
 		ft_putstr_fd(name[i + 1], 2);
 		ft_putchar_fd('\n', 2);
+		shell->exec_signal = 1;
 		shell->g_status = 1;
 	}
 	dup2(shell->fdin, STDIN_FILENO);
@@ -58,7 +63,8 @@ void	apply_pipe(t_shell *shell, char **cmd, int *prev_fd)
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[0]);
 		close(fd[1]);
-		exec_choose(shell, cmd);
+		if (shell->exec_signal == 0)
+			exec_choose(shell, cmd);
 		exit(EXIT_SUCCESS);
 	}
 	else

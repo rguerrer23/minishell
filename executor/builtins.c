@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:54:02 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/21 10:46:33 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/21 11:32:21 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	execute_builtin(t_shell *shell, char **full_cmd)
 	else if (!ft_strcmp(builtins, "unset"))
 		ft_unset(full_cmd, shell);
 	else if (!ft_strcmp(builtins, "pwd"))
-		ft_pwd();
+		ft_pwd(shell);
 }
 
 /* Esta funcion comprueba si el comando es un builtin o no. */

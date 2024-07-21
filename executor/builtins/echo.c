@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:52:32 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/21 10:31:55 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/21 12:58:22 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,18 @@
 void	ft_echo(char **args)
 {
 	int	i;
+	int x;
 	int	newline;
 
 	newline = 1;
 	i = 1;
-	if (args[i] && !ft_strcmp(args[i], "-n"))
+	x = 1;
+	while (args[i] && args[i][0] == '-' && args[i][1] == 'n')
 	{
+		while (args[i][x] == 'n')
+			x++;
+		if (args[i][x] != '\0')
+			break ;
 		newline = 0;
 		i++;
 	}

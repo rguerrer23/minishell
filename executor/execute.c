@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 11:37:06 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/21 10:45:48 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/21 13:05:17 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,8 @@ void execute(t_shell *shell)
 				dup2(prev_fd, STDIN_FILENO);
 				close(prev_fd);
 			}
-			exec_choose(shell, cmd);
+			if (shell->exec_signal == 0)
+				exec_choose(shell, cmd);
 		}
 		ft_strd_free(cmd);
 		if (shell->full_cmd[i] != NULL)

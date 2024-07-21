@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 17:59:23 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/21 10:21:46 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/21 11:26:42 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ int	is_bad_env(char *env)
 		return (2);
 	return (1);
 }
-
-#include "../../inc/minishell.h"
 
 void	ft_new_env(char *name_var, char *value_var, t_shell *shell)
 {
