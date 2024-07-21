@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 17:05:28 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/21 11:05:43 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/21 17:43:11 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ void	ft_cd_oldpwd(t_shell *shell)
 		ft_putchar_fd('\n', STDERR_FILENO);
 		shell->g_status = 1;
 	}
-	
+	ft_putstr_fd(oldpwd, STDOUT_FILENO);
+	ft_putchar_fd('\n', STDOUT_FILENO);
 }
 
 void	ft_cd_home(t_shell *shell)
@@ -65,11 +66,7 @@ void	ft_cd_home(t_shell *shell)
 
 	home = ft_getenv("HOME", shell->env);
 	if (home == NULL)
-	{
-		ft_putstr_fd("cd: HOME not set\n", STDERR_FILENO);
-		shell->g_status = 1;
 		return ;
-	}
 	if (chdir(home) == -1)
 	{
 		ft_putstr_fd("cd: no such file or directory: ", STDERR_FILENO);

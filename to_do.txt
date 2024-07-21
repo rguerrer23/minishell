@@ -72,11 +72,11 @@ INDICE DE "MINISHELL"
 *********************************************************************************
 
 2- codigo de salido ($?) -> jmartos (OK)
-3- heredoc revisar -> rguerrer (pendiente)
+3- heredoc revisar -> rguerrer (OK)
 4- echo '$PWD' -> jmartos (OK)
 6- corregir tab (OK)
 8- revisar ctrl-c
-9- verificar export con espacios
+9- verificar export con espacios (OK)
 11- cat | cat | ls verificar
 revisar redirecciones
 ...
