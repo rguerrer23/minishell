@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 17:59:23 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/21 17:21:53 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/21 18:18:25 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,17 @@ void	ft_env_error(int bad_env, char *env)
 		else
 			ft_putstr_fd("zsh: bad assignment\n", STDERR_FILENO);
 	}
+	else if (bad_env == -1)
+	{
+		ft_putstr_fd("export: not valid in this context: ", STDERR_FILENO);
+		while (env[i] && env[i] != '=')
+		{
+			ft_putchar_fd(env[i], STDERR_FILENO);
+			i++;
+		}
+		ft_putchar_fd('\n', STDERR_FILENO);
+	}
+	else
 	if (bad_env == -2)
 	{
 		ft_putstr_fd("zsh: ", STDERR_FILENO);
@@ -63,6 +74,13 @@ int	is_bad_env(char *env)
 			if (env[i + 1] == '=' && env[i + 2] != '\0')
 				return (-2);
 		}
+		i++;
+	}
+	i = 0;
+	while (env[i] && env[i] != '=')
+	{
+		if (!ft_isalnum(env[i]) && env[i] != '_')
+			return (-1);
 		i++;
 	}
 	return (1);
