@@ -82,7 +82,7 @@ revisar redirecciones
 ...
 12- VALGRIND
 
-3-Revisar env args
+3-Revisar env args; env dsf=dsfds
 4-revisar << (solo)
 revisar  ls >
 
