@@ -83,6 +83,6 @@ revisar redirecciones
 12- VALGRIND
 
 3-Revisar env args
-4-revisar <<
+4-revisar << (solo)
 revisar  ls >
 
