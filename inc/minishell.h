@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/22 22:16:36 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/22 22:30:39 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,18 +74,22 @@ typedef struct s_var
 }			t_var;
 
 /*
-	- *prompt	= linea de comandos leida por el shell, sin parsear.
-	-
-	- **env		= matriz de punteros a las variables de entorno del shell.
-	- pid		= id del proceso actual de la consola.
-	- *cmds		= puntero a la estructura de comandos.
+	- *prompt		= linea de comandos leida por el shell, sin parsear.
+	- **env			= matriz de punteros a las variables de entorno del shell.
+	- pid			= id del proceso actual de la consola.
+	- *cmds			= puntero a la estructura de comandos.
+	- **full_prompt	= matriz bidimensional de la linea de comandos ya parseada
+						y spliteada.
+	- *cmd_path		= ruta del primer comandos encontrado en el input.
+	- inline		= file descriptor a leer para ejecutar un comando.
+	- outline		= file descriptor a escribir para ejecutar un comando.
 */
 typedef struct s_shell
 {
-	char	*prompt;        // jmartos-
-	char	*parsed_prompt; // jmartos-
+	char	*prompt;
+	char	*parsed_prompt;
 	char	**env;
-	char	**full_cmd; // jmartos-
+	char	**full_cmd;
 	char	*cmd_path;
 	int		g_status;
 	int		infile;
@@ -99,59 +103,37 @@ typedef struct s_shell
 	int		exec_signal;
 }			t_shell;
 
-/*
-	- **full_prompt	= matriz bidimensional de la linea de comandos ya parseada y spliteada.
-	- *cmd_path		= ruta del primer comandos encontrado en el input.
-	- inline		= (STDIN 0) file descriptor a leer para ejecutar un comando.
-	- outline		= (STDOUT 1)file descriptor a escribir para ejecutar un comando.
-*/
-
-/*********************/
-/* FUNCIONES COMUNES */
-/*********************/
 int			main(int argc, char **argv, char **envp);
-/*******************************/
-/* FUNCIONES JMARTOS- (PARSER) */
-/*******************************/
-/* init.c */
 void		init_pipe_red(t_pipe_red *value);
 void		init_prompt(t_shell *shell);
-/* command.c */
 int			check_cmd(t_shell *shell);
-/* check_quotes.c */
 int			check_quotes(char quote, int state);
-/* pipes_redirections.c */
 int			check_first_pipe(char *prompt);
+int			check_last_pipe_red(char *prompt);
+int			check_mixes(char *prompt, int *pos);
 int			validating_pipes_reds(char *prompt);
-/* parse.c */
-char		**super_split(char *prompt, t_shell *shell);
-char		**parse_input(char *prompt, t_shell *shell);
-/* parse_utils_1.c */
-char 		*process_dq(char *prompt, int *pos, t_shell *shell);
-char 		*process_sq(char *prompt, int *pos);
+void		set_pipe_red(t_pipe_red *value, int flag);
+int			handle_pipe_red(char c, t_pipe_red *value, char *prompt, int *pos);
+int			update_quote_state(char c, int quote_state);
+int			validating_pipes_reds(char *prompt);
+char		*process_token(char *prompt, int *pos);
+char		**super_split(char *prompt);
+char		**parse_input(char *prompt);
+char		*process_dq(char *prompt, int *pos);
+char		*process_sq(char *prompt, int *pos);
 char		*process_pipe(char *prompt, int *pos);
 char		*process_red1(char *prompt, int *pos);
 char		*process_red2(char *prompt, int *pos);
-/* parse_utils_2.c */
 int			strlen_end_word(char *prompt, int pos);
 char		*process_char(char *prompt, int *pos);
-/* env_var.c */
 t_var		**init_envp(char **envp);
 char		*get_var(t_var **list_var, char *key);
-char 		*find_varname(char *str, int pos);
-char 		*replace_key_x_value(t_var **env_list, char *str, t_shell *shell);
+char		*key_x_value(t_var **env_list, char *str, t_shell *shell);
 void		expand_env_var(t_shell *shell, char **envp);
-void mini_expand_env_var(char *prompt, char **env, int *pos, t_shell *shell);
-/* env_var_utils.c */
+char		*find_varname(char *str, int pos);
 void		remove_dquotes(char *str);
-char 		*implement_dolar_question(char *str, char *start, char *end, int cmd_exit_status);
-/* signal.c */
 void		handler(int signal);
 void		if_signal(void);
-/*********************************/
-/* FUNCIONES RGUERRER (EXECUTOR) */
-/*********************************/
-/* builtins */
 void		ft_cd(char **full_cmd, t_shell *shell);
 void		ft_echo(char **args);
 void		ft_env(t_shell *shell, char **full_cmd);

@@ -6,12 +6,15 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 23:23:23 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/03 14:20:12 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/22 20:22:04 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
+/*
+	Cambiamos el chequeo de las comillas dobles.
+*/
 static int	is_dq(int state)
 {
 	if (state == NO_QUOTE)
@@ -22,6 +25,9 @@ static int	is_dq(int state)
 		return (state);
 }
 
+/*
+	Cambiamos el chequeo de las comillas simples.
+*/
 static int	is_sq(int state)
 {
 	if (state == NO_QUOTE)
@@ -32,6 +38,9 @@ static int	is_sq(int state)
 		return (state);
 }
 
+/*
+	Chequea comillas dobles o simples.
+*/
 int	check_quotes(char quote, int state)
 {
 	int	new_state;

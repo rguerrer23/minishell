@@ -9,6 +9,7 @@
         "signal.h": "c",
         "history.h": "c",
         "readline.h": "c",
-        "libft.h": "c"
+        "libft.h": "c",
+        "type_traits": "c"
     }
 }

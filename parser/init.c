@@ -3,67 +3,61 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 21:40:30 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/22 17:58:30 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/22 21:16:42 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
+/*
+	Inicializa la estructura para controlar los pipes y redicrecciones.
+*/
 void	init_pipe_red(t_pipe_red *value)
 {
 	value->pipe = 0;
 	value->red = 0;
 }
 
-void ft_trim_trailing_spaces(char *str)
+/*
+	Borramos los espacios que puede haber al final del prompt.
+*/
+void	delete_end_spaces(char *str)
 {
-    int len;
+	int	len;
 
-    if (str == NULL)
-        return;
-
-    len = strlen(str);
-
-    // Recorre el string de atrás hacia adelante
-    while (len > 0 && str[len - 1] == ' ')
-    {
-        len--;
-    }
-
-    // Coloca el carácter nulo para eliminar los espacios finales
-    str[len] = '\0';
+	if (str == NULL)
+		return ;
+	len = strlen(str);
+	while (len > 0 && str[len - 1] == ' ')
+	{
+		len--;
+	}
+	str[len] = '\0';
 }
 
-t_var **init_envp(char **envp)
+/*
+	Iniciamos la estructura con la copia de keys y values de las
+	variables de entorno, para usarlas en el parseo.
+*/
+t_var	**init_envp(char **envp)
 {
-	t_var **list_var;
-	int c;
-	int i;
+	t_var	**list_var;
+	int		c;
+	int		i;
 
 	i = 0;
 	c = ft_strd_len(envp);
-	list_var = ft_calloc(sizeof(t_var *), c + 1); // +1 para NULL.
+	list_var = ft_calloc(sizeof(t_var *), c + 1);
 	if (!list_var)
-        return (NULL); // error por falta de memoria.
+		return (NULL);
 	while (i < c)
 	{
 		list_var[i] = ft_calloc(sizeof(t_var), 1);
-		if (!list_var[i])
-        {
-            while (i-- > 0)
-            {
-                free(list_var[i]->key);
-                free(list_var[i]->value);
-                free(list_var[i]);
-				
-            }
-            free(list_var);
-            return (NULL); // error por falta de memoria.
-		}
-		list_var[i]->key = ft_strndup(envp[i], ft_strchr(envp[i], '=') - envp[i]);
+		list_var[i]->key = ft_strndup(envp[i],
+				ft_strchr(envp[i], '=') - envp[i]);
 		list_var[i]->value = ft_strdup(ft_strchr(envp[i], '=') + 1);
 		i++;
 	}
@@ -71,23 +65,42 @@ t_var **init_envp(char **envp)
 	return (list_var);
 }
 
+/*
+	Iniciamos el prompt:
+
+		- Parseamos los arguementos.
+		- Super_split.
+		- Expansion de las variables de entorno.
+*/
 void	init_prompt(t_shell *shell)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
-	
-	ft_trim_trailing_spaces(shell->prompt);
+	delete_end_spaces(shell->prompt);
 	if (!check_cmd(shell))
 	{
-		ft_printf(RED"ERROR! (init_prompt)"NC);
-		exit (EXIT_FAILURE);
+		ft_printf(RED "ERROR! (init_prompt)" NC);
+		exit(EXIT_FAILURE);
 	}
-	shell->full_cmd = parse_input(shell->prompt, shell);
+	shell->full_cmd = parse_input(shell->prompt);
 	expand_env_var(shell, shell->env);
-	while(shell->full_cmd[i] != NULL)
+	while (shell->full_cmd[i] != NULL)
 	{
 		remove_dquotes(shell->full_cmd[i]);
 		i++;
 	}
+}
+
+/*
+	Segunda parte de init_prompt.
+*/
+char	**parse_input(char *prompt)
+{
+	char	**cmd;
+
+	cmd = super_split(prompt);
+	if (prompt[ft_strlen(prompt) - 1] == ' ')
+		cmd = ft_strd_lastdel(cmd);
+	return (cmd);
 }
