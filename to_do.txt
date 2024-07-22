@@ -84,5 +84,6 @@ revisar redirecciones
 
 3-Revisar env args; env dsf=dsfds
 4-revisar << (solo)
+revisar unset env;
 revisar  ls >
 
