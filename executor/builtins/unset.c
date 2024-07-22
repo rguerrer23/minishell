@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 10:39:41 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/22 11:26:28 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/22 18:46:49 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	ft_unset_env(char **name_var, t_shell *shell, int x)
 
 void	ft_unset(char **name_var, t_shell *shell)
 {
-	int		x;
+	int	x;
 
 	x = 1;
 	if (!(name_var[1]))

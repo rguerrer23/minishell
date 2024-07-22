@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_ins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:43:22 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/22 11:34:26 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/22 20:45:27 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,5 @@ int	execute_ins(t_shell *shell, char **cmd)
 		status = exc(shell->cmd_path, cmd, shell);
 	else
 		status = exc(cmd[0], cmd, shell);
-	ft_strd_free(bin);
-	free(shell->cmd_path);
-	return (status);
+	return (ft_strd_free(bin), free(shell->cmd_path), status);
 }

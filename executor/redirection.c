@@ -3,128 +3,65 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/08 17:37:00 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/22 10:59:21 by rguerrer         ###   ########.fr       */
+/*   Created: 2024/07/22 20:50:24 by rguerrer          #+#    #+#             */
+/*   Updated: 2024/07/22 20:55:11 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void apply_heredoc(char *delimiter, t_shell *shell)
+void	handle_output_redirection(char **prompt, t_shell *shell, int i)
 {
-	int pipefd[2];
-	char *line;
+	int	j;
+	int	is_command_before;
 
-	if (pipe(pipefd) == -1)
+	is_command_before = 0;
+	if (i == 0 || prompt[i - 1] == NULL)
+		is_command_before = 1;
+	apply_outfile(prompt, shell, i);
+	if (is_command_before == 1)
 	{
-		ft_putstr_fd("zsh: pipe failed\n", 2);
-		shell->exec_signal = 1;
-		shell->g_status = 1;
-		return;
+		prompt[i] = ft_strdup("cat");
+		i++;
 	}
-    while (1)
-    {
-		ft_putstr_fd("> ", 1);
-		line = get_next_line(STDIN_FILENO);
-		if (!line || ft_strcmp(line, delimiter) == 0)
-			break;
-		line[ft_strlen(line) - 1] = '\0';
-		if (ft_strcmp(line, delimiter) == 0)
-		{
-			free(line);
-			break;
-		}
-		line[ft_strlen(line)] = '\n';
-		ft_putstr_fd(line, pipefd[1]);
-		free(line);
-	}
-	close(pipefd[1]);
-	shell->fdin = pipefd[0];
-	dup2(shell->fdin, STDIN_FILENO);
-}
-
-void	apply_outfile(char **name, t_shell *shell, int i)
-{
-	if (shell->fdout > 2)
-		close(shell->fdout);
-	if (ft_strcmp(name[i], ">>") == 0)
-		shell->fdout = open(name[i + 1], O_WRONLY | O_CREAT | O_APPEND, S_IRWXU);
-	else
-		shell->fdout = open(name[i + 1], O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU);
-	if (shell->fdout == -1)
+	j = i;
+	while (prompt[j] != NULL)
 	{
-		ft_putstr_fd("zsh: no such file or directory: ", 2);
-		ft_putstr_fd(name[i + 1], 2);
-		ft_putchar_fd('\n', 2);
-		shell->exec_signal = 1;
-		shell->g_status = 1;
-	}
-	dup2(shell->fdout, STDOUT_FILENO);
-}
-
-void	apply_infile(char **name, t_shell *shell, int i)
-{
-	if (shell->fdin > 2)
-		close(shell->fdin);
-	if (ft_strcmp(name[i], "<<") == 0)
-		apply_heredoc(name[i + 1], shell);
-	else
-	{
-		shell->fdin = open(name[i + 1], O_RDONLY, S_IRWXU);
-		if (shell->fdin == -1)
-		{
-			ft_putstr_fd("zsh: no such file or directory: ", 2);
-			ft_putstr_fd(name[i + 1], 2);
-			ft_putchar_fd('\n', 2);
-			shell->exec_signal = 1;
-			shell->g_status = 1;
-		}
-		dup2(shell->fdin, STDIN_FILENO);
+		prompt[j] = prompt[j + 1];
+		j++;
 	}
 }
 
-void	apply_pipe(t_shell *shell, char **cmd, int *prev_fd)
+void	handle_input_redirection(char **prompt, t_shell *shell, int i)
 {
-	int fd[2];
+	int	j;
 
-	pipe(fd);
-	if (fd[0] == -1 || fd[1] == -1)
-	{
-		ft_putstr_fd("zsh: pipe failed\n", 2);
+	if (i == 0 || prompt[i - 1] == NULL)
 		shell->exec_signal = 1;
-		shell->g_status = 1;
-		return ;
-	}
-	pid_t pid = fork();
-	if (pid == -1)
+	apply_infile(prompt, shell, i);
+	j = i;
+	while (prompt[j] != NULL)
 	{
-		ft_putstr_fd("zsh: fork failed\n", 2);
-		shell->exec_signal = 1;
-		shell->g_status = 1;
-		return ;
+		prompt[j] = prompt[j + 1];
+		j++;
 	}
-	if (pid == 0)
+}
+
+void	apply_redirections(char **prompt, t_shell *shell)
+{
+	int	i;
+
+	i = 0;
+	while (prompt[i])
 	{
-		if (*prev_fd != -1)
-		{
-			dup2(*prev_fd, STDIN_FILENO);
-			close(*prev_fd);
-		}
-		dup2(fd[1], STDOUT_FILENO);
-		close(fd[0]);
-		close(fd[1]);
-		if (shell->exec_signal == 0)
-			exec_choose(shell, cmd);
-		exit(EXIT_SUCCESS);
+		if (ft_strcmp(prompt[i], ">") == 0 || ft_strcmp(prompt[i], ">>") == 0)
+			handle_output_redirection(prompt, shell, i);
+		else if (ft_strcmp(prompt[i], "<") == 0 || ft_strcmp(prompt[i],
+				"<<") == 0)
+			handle_input_redirection(prompt, shell, i);
+		else
+			i++;
 	}
-	else
-	{
-		waitpid(pid, &shell->g_status, 0);
-		close(fd[1]);
-		if (*prev_fd != -1)
-			close(*prev_fd);
-	}
-	*prev_fd = fd[0];
 }

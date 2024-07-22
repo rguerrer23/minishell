@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/22 17:24:38 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/22 22:16:36 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,21 +154,28 @@ void		if_signal(void);
 /* builtins */
 void		ft_cd(char **full_cmd, t_shell *shell);
 void		ft_echo(char **args);
-void		ft_env(t_shell *shell);
+void		ft_env(t_shell *shell, char **full_cmd);
 void		ft_exit(char **cmd, t_shell *shell);
 void		ft_export(char **full_cmd, t_shell *shell);
-void		ft_pwd(t_shell *shell);
+void		ft_pwd(t_shell *shell, char **full_cmd);
 void		ft_unset(char **name_var, t_shell *shell);
 int			is_builtin(char *cmd);
 void		execute_builtin(t_shell *shell, char **full_cmd);
+void		ft_env_error(int bad_env, char *env);
+int			is_bad_env(char *env);
+void		ft_new_env(char *name_var, char *value_var, t_shell *shell);
 /* executor */
 int			execute_ins(t_shell *shell, char **cmd);
 void		exec_choose(t_shell *shell, char **cmd);
 void		execute(t_shell *shell);
 /*redirection*/
+void		apply_redirections(char **prompt, t_shell *shell);
 void		apply_outfile(char **name, t_shell *shell, int i);
 void		apply_infile(char **name, t_shell *shell, int i);
 void		apply_pipe(t_shell *shell, char **cmd, int *prev_fd);
+void		apply_heredoc(char *delimiter, t_shell *shell);
+void		reset_redirections(t_shell *shell);
+void		setup_redirections(t_shell *shell);
 /*clean*/
 void		ft_close_resets(t_shell *shell);
 
