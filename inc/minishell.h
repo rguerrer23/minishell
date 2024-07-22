@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/22 22:30:39 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/22 22:37:49 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,6 @@
 
 # define NC "\033[0m"
 # define RED "\033[31;1m"
-
-/*
-	Variable Global:
-		0 = close
-		1 = open
-*/
-extern int	g_error;
 
 /*
 	Usaremos esta estructura para guardar los estados de pipes y redirecciones.

@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/21 19:01:44 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/22 22:37:03 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/minishell.h"
-
-int g_error = 0;
 
 static int	ft_check_line(char *line)
 {
@@ -30,11 +28,12 @@ static int	ft_check_line(char *line)
 
 int	insert_tab(int count, int key)
 {
-	if (rl_line_buffer[0] == '\0' || strspn(rl_line_buffer, " \t") == strlen(rl_line_buffer))
+	if (rl_line_buffer[0] == '\0'
+		|| strspn(rl_line_buffer, " \t") == strlen(rl_line_buffer))
 	{
 		rl_insert_text("\t");
 		rl_redisplay();
-		return 0;
+		return (0);
 	}
 	else
 		return (rl_complete(count, key));
@@ -53,7 +52,6 @@ int	main(int argc, char **argv, char **envp)
 	shell.g_status = 0;
 	shell.exit = 0;
 	shell.env = envp;
-
 	rl_bind_key('\t', insert_tab);
 	while (shell.exit == 0)
 	{
@@ -61,15 +59,13 @@ int	main(int argc, char **argv, char **envp)
 		if_signal();
 		line = readline("Minishell$~ ");
 		if (line == NULL)
-			break;
+			break ;
 		else if (ft_check_line(line) == 0)
 		{
 			shell.prompt = line;
 			add_history(line);
 			init_prompt(&shell);
-			//ft_printf("- (main.c) g_error = %i\n", g_error);
 			execute(&shell);
-			//ft_printf("- (main.c) cmd.g_status = %i\n", cmd.g_status);
 		}
 		free(line);
 	}
