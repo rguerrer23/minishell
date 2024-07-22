@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 19:30:25 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/22 01:06:15 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/22 17:58:44 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,70 +61,6 @@ char *replace_key_x_value(t_var **list_var, char *str, t_shell *shell)
     return result;
 }
 
-void expand_env_var(t_shell *shell, char **envp)
-{
-    t_var **list_var;
-    int i;
-    int j;
-    char *key;
-    char *status;
-
-    list_var = init_envp(envp);
-    status = ft_itoa(shell->g_status);
-
-    i = 0;
-    while (shell->full_cmd[i])
-    {
-        j = 0;
-        while (shell->full_cmd[i][j])
-        {
-            if (shell->full_cmd[i][j] == '$')
-            {
-                if (shell->full_cmd[i][j + 1] == '?')
-                {
-                    shell->full_cmd[i] = ft_insert_str(shell->full_cmd[i], status, j);
-                    j += strlen(status); // Avanza más allá del valor insertado
-                }
-                else if (!shell->full_cmd[i][j + 1] || shell->full_cmd[i][j + 1] == ' ')
-                {
-                    j++;
-                }
-                else
-                {
-                    key = ft_strndup(shell->full_cmd[i] + j + 1, strcspn(shell->full_cmd[i] + j + 1, " $\"\'"));
-                    char *value = get_var(list_var, key);
-                    if (value)
-                    {
-                        shell->full_cmd[i] = ft_insert_str(shell->full_cmd[i], value, j);
-                        j += strlen(value); // Avanza más allá del valor insertado
-                    }
-                    else
-                    {
-                        j++;
-                    }
-                    free(key);
-                }
-            }
-            else
-            {
-                j++;
-            }
-        }
-
-        // Reemplazo de variables dentro de comillas dobles
-        if (strchr(shell->full_cmd[i], '\"') && !strchr(shell->full_cmd[i], '\''))
-        {
-            shell->full_cmd[i] = replace_key_x_value(list_var, shell->full_cmd[i], shell);
-        }
-
-        i++;
-    }
-
-    free(status);
-}
-
-
-/*
 // Expande las variables de entorno.
 void expand_env_var(t_shell *shell, char **envp)
 {
@@ -140,31 +76,35 @@ void expand_env_var(t_shell *shell, char **envp)
     while (shell->full_cmd[i])
     {
         j = 0;
-        while (shell->full_cmd[i][j])
+        if (shell->full_cmd[i][0] != '\'')
         {
-            if (shell->full_cmd[i][j] == '$' && !shell->full_cmd[i][j + 1])
-                shell->full_cmd[i][j] = '$';
-            else if (shell->full_cmd[i][j] == '$')
+            while (shell->full_cmd[i][j])
             {
-                if (shell->full_cmd[i][j + 1] == '?')
-                {   
-                    shell->full_cmd[i] = ft_insert_str(shell->full_cmd[i], status, j);
-                    //shell->full_cmd[i][j] = ft_strdup(status);
-                    j++;
-                }
-                else
+                if (shell->full_cmd[i][j] == '$' && !shell->full_cmd[i][j + 1])
+                    shell->full_cmd[i][j] = '$';
+                else if (shell->full_cmd[i][j] == '$')
                 {
-                    key = shell->full_cmd[i];
-                    shell->full_cmd[i] = get_var(list_var, key + 1);
-                    free(key);
+                    if (shell->full_cmd[i][j + 1] == '?')
+                    {
+                        shell->full_cmd[i] = ft_delete_str(shell->full_cmd[i], j, j + 1);
+                        shell->full_cmd[i] = ft_insert_str(shell->full_cmd[i], status, j);
+                        j++;
+                    }
+                    else
+                    {
+                        key = find_varname(shell->full_cmd[i], j + 1);
+                        shell->full_cmd[i] = ft_delete_str(shell->full_cmd[i], j, j + ft_strlen(key));
+                        shell->full_cmd[i] = ft_insert_str(shell->full_cmd[i], get_var(list_var, key), j);
+                        free(key);
+                    }
                 }
+                j++;
             }
-            j++;
+            if (strchr(shell->full_cmd[i], '\"'))
+                shell->full_cmd[i] = replace_key_x_value(list_var, shell->full_cmd[i], shell);
+
         }
-        if (strchr(shell->full_cmd[i], '\"'))
-            shell->full_cmd[i] = replace_key_x_value(list_var, shell->full_cmd[i], shell);
-        i++;
+    i++;
     }
     free(status);
 }
-*/

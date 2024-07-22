@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 21:40:30 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/22 01:00:26 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/22 17:58:30 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,25 @@ void	init_pipe_red(t_pipe_red *value)
 {
 	value->pipe = 0;
 	value->red = 0;
+}
+
+void ft_trim_trailing_spaces(char *str)
+{
+    int len;
+
+    if (str == NULL)
+        return;
+
+    len = strlen(str);
+
+    // Recorre el string de atrás hacia adelante
+    while (len > 0 && str[len - 1] == ' ')
+    {
+        len--;
+    }
+
+    // Coloca el carácter nulo para eliminar los espacios finales
+    str[len] = '\0';
 }
 
 t_var **init_envp(char **envp)
@@ -57,6 +76,8 @@ void	init_prompt(t_shell *shell)
 	int i;
 	
 	i = 0;
+	
+	ft_trim_trailing_spaces(shell->prompt);
 	if (!check_cmd(shell))
 	{
 		ft_printf(RED"ERROR! (init_prompt)"NC);
@@ -67,7 +88,6 @@ void	init_prompt(t_shell *shell)
 	while(shell->full_cmd[i] != NULL)
 	{
 		remove_dquotes(shell->full_cmd[i]);
-		printf("prompt = %s\n", shell->full_cmd[i]);
 		i++;
 	}
 }
