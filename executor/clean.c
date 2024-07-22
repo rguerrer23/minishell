@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   close.c                                            :+:      :+:    :+:   */
+/*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:49:15 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/21 10:24:02 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/22 11:28:27 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	close_fds(t_shell *shell)
 		close(shell->pout);
 }
 
-void reset_fds(t_shell *shell)
+void	reset_fds(t_shell *shell)
 {
 	shell->fdin = -1;
 	shell->fdout = -1;

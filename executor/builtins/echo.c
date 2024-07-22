@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:52:32 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/21 12:58:22 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/22 11:26:46 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 void	ft_echo(char **args)
 {
 	int	i;
-	int x;
+	int	x;
 	int	newline;
 
 	newline = 1;

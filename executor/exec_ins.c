@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:43:22 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/21 10:25:32 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/22 11:34:26 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,21 @@
 
 int	error_msg(char *cmd)
 {
-	DIR *dir;
-	int status;
+	DIR	*dir;
+	int	status;
 
-	
-	if (ft_strchr(cmd, '/') == NULL) {
+	dir = opendir(cmd);
+	if (ft_strchr(cmd, '/') == NULL)
 		ft_putstr_fd("zsh: command not found: ", 2);
-	} else if (access(cmd, F_OK) == -1) {
+	else if (access(cmd, F_OK) == -1)
 		ft_putstr_fd("zsh: no such file or directory: ", 2);
-	} else if ((dir = opendir(cmd)) != NULL) {
-		closedir(dir);
+	else if (dir != NULL)
+	{
 		ft_putstr_fd("zsh: is a directory: ", 2);
-	} else if (access(cmd, X_OK) == -1) {
-		ft_putstr_fd("zsh: permission denied: ", 2);
+		closedir(dir);
 	}
+	else if (access(cmd, X_OK) == -1)
+		ft_putstr_fd("zsh: permission denied: ", 2);
 	if (ft_strchr(cmd, '/') == NULL || (dir == NULL))
 		status = 127;
 	else
@@ -64,7 +65,7 @@ int	exc(char *path, char **cmd, t_shell *shell)
 	int		status;
 
 	pid = fork();
-	if(pid == 0)
+	if (pid == 0)
 	{
 		if (ft_strchr(path, '/') != NULL)
 			execve(path, cmd, shell->env);

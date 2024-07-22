@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 11:37:06 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/21 21:14:02 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/22 10:34:42 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-void handle_no_command_redirection(char *filename) {
-    int fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU);
-    if (fd == -1) {
-        // Manejar error
-        return;
-    }
-	dup2(fd, STDOUT_FILENO);
-	close(fd);
-}
 
 void exclude_redirection(char **prompt)
 {
@@ -72,6 +62,8 @@ void	apply_redirections(char **prompt, t_shell *shell)
 		} 
 		else if (ft_strcmp(prompt[i], "<") == 0 || ft_strcmp(prompt[i], "<<") == 0)
 		{
+			if (i == 0 || prompt[i - 1] == NULL)
+				shell->exec_signal = 1;
 			apply_infile(prompt, shell, i);
 			j = i;
 			while(prompt[j] != NULL)

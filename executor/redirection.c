@@ -3,14 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 17:37:00 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/21 20:34:15 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/22 10:59:21 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+void apply_heredoc(char *delimiter, t_shell *shell)
+{
+	int pipefd[2];
+	char *line;
+
+	if (pipe(pipefd) == -1)
+	{
+		ft_putstr_fd("zsh: pipe failed\n", 2);
+		shell->exec_signal = 1;
+		shell->g_status = 1;
+		return;
+	}
+    while (1)
+    {
+		ft_putstr_fd("> ", 1);
+		line = get_next_line(STDIN_FILENO);
+		if (!line || ft_strcmp(line, delimiter) == 0)
+			break;
+		line[ft_strlen(line) - 1] = '\0';
+		if (ft_strcmp(line, delimiter) == 0)
+		{
+			free(line);
+			break;
+		}
+		line[ft_strlen(line)] = '\n';
+		ft_putstr_fd(line, pipefd[1]);
+		free(line);
+	}
+	close(pipefd[1]);
+	shell->fdin = pipefd[0];
+	dup2(shell->fdin, STDIN_FILENO);
+}
 
 void	apply_outfile(char **name, t_shell *shell, int i)
 {
@@ -35,16 +68,21 @@ void	apply_infile(char **name, t_shell *shell, int i)
 {
 	if (shell->fdin > 2)
 		close(shell->fdin);
-	shell->fdin = open(name[i + 1], O_RDONLY, S_IRWXU);
-	if (shell->fdin == -1)
+	if (ft_strcmp(name[i], "<<") == 0)
+		apply_heredoc(name[i + 1], shell);
+	else
 	{
-		ft_putstr_fd("zsh: no such file or directory: ", 2);
-		ft_putstr_fd(name[i + 1], 2);
-		ft_putchar_fd('\n', 2);
-		shell->exec_signal = 1;
-		shell->g_status = 1;
+		shell->fdin = open(name[i + 1], O_RDONLY, S_IRWXU);
+		if (shell->fdin == -1)
+		{
+			ft_putstr_fd("zsh: no such file or directory: ", 2);
+			ft_putstr_fd(name[i + 1], 2);
+			ft_putchar_fd('\n', 2);
+			shell->exec_signal = 1;
+			shell->g_status = 1;
+		}
+		dup2(shell->fdin, STDIN_FILENO);
 	}
-	dup2(shell->fdin, STDIN_FILENO);
 }
 
 void	apply_pipe(t_shell *shell, char **cmd, int *prev_fd)

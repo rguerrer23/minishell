@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 17:05:28 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/21 17:43:11 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/22 11:06:11 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	ft_cd_home(t_shell *shell)
 
 void	ft_cd(char **full_cmd, t_shell *shell)
 {
-	if(full_cmd[2] != NULL)
+	if (full_cmd[2] != NULL)
 	{
 		write(STDERR_FILENO, "cd: too many arguments\n", 23);
 		shell->g_status = 1;
