@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 19:30:25 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/23 11:30:38 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/23 12:57:58 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ void	expand_env_var(t_shell *shell, char **envp)
 					{
 						shell->full_cmd[i] = delete_str(shell->full_cmd[i], j, j + 1);
 						shell->full_cmd[i] = insert_str(shell->full_cmd[i], status, j);
-						printf("shell %s\n", shell->full_cmd[i]);
 						j++;
 					}
 					else

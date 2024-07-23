@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:59:05 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/23 12:23:17 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/23 12:57:46 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ char	**super_split(char *prompt)
 				else
 					new = ft_strd_add(new, aux);
 			}
-			printf("split = %s\n", aux);
 			free(aux);
 		}
 	}

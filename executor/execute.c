@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 11:37:06 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/23 12:16:19 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/23 13:19:59 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void	execute(t_shell *shell)
 	setup_redirections(shell);
 	while (shell->full_cmd[i] != NULL)
 	{
+		printf("full_cmd[%d]: %s\n", i, shell->full_cmd[i]);
 		while (shell->full_cmd[i] != NULL && ft_strcmp(shell->full_cmd[i],
 				"|") != 0)
 			i++;
