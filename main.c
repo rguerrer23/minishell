@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/23 10:47:35 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/23 11:16:45 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ static int	ft_check_line(char *line)
 
 int	insert_tab(int count, int key)
 {
-	if (rl_line_buffer[0] == '\0'
-		|| strspn(rl_line_buffer, " \t") == strlen(rl_line_buffer))
+	if (rl_line_buffer[0] == '\0' || strspn(rl_line_buffer,
+			" \t") == strlen(rl_line_buffer))
 	{
 		rl_insert_text("\t");
 		rl_redisplay();
@@ -50,21 +50,21 @@ void	init_struct(t_shell *shell, char **envp)
 	setup_redirections(shell);
 	reset_fds(shell);
 	shell->exit = 0;
-	shell->exec_signal = 0;	
+	shell->exec_signal = 0;
+	rl_bind_key('\t', insert_tab);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
 	t_shell	shell;
-	
+
 	if (argc != 1 || argv[1] != NULL)
 	{
 		ft_putstr_fd(RED "minishell: invalid arguments\n" NC, STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}
 	init_struct(&shell, envp);
-	rl_bind_key('\t', insert_tab);
 	while (shell.exit == 0)
 	{
 		if_signal();
