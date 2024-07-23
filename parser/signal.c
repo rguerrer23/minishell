@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 16:32:27 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/22 20:24:12 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/23 15:37:20 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	handler(int sig)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
-		rl_replace_line("", 0);
 	}
 	else if (sig == SIGQUIT)
 	{
