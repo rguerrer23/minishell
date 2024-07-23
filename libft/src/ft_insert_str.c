@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 23:40:57 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/22 22:43:37 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/23 11:15:02 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,22 @@ char	*ft_insert_str(char *main, char *piece, size_t pos)
 	new = ft_calloc(sizeof(char), ft_strlen(main) + ft_strlen(piece) + 1);
 	new_pos = 0;
 	piece_pos = 0;
-	while (pos > new_pos++)
+	while (new_pos < pos)
+	{
 		new[new_pos] = main[new_pos];
-	while (piece[piece_pos++])
+		new_pos++;
+	}
+	while (piece[piece_pos])
 	{
 		new[new_pos] = piece[piece_pos];
 		new_pos++;
+		piece_pos++;
 	}
-	while (main[pos++])
+	while (main[pos])
 	{
 		new[new_pos] = main[pos];
 		new_pos++;
+		pos++;
 	}
-	new[new_pos] = '\0';
-	return (new);
+	return (new[new_pos] = '\0', new);
 }

@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 19:30:25 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/22 21:09:20 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/23 11:15:47 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,57 @@ char	*key_x_value(t_var **list_var, char *str, t_shell *shell)
 	return (res);
 }
 
+char	*insert_str(char *main, char *piece, size_t pos)
+{
+	char	*new;
+	size_t	new_pos;
+	size_t	piece_pos;
+
+	new = ft_calloc(sizeof(char), ft_strlen(main) + ft_strlen(piece) + 1);
+	new_pos = 0;
+	piece_pos = 0;
+	while (new_pos < pos)
+	{
+		new[new_pos] = main[new_pos];
+		new_pos++;
+	}
+	while (piece[piece_pos])
+	{
+		new[new_pos] = piece[piece_pos];
+		new_pos++;
+		piece_pos++;
+	}
+	while (main[pos])
+	{
+		new[new_pos] = main[pos];
+		new_pos++;
+		pos++;
+	}
+	return (new[new_pos] = '\0', new);
+}
+
+char	*delete_str(char *main, size_t start, size_t finish)
+{
+	size_t	main_pos;
+	size_t	len;
+	size_t	new_len;
+	char	*new;
+	size_t	new_pos;
+
+	main_pos = 0;
+	len = ft_strlen(main);
+	new_len = len - (finish - start + 1);
+	new = ft_calloc(sizeof(char), new_len + 1);
+	new_pos = 0;
+	while (main_pos < start)
+		new[new_pos++] = main[main_pos++];
+	main_pos = finish + 1;
+	while (main_pos < len)
+		new[new_pos++] = main[main_pos++];
+	new[new_pos] = '\0';
+	return (new);
+}
+
 /*
 	Expande las variables de entorno.
 */
@@ -93,15 +144,16 @@ void	expand_env_var(t_shell *shell, char **envp)
 				{
 					if (shell->full_cmd[i][j + 1] == '?')
 					{
-						shell->full_cmd[i] = ft_delete_str(shell->full_cmd[i], j, j + 1);
-						shell->full_cmd[i] = ft_insert_str(shell->full_cmd[i], status, j);
+						shell->full_cmd[i] = delete_str(shell->full_cmd[i], j, j + 1);
+						shell->full_cmd[i] = insert_str(shell->full_cmd[i], status, j);
+						printf("shell %s\n", shell->full_cmd[i]);
 						j++;
 					}
 					else
 					{
 						key = find_varname(shell->full_cmd[i], j + 1);
-						shell->full_cmd[i] = ft_delete_str(shell->full_cmd[i], j, j + ft_strlen(key));
-						shell->full_cmd[i] = ft_insert_str(shell->full_cmd[i], get_var(list_var, key), j);
+						shell->full_cmd[i] = delete_str(shell->full_cmd[i], j, j + ft_strlen(key));
+						shell->full_cmd[i] = insert_str(shell->full_cmd[i], get_var(list_var, key), j);
 						free(key);
 					}
 				}
