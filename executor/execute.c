@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 11:37:06 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/23 10:27:28 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/23 12:16:19 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,6 @@ void	execute(t_shell *shell)
 			i++;
 		j = i;
 	}
+	reset_env(shell);
 	reset_redirections(shell);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/23 11:30:09 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/23 12:22:59 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ typedef struct s_shell
 	pid_t	pid;
 	int		exit;
 	int		exec_signal;
+	char	*oldpwd;
 }			t_shell;
 
 int			main(int argc, char **argv, char **envp);
@@ -156,5 +157,6 @@ void		reset_redirections(t_shell *shell);
 void		setup_redirections(t_shell *shell);
 /*clean*/
 void		ft_close_resets(t_shell *shell);
+void		reset_env(t_shell *shell);
 
 #endif

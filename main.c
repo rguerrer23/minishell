@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/23 11:16:45 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/23 11:50:05 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	init_struct(t_shell *shell, char **envp)
 	shell->exit = 0;
 	shell->exec_signal = 0;
 	rl_bind_key('\t', insert_tab);
+	shell->oldpwd = NULL;
 }
 
 int	main(int argc, char **argv, char **envp)
