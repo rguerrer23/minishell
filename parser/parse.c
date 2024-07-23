@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:59:05 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/23 10:19:42 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/23 11:44:23 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ char	*process_token(char *prompt, int *pos)
 	char	*aux;
 
 	aux = NULL;
-	while (prompt[*pos] == ' ')
-		(*pos)++;
 	if (prompt[*pos] == '\"')
 		aux = process_dq(prompt, pos);
 	else if (prompt[*pos] == '\'')
@@ -82,16 +80,21 @@ char	**super_split(char *prompt)
 	new = NULL;
 	while (prompt[pos])
 	{
-		aux = process_token(prompt, &pos);
-		if (aux && *aux)
+		while (prompt[pos] == ' ')
+			pos++;
+		if (prompt[pos])
 		{
-			if (!new)
-				new = ft_strd_new(aux);
-			else
-				new = ft_strd_add(new, aux);
+			aux = process_token(prompt, &pos);
+			if (aux && *aux)
+			{
+				if (!new)
+					new = ft_strd_new(aux);
+				else
+					new = ft_strd_add(new, aux);
+			}
+			printf("split = %s\n", aux);
+			free(aux);
 		}
-		printf("split = %s\n", aux);
-		free(aux);
 	}
 	return (new);
 }

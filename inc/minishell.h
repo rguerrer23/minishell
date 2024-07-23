@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/23 11:23:35 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/23 11:30:09 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,11 +120,13 @@ char		*process_red2(char *prompt, int *pos);
 int			strlen_end_word(char *prompt, int pos);
 char		*process_char(char *prompt, int *pos);
 t_var		**init_envp(char **envp);
-char		*get_var(t_var **list_var, char *key);
 char		*key_x_value(t_var **env_list, char *str, t_shell *shell);
 void		expand_env_var(t_shell *shell, char **envp);
+char		*get_var(t_var **list_var, char *key);
 char		*find_varname(char *str, int pos);
 void		remove_dquotes(char *str);
+char		*insert_str(char *main, char *piece, size_t pos);
+char		*delete_str(char *main, size_t start, size_t finish);
 void		handler(int signal);
 void		if_signal(void);
 void		ft_cd(char **full_cmd, t_shell *shell);
