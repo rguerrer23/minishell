@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/22 22:37:49 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/23 10:27:01 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ void		ft_env_error(int bad_env, char *env);
 int			is_bad_env(char *env);
 void		ft_new_env(char *name_var, char *value_var, t_shell *shell);
 /* executor */
-int			execute_ins(t_shell *shell, char **cmd);
+int			execute_bin(t_shell *shell, char **cmd);
 void		exec_choose(t_shell *shell, char **cmd);
 void		execute(t_shell *shell);
 /*redirection*/
