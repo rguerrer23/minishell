@@ -6,14 +6,14 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:46:21 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/23 12:40:53 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/23 14:27:11 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
 /*
-	Extrae una parte de caracteres que sean pipes consecutivos.
+	Procesa una parte de caracteres que sean pipes consecutivos.
 */
 char	*process_pipe(char *prompt, int *pos)
 {
@@ -34,7 +34,7 @@ char	*process_pipe(char *prompt, int *pos)
 }
 
 /*
-	Extrae una parte de caracteres que sean "<" consecutivos.
+	Procesa una parte de caracteres que sean "<" consecutivos.
 */
 char	*process_red1(char *prompt, int *pos)
 {
@@ -55,7 +55,7 @@ char	*process_red1(char *prompt, int *pos)
 }
 
 /*
-	Extrae una parte de caracteres que sean ">" consecutivos.
+	Procesa una parte de caracteres que sean ">" consecutivos.
 */
 char	*process_red2(char *prompt, int *pos)
 {
@@ -76,7 +76,7 @@ char	*process_red2(char *prompt, int *pos)
 }
 
 /*
-	Extrae una subcadena de caracteres "normales" consecutivos.
+	Procesa una subcadena de caracteres "normales" consecutivos.
 */
 char	*process_char(char *prompt, int *pos)
 {
