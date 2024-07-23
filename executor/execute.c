@@ -3,40 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 11:37:06 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/23 14:04:01 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/23 14:53:21 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	exclude_redirection(char **prompt)
-{
-	int	i;
-
-	i = 0;
-	while (prompt[i])
-	{
-		if (ft_strcmp(prompt[i], ">") == 0)
-		{
-			free(prompt[i]);
-			prompt[i] = NULL;
-		}
-		i++;
-	}
-}
-
 /* Esta funcion comprueba si existe un builtin y escoje*/
 void	exec_choose(t_shell *shell, char **cmd)
 {
 	shell->g_status = 0;
-	exclude_redirection(cmd);
 	if (cmd && is_builtin(cmd[0]) == 1)
 		execute_builtin(shell, cmd);
 	else if (cmd)
-		shell->g_status = execute_bin(shell, cmd);
+		execute_bin(shell, cmd);
 	if (shell->pin > 0)
 		close(shell->pin);
 	if (shell->pout > 0)
@@ -45,11 +28,13 @@ void	exec_choose(t_shell *shell, char **cmd)
 	shell->pout = -1;
 }
 
-char	**extract_command(char **full_cmd, int start, int end)
+char	**extract_command(char **full_cmd, int start, int end, t_shell *shell)
 {
 	char	**cmd;
 	int		k;
-
+	
+	k = start;
+	apply_redirections(full_cmd, shell, &k);
 	cmd = ft_calloc(end - start + 1, sizeof(char *));
 	if (cmd == NULL)
 		return (NULL);
@@ -65,7 +50,6 @@ char	**extract_command(char **full_cmd, int start, int end)
 
 void	process_command(t_shell *shell, char **cmd, int *prev_fd, int has_pipe)
 {
-	apply_redirections(cmd, shell);
 	if (has_pipe)
 		apply_pipe(shell, cmd, prev_fd);
 	else
@@ -97,7 +81,7 @@ void	execute(t_shell *shell)
 		while (shell->full_cmd[i] != NULL && ft_strcmp(shell->full_cmd[i],
 				"|") != 0)
 			i++;
-		cmd = extract_command(shell->full_cmd, j, i);
+		cmd = extract_command(shell->full_cmd, j, i, shell);
 		if (cmd == NULL)
 			return ;
 		process_command(shell, cmd, &prev_fd, shell->full_cmd[i] != NULL);

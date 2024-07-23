@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 17:37:00 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/23 13:07:51 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/23 14:27:20 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	apply_infile(char **name, t_shell *shell, int i)
 		apply_heredoc(name[i + 1], shell);
 	else
 	{
-		shell->fdin = open(name[i + 1], O_RDONLY, S_IRWXU);
+		shell->fdin = open(name[i + 1], O_RDONLY);
 		if (shell->fdin == -1)
 		{
 			ft_putstr_fd("zsh: no such file or directory: ", 2);

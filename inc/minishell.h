@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/23 12:22:59 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/23 14:40:07 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,12 +143,12 @@ void		ft_env_error(int bad_env, char *env);
 int			is_bad_env(char *env);
 void		ft_new_env(char *name_var, char *value_var, t_shell *shell);
 /* executor */
-int			execute_bin(t_shell *shell, char **cmd);
+void			execute_bin(t_shell *shell, char **cmd);
 void		exec_choose(t_shell *shell, char **cmd);
 void		execute(t_shell *shell);
 void		reset_fds(t_shell *shell);
 /*redirection*/
-void		apply_redirections(char **prompt, t_shell *shell);
+void		apply_redirections(char **prompt, t_shell *shell, int *i);
 void		apply_outfile(char **name, t_shell *shell, int i);
 void		apply_infile(char **name, t_shell *shell, int i);
 void		apply_pipe(t_shell *shell, char **cmd, int *prev_fd);

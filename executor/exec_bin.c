@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:43:22 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/23 10:26:48 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/23 13:48:56 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	error_msg(char *cmd)
 	DIR	*dir;
 	int	status;
 
+	status = 0;
 	dir = opendir(cmd);
 	if (ft_strchr(cmd, '/') == NULL)
 		ft_putstr_fd("zsh: command not found: ", 2);
@@ -59,7 +60,7 @@ char	*get_cmd_path(char *cmd, char *bin)
 	}
 }
 
-int	exc(char *path, char **cmd, t_shell *shell)
+void	exc(char *path, char **cmd, t_shell *shell)
 {
 	pid_t	pid;
 	int		status;
@@ -80,14 +81,12 @@ int	exc(char *path, char **cmd, t_shell *shell)
 		else
 			shell->g_status = 1;
 	}
-	return (shell->g_status);
 }
 
-int	execute_bin(t_shell *shell, char **cmd)
+void	execute_bin(t_shell *shell, char **cmd)
 {
 	int		i;
 	char	**bin;
-	int		status;
 
 	i = 0;
 	while (shell->env && shell->env[i])
@@ -97,17 +96,24 @@ int	execute_bin(t_shell *shell, char **cmd)
 		i++;
 	}
 	if (shell->env[i] == NULL)
-		return (exc(cmd[0], cmd, shell));
+	{
+		shell->g_status = 1;
+		return ;
+	}
 	bin = ft_split(shell->env[i], ':');
 	if (!cmd[0] && !bin)
-		return (1);
+	{
+		shell->g_status = 1;
+		return ;
+	}
 	i = 1;
 	shell->cmd_path = get_cmd_path(cmd[0], bin[0] + 5);
 	while (cmd[0] && bin[i] && shell->cmd_path == NULL)
 		shell->cmd_path = get_cmd_path(cmd[0], bin[i++]);
 	if (shell->cmd_path != NULL)
-		status = exc(shell->cmd_path, cmd, shell);
+		exc(shell->cmd_path, cmd, shell);
 	else
-		status = exc(cmd[0], cmd, shell);
-	return (ft_strd_free(bin), free(shell->cmd_path), status);
+		exc(cmd[0], cmd, shell);
+	return (ft_strd_free(bin), free(shell->cmd_path));
 }
+
