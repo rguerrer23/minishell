@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/22 22:37:03 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/23 10:47:35 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,34 @@ int	insert_tab(int count, int key)
 		return (rl_complete(count, key));
 }
 
+void	init_struct(t_shell *shell, char **envp)
+{
+	shell->prompt = NULL;
+	shell->parsed_prompt = NULL;
+	shell->env = envp;
+	shell->full_cmd = NULL;
+	shell->cmd_path = NULL;
+	shell->g_status = 0;
+	setup_redirections(shell);
+	reset_fds(shell);
+	shell->exit = 0;
+	shell->exec_signal = 0;	
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
 	t_shell	shell;
-
+	
 	if (argc != 1 || argv[1] != NULL)
 	{
 		ft_putstr_fd(RED "minishell: invalid arguments\n" NC, STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}
-	shell.g_status = 0;
-	shell.exit = 0;
-	shell.env = envp;
+	init_struct(&shell, envp);
 	rl_bind_key('\t', insert_tab);
 	while (shell.exit == 0)
 	{
-		shell.exec_signal = 0;
 		if_signal();
 		line = readline("Minishell$~ ");
 		if (line == NULL)

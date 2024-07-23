@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/23 10:27:01 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/23 10:48:06 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ void		ft_new_env(char *name_var, char *value_var, t_shell *shell);
 int			execute_bin(t_shell *shell, char **cmd);
 void		exec_choose(t_shell *shell, char **cmd);
 void		execute(t_shell *shell);
+void		reset_fds(t_shell *shell);
 /*redirection*/
 void		apply_redirections(char **prompt, t_shell *shell);
 void		apply_outfile(char **name, t_shell *shell, int i);
