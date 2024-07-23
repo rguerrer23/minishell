@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 20:50:24 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/23 15:04:11 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/23 17:46:39 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,13 @@ void	handle_output_redirection(char **prompt, t_shell *shell, int *i)
 	*i = *i - 1;
 }
 
-void	handle_input_redirection(char **prompt, t_shell *shell, int *i)
+void	handle_input_redirection(char **prompt, t_shell *shell, int *i, int start)
 {
 	int	j;
-
-	if (*i == 0 || prompt[*i - 1] == NULL)
-		shell->exec_signal = 1;
-	apply_infile(prompt, shell, *i);
-	j = *i;
+	
+	*i = *i - 2;
+	j = start;	
+	apply_infile(prompt, shell, j);
 	while (prompt[j + 2] != NULL)
 	{
 		prompt[j] = prompt[j + 2];
@@ -48,19 +47,21 @@ void	handle_input_redirection(char **prompt, t_shell *shell, int *i)
 	}
 	prompt[j] = NULL;
 	prompt[j + 1] = NULL;
-	//*i = *i - 1;
 }
 
-void	apply_redirections(char **prompt, t_shell *shell, int *i)
+void	apply_redirections(char **prompt, t_shell *shell, int *i, int start)
 {
-	while (prompt[*i])
+	int	j;
+
+	j = start;
+	while (prompt[j])
 	{
-		if (ft_strcmp(prompt[*i], ">") == 0 || ft_strcmp(prompt[*i], ">>") == 0)
+		if (ft_strcmp(prompt[j], ">") == 0 || ft_strcmp(prompt[j], ">>") == 0)
 			handle_output_redirection(prompt, shell, i);
-		else if (ft_strcmp(prompt[*i], "<") == 0 || ft_strcmp(prompt[*i],
+		else if (ft_strcmp(prompt[j], "<") == 0 || ft_strcmp(prompt[j],
 				"<<") == 0)
-			handle_input_redirection(prompt, shell, i);
+			handle_input_redirection(prompt, shell, i, start);
 		else
-			(*i)++;
+			j++;
 	}
 }

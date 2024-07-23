@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/23 15:47:15 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/23 17:02:30 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,10 +149,10 @@ void		exec_choose(t_shell *shell, char **cmd);
 void		execute(t_shell *shell);
 void		reset_fds(t_shell *shell);
 /*redirection*/
-void		apply_redirections(char **prompt, t_shell *shell, int *i);
+void		apply_redirections(char **prompt, t_shell *shell, int *i, int start);
 void		apply_outfile(char **name, t_shell *shell, int i);
 void		apply_infile(char **name, t_shell *shell, int i);
-void		apply_pipe(t_shell *shell, char **cmd, int *prev_fd);
+void		apply_pipe(t_shell *shell, char **cmd);
 void		apply_heredoc(char *delimiter, t_shell *shell);
 void		reset_redirections(t_shell *shell);
 void		setup_redirections(t_shell *shell);

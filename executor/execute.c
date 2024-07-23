@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 11:37:06 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/23 15:47:00 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/23 18:03:13 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,32 +32,33 @@ char	**extract_command(char **full_cmd, int start, int end, t_shell *shell)
 {
 	char	**cmd;
 	int		k;
+	int		i;
 	
-	k = start;
-	apply_redirections(full_cmd, shell, &k);
-	cmd = ft_calloc(end - start + 1, sizeof(char *));
+	k = end;
+	apply_redirections(full_cmd, shell, &k, start);
+	cmd = ft_calloc(start + k + 1, sizeof(char *));
 	if (cmd == NULL)
 		return (NULL);
-	k = 0;
-	while (k < end - start)
+	i = 0;
+	while (i < k - start)
 	{
-		cmd[k] = full_cmd[start + k];
-		k++;
+		cmd[i] = full_cmd[start + i];
+		i++;
 	}
-	cmd[k] = NULL;
+	cmd[i] = NULL;
 	return (cmd);
 }
 
-void	process_command(t_shell *shell, char **cmd, int *prev_fd, int has_pipe)
+void	process_command(t_shell *shell, char **cmd, int has_pipe)
 {
 	if (has_pipe)
-		apply_pipe(shell, cmd, prev_fd);
+		apply_pipe(shell, cmd);
 	else
 	{
-		if (*prev_fd != -1)
+		if (shell->fdin != -1)
 		{
-			dup2(*prev_fd, STDIN_FILENO);
-			close(*prev_fd);
+			dup2(shell->fdin, STDIN_FILENO);
+			close(shell->fdin);
 		}
 		if (shell->exec_signal == 0)
 			exec_choose(shell, cmd);
@@ -70,11 +71,9 @@ void	execute(t_shell *shell)
 	int		i;
 	int		j;
 	char	**cmd;
-	int		prev_fd;
 
 	i = 0;
 	j = 0;
-	prev_fd = -1;
 	setup_redirections(shell);
 	while (shell->full_cmd[i] != NULL)
 	{
@@ -84,7 +83,7 @@ void	execute(t_shell *shell)
 		cmd = extract_command(shell->full_cmd, j, i, shell);
 		if (cmd == NULL)
 			return ;
-		process_command(shell, cmd, &prev_fd, shell->full_cmd[i] != NULL);
+		process_command(shell, cmd, shell->full_cmd[i] != NULL);
 		if (shell->full_cmd[i] != NULL)
 			i++;
 		j = i;
