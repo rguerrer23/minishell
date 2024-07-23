@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 20:50:24 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/23 14:37:43 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/23 15:04:11 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,14 @@ void	handle_input_redirection(char **prompt, t_shell *shell, int *i)
 		shell->exec_signal = 1;
 	apply_infile(prompt, shell, *i);
 	j = *i;
-	while (prompt[j] != NULL)
+	while (prompt[j + 2] != NULL)
 	{
-		prompt[j] = prompt[j + 1];
+		prompt[j] = prompt[j + 2];
 		j++;
 	}
-	*i = *i - 1;
+	prompt[j] = NULL;
+	prompt[j + 1] = NULL;
+	//*i = *i - 1;
 }
 
 void	apply_redirections(char **prompt, t_shell *shell, int *i)

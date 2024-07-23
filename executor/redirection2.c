@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 17:37:00 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/23 14:27:20 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/23 15:45:32 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	apply_infile(char **name, t_shell *shell, int i)
 
 void	setup_redirections(t_shell *shell)
 {
+	shell->exec_signal = 0;
 	shell->infile = dup(STDIN_FILENO);
 	shell->outfile = dup(STDOUT_FILENO);
 }

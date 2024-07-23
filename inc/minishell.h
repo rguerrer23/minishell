@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/23 14:40:07 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/23 15:47:15 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ typedef struct s_shell
 	int		exit;
 	int		exec_signal;
 	char	*oldpwd;
+	int		prev_fd;
 }			t_shell;
 
 int			main(int argc, char **argv, char **envp);
@@ -143,7 +144,7 @@ void		ft_env_error(int bad_env, char *env);
 int			is_bad_env(char *env);
 void		ft_new_env(char *name_var, char *value_var, t_shell *shell);
 /* executor */
-void			execute_bin(t_shell *shell, char **cmd);
+void		execute_bin(t_shell *shell, char **cmd);
 void		exec_choose(t_shell *shell, char **cmd);
 void		execute(t_shell *shell);
 void		reset_fds(t_shell *shell);

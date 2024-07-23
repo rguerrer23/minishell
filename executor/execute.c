@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 11:37:06 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/23 14:53:21 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/23 15:47:00 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ void	execute(t_shell *shell)
 {
 	int		i;
 	int		j;
-	int		prev_fd;
 	char	**cmd;
+	int		prev_fd;
 
 	i = 0;
 	j = 0;
