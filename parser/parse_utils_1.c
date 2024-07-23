@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:46:21 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/23 11:59:16 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/23 12:40:53 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char	*process_char(char *prompt, int *pos)
 	while (prompt[*pos] && prompt[*pos] != ' ' && prompt[*pos] != '|'
 		&& prompt[*pos] != '<' && prompt[*pos] != '>')
 	{
-		if (prompt[*pos] == '=')
+		if (prompt[++(*pos)] == '=')
 		{
 			aux = ft_substr(prompt, aux_pos, *pos - aux_pos + 1);
 			(*pos)++;
@@ -102,10 +102,7 @@ char	*process_char(char *prompt, int *pos)
 			free(aux);
 			return (word);
 		}
-		(*pos)++;
 	}
 	word = ft_substr(prompt, aux_pos, *pos - aux_pos);
 	return (word);
 }
-
-

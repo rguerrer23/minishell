@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 19:30:25 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/23 12:57:58 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/23 13:48:49 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,83 +15,111 @@
 /*
 	Sobreescribimos el key por la variable de entonrno despues de un $.
 */
-char	*key_x_value(t_var **list_var, char *str, t_shell *shell)
+static char	*handle_dollar(char *dollar, t_var **list_var, t_shell *shell)
 {
 	char	*res;
-	char	*dollar;
 	char	*key;
 	char	*value;
 	char	*end;
 
-	res = ft_strdup("");
-	while ((dollar = ft_strchr(str, '$')))
+	if (*(dollar + 1) == '?')
 	{
-		res = ft_insert_str(res, ft_strndup(str, dollar - str), ft_strlen(res));
-		if (*(dollar + 1) == '?')
-		{
-			res = ft_insert_str(res, ft_itoa(shell->g_status), ft_strlen(res));
-			str = dollar + 2;
-		}
-		else
-		{
-			end = dollar + 1;
-			while (*end && (ft_isalnum(*end) || *end == '_'))
-				end++;
-			key = ft_strndup(dollar + 1, end - dollar - 1);
-			value = get_var(list_var, key);
-			res = ft_insert_str(res, value, ft_strlen(res));
-			free(key);
-			str = end;
-		}
+		res = ft_itoa(shell->g_status);
 	}
-	res = ft_insert_str(res, str, ft_strlen(res));
+	else
+	{
+		end = dollar + 1;
+		while (*end && (ft_isalnum(*end) || *end == '_'))
+			end++;
+		key = ft_strndup(dollar + 1, end - dollar - 1);
+		value = get_var(list_var, key);
+		res = ft_strdup(value);
+		free(key);
+	}
+	return (res);
+}
+
+char	*key_x_value(t_var **list_var, char *str, t_shell *shell)
+{
+	char	*res;
+	char	*dollar;
+	char	*dollar_res;
+	char	*temp;
+
+	res = ft_strdup("");
+	dollar = ft_strchr(str, '$');
+	while (dollar != NULL)
+	{
+		temp = ft_strndup(str, dollar - str);
+		res = ft_strjoin(res, temp);
+		free(temp);
+		dollar_res = handle_dollar(dollar, list_var, shell);
+		res = ft_strjoin(res, dollar_res);
+		free(dollar_res);
+		if (*(dollar + 1) == '?')
+			str = dollar + 2;
+		else
+			str = dollar + 1;
+		dollar = ft_strchr(str, '$');
+	}
+	temp = ft_strdup(str);
+	res = ft_strjoin(res, temp);
+	free(temp);
 	return (res);
 }
 
 /*
 	Expande las variables de entorno.
 */
+static void	replace_dollar(char **cmd, int *j, char *status, t_var **list_var)
+{
+	char	*key;
+
+	if ((*cmd)[*j + 1] == '?')
+	{
+		*cmd = ft_delete_str(*cmd, *j, *j + 1);
+		*cmd = ft_insert_str(*cmd, status, *j);
+		(*j)++;
+	}
+	else
+	{
+		key = find_varname(*cmd, *j + 1);
+		*cmd = ft_delete_str(*cmd, *j, *j + ft_strlen(key));
+		*cmd = ft_insert_str(*cmd, get_var(list_var, key), *j);
+		free(key);
+	}
+}
+
+static void	do_command(char **cmd, t_var **list_var, char *status)
+{
+	int	j;
+
+	j = 0;
+	while ((*cmd)[j])
+	{
+		if ((*cmd)[j] == '$' && !(*cmd)[j + 1])
+			(*cmd)[j] = '$';
+		else if ((*cmd)[j] == '$')
+			replace_dollar(cmd, &j, status, list_var);
+		j++;
+	}
+	if (strchr(*cmd, '\"'))
+		*cmd = key_x_value(list_var, *cmd, NULL);
+}
+
 void	expand_env_var(t_shell *shell, char **envp)
 {
 	t_var	**list_var;
 	int		i;
-	int		j;
-	char	*key;
 	char	*status;
 
 	list_var = init_envp(envp);
-	i = 0;
 	status = ft_itoa(shell->g_status);
+	i = 0;
 	while (shell->full_cmd[i])
 	{
-		j = 0;
 		if (shell->full_cmd[i][0] != '\'')
-		{
-			while (shell->full_cmd[i][j])
-			{
-				if (shell->full_cmd[i][j] == '$' && !shell->full_cmd[i][j + 1])
-					shell->full_cmd[i][j] = '$';
-				else if (shell->full_cmd[i][j] == '$')
-				{
-					if (shell->full_cmd[i][j + 1] == '?')
-					{
-						shell->full_cmd[i] = delete_str(shell->full_cmd[i], j, j + 1);
-						shell->full_cmd[i] = insert_str(shell->full_cmd[i], status, j);
-						j++;
-					}
-					else
-					{
-						key = find_varname(shell->full_cmd[i], j + 1);
-						shell->full_cmd[i] = delete_str(shell->full_cmd[i], j, j + ft_strlen(key));
-						shell->full_cmd[i] = insert_str(shell->full_cmd[i], get_var(list_var, key), j);
-						free(key);
-					}
-				}
-				j++;
-			}
-			if (strchr(shell->full_cmd[i], '\"'))
-				shell->full_cmd[i] = key_x_value(list_var, shell->full_cmd[i], shell);
-		}
+			do_command(&shell->full_cmd[i], list_var, status);
 		i++;
 	}
 	free(status);
