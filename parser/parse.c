@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:59:05 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/24 17:05:24 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 18:56:20 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ char	**super_split(char *prompt)
 			pos++;
 		if (prompt[pos])
 		{
-			//aux = process_token(prompt, &pos);
 			aux = process_token(prompt, &pos);
 			if (aux && *aux)
 			{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:13:05 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/24 17:21:31 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 18:13:16 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,43 +50,35 @@ char	*find_varname(char *str, int pos)
 	Borra las comillas, simples o dobles, de un string (str)
 	y da lo mismo donde esten.
 */
-void remove_quotes(char *str) {
-    int i = 0, j = 0;
+void	remove_quotes(char *str)
+{
+	int	i;
+	int	j;
 
-    while (str[i]) 
+	i = 0;
+	j = 0;
+	while (str[i])
 	{
-        if (str[i] == '\'') 
+		if (str[i] == '\'')
 		{
 			i++;
 			while (str[i] && str[i] != '\'')
-			{
-				str[j] = str[i];
-				i++;
-				j++;
-			}
+				str[j++] = str[i++];
 		}
 		else if (str[i] == '\"')
 		{
 			i++;
 			while (str[i] && str[i] != '\"')
-			{
-				str[j] = str[i];
-				i++;
-				j++;
-			}
+				str[j++] = str[i++];
 		}
 		else
-		{
-			str[j] = str[i];
-			i++;
-			j++;
-		}
-    }
-    str[j] = '\0'; // Terminar la cadena de salida
+			str[j++] = str[i++];
+	}
+	str[j] = '\0';
 }
 
 /*
-	
+
 */
 char	*insert_str(char *main, char *piece, size_t pos)
 {

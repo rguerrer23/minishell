@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_split.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 02:25:24 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/24 16:40:31 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 18:54:45 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,148 +28,45 @@ int	pipe_counter(char **str)
 	return (cont);
 }
 
-void	allocate_memory_args(t_cmd *cmds, char **split_cmd)
+void	handle_inred(char **split, int *i, t_cmd *cmd, int *in_cont)
 {
-	int	arg_count;
-	int	i;
-
-	arg_count = 0;
-	i = 0;
-	while (split_cmd[i] && strcmp(split_cmd[i], "|") != 0)
-	{
-		if (i > 0)
-		{
-			if (strcmp(split_cmd[i], ">") == 0 || strcmp(split_cmd[i],
-					">>") == 0 || strcmp(split_cmd[i], "<") == 0)
-			{
-				i += 2;
-			}
-			else
-			{
-				arg_count++;
-				i++;
-			}
-		}
-		else
-			i++;
-	}
-	cmds->args = ft_calloc(arg_count + 1, sizeof(char *));
+	cmd->incmd[(*in_cont)++] = strdup(split[*i]);
+	(*i)++;
+	if (split[*i])
+		cmd->incmd[(*in_cont)++] = strdup(split[(*i)++]);
 }
 
-void	allocate_memory_in(t_cmd *cmds, char **split_cmd)
+void	handle_outred(char **split, int *i, t_cmd *cmd, int *out_cont)
 {
-	int	in_count;
-	int	i;
-
-	in_count = 0;
-	i = 0;
-	while (split_cmd[i] && strcmp(split_cmd[i], "|") != 0)
-	{
-		if (strcmp(split_cmd[i], "<") == 0 || strcmp(split_cmd[i], "<<") == 0)
-		{
-			in_count++;
-			i++;
-			if (split_cmd[i])
-			{
-				in_count++;
-				i++;
-			}
-		}
-		else
-			i++;
-	}
-	cmds->incmd = ft_calloc(in_count + 1, sizeof(char *));
-}
-
-void	allocate_memory_out(t_cmd *cmds, char **split_cmd)
-{
-	int	out_count;
-	int	i;
-
-	out_count = 0;
-	i = 0;
-	while (split_cmd[i] && strcmp(split_cmd[i], "|") != 0)
-	{
-		if (strcmp(split_cmd[i], ">") == 0 || strcmp(split_cmd[i], ">>") == 0)
-		{
-			out_count++;
-			i++;
-			if (split_cmd[i])
-			{
-				out_count++;
-				i++;
-			}
-		}
-		else
-			i++;
-	}
-	cmds->outcmd = ft_calloc(out_count + 1, sizeof(char *));
-}
-
-void	allocate_memory(t_cmd **cmds, char **split_cmd)
-{
-	int	i;
-	int	cmd_count;
-
-	cmd_count = 0;
-	cmd_count = pipe_counter(split_cmd);
-	i = 0;
-	while (i < cmd_count)
-	{
-		cmds[i] = (t_cmd *)malloc(sizeof(t_cmd));
-		if (!cmds[i])
-			return ;
-		cmds[i]->cmd = NULL;
-		allocate_memory_args(cmds[i], split_cmd);
-		allocate_memory_in(cmds[i], split_cmd);
-		allocate_memory_out(cmds[i], split_cmd);
-		i++;
-	}
+	cmd->outcmd[(*out_cont)++] = strdup(split[*i]);
+	(*i)++;
+	if (split[*i])
+		cmd->outcmd[(*out_cont)++] = strdup(split[(*i)++]);
 }
 
 void	parse_command(char **split_cmd, int *index, t_cmd *cmd_struct)
 {
-	int	arg_count;
-	int	in_count;
-	int	out_count;
+	int	arg_cont;
+	int	in_cont;
+	int	out_cont;
 
-	arg_count = 0;
-	in_count = 0;
-	out_count = 0;
+	arg_cont = 0;
+	in_cont = 0;
+	out_cont = 0;
 	while (split_cmd[*index] && strcmp(split_cmd[*index], "|") != 0)
 	{
-		if (strcmp(split_cmd[*index], "<") == 0 || strcmp(split_cmd[*index],
-				"<<") == 0)
-		{
-			cmd_struct->incmd[in_count++] = strdup(split_cmd[*index]);
-			(*index)++;
-			if (split_cmd[*index])
-			{
-				cmd_struct->incmd[in_count++] = strdup(split_cmd[*index]);
-				(*index)++;
-			}
-		}
+		if (strcmp(split_cmd[*index], "<") == 0
+			|| strcmp(split_cmd[*index], "<<") == 0)
+			handle_inred(split_cmd, index, cmd_struct, &in_cont);
 		else if (strcmp(split_cmd[*index], ">") == 0
 			|| strcmp(split_cmd[*index], ">>") == 0)
-		{
-			cmd_struct->outcmd[out_count++] = strdup(split_cmd[*index]);
-			(*index)++;
-			if (split_cmd[*index])
-			{
-				cmd_struct->outcmd[out_count++] = strdup(split_cmd[*index]);
-				(*index)++;
-			}
-		}
+			handle_outred(split_cmd, index, cmd_struct, &out_cont);
 		else
 		{
 			if (cmd_struct->cmd == NULL)
-			{
 				cmd_struct->cmd = strdup(split_cmd[*index]);
-			}
 			else
-			{
-				cmd_struct->args[arg_count++] = strdup(split_cmd[*index]);
-			}
+				cmd_struct->args[arg_cont++] = strdup(split_cmd[*index]);
 			(*index)++;
 		}
 	}
@@ -177,12 +74,15 @@ void	parse_command(char **split_cmd, int *index, t_cmd *cmd_struct)
 
 void	executor_split(t_shell *shell)
 {
-	t_cmd **cmds;
-	int i = 0;
-	int cmd_index = 0;
-	int pipe_count = pipe_counter(shell->split_cmd);
+	t_cmd	**cmds;
+	int		i;
+	int		cmd_index;
+	int		pipe_cont;
 
-	cmds = (t_cmd **)malloc(sizeof(t_cmd *) * (pipe_count + 1));
+	i = 0;
+	cmd_index = 0;
+	pipe_cont = pipe_counter(shell->split_cmd);
+	cmds = (t_cmd **)malloc(sizeof(t_cmd *) * (pipe_cont + 1));
 	if (!cmds)
 		return ;
 	allocate_memory(cmds, shell->split_cmd);
@@ -193,6 +93,6 @@ void	executor_split(t_shell *shell)
 			i++;
 		cmd_index++;
 	}
-	cmds[pipe_count] = NULL;
+	cmds[pipe_cont] = NULL;
 	shell->cmds = cmds;
 }

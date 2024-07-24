@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 19:30:25 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/24 18:13:08 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 19:03:38 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,11 +104,9 @@ static void	do_command(char **cmd, t_var **list_var, char *status)
 			replace_dollar(cmd, &j, status, list_var);
 		j++;
 	}
-	//if (strchr(*cmd, '\"'))
-	//	*cmd = key_x_value(list_var, *cmd, NULL);
 }
 
-void restore_dolar(char **dolar)
+void	restore_dolar(char **dolar)
 {
 	int	i;
 	int	j;
