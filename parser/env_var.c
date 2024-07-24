@@ -3,75 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 19:30:25 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/24 19:38:30 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 21:59:21 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-/*
-	Sobreescribimos el key por la variable de entonrno despues de un $.
-*/
-/*
-static char	*handle_dollar(char *dollar, t_var **list_var, t_shell *shell)
-{
-	char	*res;
-	char	*key;
-	char	*value;
-	char	*end;
-
-	if (*(dollar + 1) == '?')
-	{
-		res = ft_itoa(shell->g_status);
-	}
-	else
-	{
-		end = dollar + 1;
-		while (*end && (ft_isalnum(*end) || *end == '_'))
-			end++;
-		key = ft_strndup(dollar + 1, end - dollar - 1);
-		value = get_var(list_var, key);
-		res = ft_strdup(value);
-		free(key);
-	}
-	return (res);
-}
-
-char	*key_x_value(t_var **list_var, char *str, t_shell *shell)
-{
-	char	*res;
-	char	*dollar;
-	char	*dollar_res;
-	char	*temp;
-
-	res = ft_strdup("");
-	dollar = ft_strchr(str, '$');
-	while (dollar != NULL)
-	{
-		temp = ft_strndup(str, dollar - str);
-		res = ft_strjoin(res, temp);
-		free(temp);
-		dollar_res = handle_dollar(dollar, list_var, shell);
-		res = ft_strjoin(res, dollar_res);
-		free(dollar_res);
-		if (*(dollar + 1) == '?')
-			str = dollar + 2;
-		else
-			str = dollar + 1;
-		dollar = ft_strchr(str, '$');
-	}
-	temp = ft_strdup(str);
-	res = ft_strjoin(res, temp);
-	free(temp);
-	return (res);
-}
-*/
-/*
-	Expande las variables de entorno.
-*/
 static void	replace_dollar(char **cmd, int *j, char *status, t_var **list_var)
 {
 	char	*key;

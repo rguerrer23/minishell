@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 21:40:30 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/24 19:39:35 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 22:17:08 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ void	init_prompt(t_shell *shell)
 	parse_input(shell);
 	shell->split_cmd = ft_matrixdup(shell->full_cmd);
 	executor_split(shell);
+	ft_strd_free(shell->full_cmd);
+	ft_strd_free(shell->split_cmd);
 }
 
 /*
