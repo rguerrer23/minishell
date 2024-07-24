@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 19:30:25 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/24 16:45:47 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/24 18:06:36 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 /*
 	Sobreescribimos el key por la variable de entonrno despues de un $.
 */
+/*
 static char	*handle_dollar(char *dollar, t_var **list_var, t_shell *shell)
 {
 	char	*res;
@@ -67,7 +68,7 @@ char	*key_x_value(t_var **list_var, char *str, t_shell *shell)
 	free(temp);
 	return (res);
 }
-
+*/
 /*
 	Expande las variables de entorno.
 */
@@ -97,14 +98,14 @@ static void	do_command(char **cmd, t_var **list_var, char *status)
 	j = 0;
 	while ((*cmd)[j])
 	{
-		if ((*cmd)[j] == '$' && !(*cmd)[j + 1])
+		if ((*cmd)[j] == '$' && ((!ft_isalnum((*cmd)[j + 1])) && ((*cmd)[j + 1] != '_')))
 			(*cmd)[j] = '$';
 		else if ((*cmd)[j] == '$')
 			replace_dollar(cmd, &j, status, list_var);
 		j++;
 	}
-	if (strchr(*cmd, '\"'))
-		*cmd = key_x_value(list_var, *cmd, NULL);
+	//if (strchr(*cmd, '\"'))
+	//	*cmd = key_x_value(list_var, *cmd, NULL);
 }
 
 void restore_dolar(char **dolar)
