@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 17:05:28 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 02:55:38 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 18:08:20 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void	ft_cd(char **full_cmd, t_shell *shell)
 		ft_cd_home(shell);
 	else if (full_cmd[0][0] == '-')
 		ft_cd_oldpwd(shell);
-	else if (chdir(full_cmd[1]) == -1)
+	else if (chdir(full_cmd[0]) == -1)
 	{
 		ft_putstr_fd("cd: no such file or directory: ", STDERR_FILENO);
 		ft_putstr_fd(full_cmd[0], STDERR_FILENO);
