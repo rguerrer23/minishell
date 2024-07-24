@@ -93,3 +93,4 @@ cambiar $SHLV y $OLDPWD
 echo ?kdlsf
 echo - "" "  " hello
 
+echo hola mu"ndo Mala"ga ti'err'a de bue<nas per<sonas como el '$USER' super$USER"$USER"'$US"ER'
