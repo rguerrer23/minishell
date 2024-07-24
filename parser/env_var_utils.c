@@ -6,13 +6,13 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:13:05 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/24 17:21:31 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 19:23:43 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-/*
+/*dsdf
 	Busca en la lista de variables de entorno (list_var) un key (key) y
 	devuelve su valor. So no lo encuentra no devuelve nada.
 */
