@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 15:59:54 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/23 13:26:00 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/24 18:50:09 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,6 @@ int	check_cmd(t_shell *shell)
 		if (shell->prompt[pos] == '\"' || shell->prompt[pos] == '\'')
 			state = check_quotes(shell->prompt[pos], state);
 		pos++;
-	}
-	if (state != NO_QUOTE)
-	{
-		ft_printf(RED"ERROR! (check_cmd)\n"NC);
-		exit(EXIT_FAILURE);
 	}
 	if (check_first_pipe(shell->prompt) == 0)
 		return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 21:40:30 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/24 16:27:27 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/24 18:53:34 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,14 @@ t_var	**init_envp(char **envp)
 */
 void	init_prompt(t_shell *shell)
 {
+	shell->parse_error = 0;
 	delete_end_spaces(shell->prompt);
 	if (!check_cmd(shell))
 	{
-		ft_printf("zsh: parse error\n");
-		shell->g_status = 2;
+		ft_printf("minishell: parse error\n");
+		shell->parse_error = 1;
 		shell->prompt = NULL;
+		return ;
 	}
 	parse_input(shell);
 	shell->split_cmd = ft_matrixdup(shell->full_cmd);

@@ -83,14 +83,8 @@ revisar redirecciones
 12- VALGRIND
 
 3-Revisar env args; env dsf=dsfds
-4-revisar << (solo)
-revisar unset env;
-revisar  ls >
 
 cambiar $_ detro de env
-cambiar $SHLV y $OLDPWD
->file ls
-echo ?kdlsf
 echo - "" "  " hello
 
 echo hola mu"ndo Mala"ga ti'err'a de bue<nas per<sonas como el '$USER' super$USER"$USER"'$US"ER'

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 16:33:19 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/24 18:52:15 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	init_struct(t_shell *shell, char **envp)
 	shell->exec_signal = 0;
 	rl_bind_key('\t', insert_tab);
 	shell->oldpwd = NULL;
+	update_shlvl(shell);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -94,7 +95,8 @@ int	main(int argc, char **argv, char **envp)
 			shell.prompt = line;
 			add_history(line);
 			init_prompt(&shell);
-			execute(shell.cmds, &shell);
+			if (shell.parse_error == 0)
+				execute(shell.cmds, &shell);
 		}
 		free(line);
 	}

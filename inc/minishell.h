@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 16:14:42 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/24 18:52:27 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ typedef struct s_shell
 	int		exec_signal;
 	char	*oldpwd;
 	int		prev_fd;
+	int		parse_error;
 	t_cmd	**cmds;
 }			t_shell;
 
@@ -142,6 +143,7 @@ char		*insert_str(char *main, char *piece, size_t pos);
 char		*delete_str(char *main, size_t start, size_t finish);
 void		handler(int signal);
 void		if_signal(void);
+void		update_shlvl(t_shell *shell);
 void		ft_cd(char **full_cmd, t_shell *shell);
 void		ft_echo(char **args, t_shell *shell);
 void		ft_env(t_shell *shell, char **full_cmd);
