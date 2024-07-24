@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:52:32 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/22 11:26:46 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 02:51:11 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 /* Esta funcion imprime en la salida estandar los argumentos que recibe. */
 
-void	ft_echo(char **args)
+void	ft_echo(char **args, t_shell *shell)
 {
 	int	i;
 	int	x;
 	int	newline;
 
 	newline = 1;
-	i = 1;
+	i = 0;
 	x = 1;
 	while (args[i] && args[i][0] == '-' && args[i][1] == 'n')
 	{
@@ -34,11 +34,11 @@ void	ft_echo(char **args)
 	}
 	while (args[i])
 	{
-		ft_putstr_fd(args[i], STDOUT_FILENO);
+		ft_putstr_fd(args[i], shell->fdout);
 		if (args[i + 1] && args[i][0] != '\0')
-			ft_putstr_fd(" ", STDOUT_FILENO);
+			ft_putstr_fd(" ", shell->fdout);
 		i++;
 	}
 	if (newline)
-		ft_putstr_fd("\n", STDOUT_FILENO);
+		ft_putstr_fd("\n", shell->fdout);
 }

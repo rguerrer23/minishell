@@ -6,20 +6,47 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 11:37:06 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/23 18:03:13 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 02:46:20 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
+char	*ft_undo_dim(char **cmd)
+{
+	int	i;
+	int len;
+	char *str;
+
+	i = 0;
+	while (cmd[i] != NULL)
+	{	
+		len += ft_strlen(cmd[i]) + 1;
+		i++;
+	}
+	str = ft_calloc(len + i + 1, sizeof(char));
+	i = 0;
+	int pos = 0;
+	while (cmd[i] != NULL)
+	{
+		strcpy(str + pos, cmd[i]);
+		pos += ft_strlen(cmd[i]);
+		str[pos] = ' ';
+		pos++;
+		i++;
+	}
+	str[len] = '\0';
+	return (str);
+}
+
 /* Esta funcion comprueba si existe un builtin y escoje*/
-void	exec_choose(t_shell *shell, char **cmd)
+void	exec_choose(t_cmd **cmds, t_shell *shell, int i)
 {
 	shell->g_status = 0;
-	if (cmd && is_builtin(cmd[0]) == 1)
-		execute_builtin(shell, cmd);
-	else if (cmd)
-		execute_bin(shell, cmd);
+	if (cmds[i]->cmd && is_builtin(cmds[i]->cmd) == 1)
+		execute_builtin(shell, cmds, i);
+	else if (cmds[i]->cmd)
+		execute_bin(shell, cmds, i);
 	if (shell->pin > 0)
 		close(shell->pin);
 	if (shell->pout > 0)
@@ -28,65 +55,24 @@ void	exec_choose(t_shell *shell, char **cmd)
 	shell->pout = -1;
 }
 
-char	**extract_command(char **full_cmd, int start, int end, t_shell *shell)
+void	execute(t_cmd **cmds, t_shell *shell)
 {
-	char	**cmd;
-	int		k;
-	int		i;
+	int i;
 	
-	k = end;
-	apply_redirections(full_cmd, shell, &k, start);
-	cmd = ft_calloc(start + k + 1, sizeof(char *));
-	if (cmd == NULL)
-		return (NULL);
 	i = 0;
-	while (i < k - start)
-	{
-		cmd[i] = full_cmd[start + i];
-		i++;
-	}
-	cmd[i] = NULL;
-	return (cmd);
-}
-
-void	process_command(t_shell *shell, char **cmd, int has_pipe)
-{
-	if (has_pipe)
-		apply_pipe(shell, cmd);
-	else
-	{
-		if (shell->fdin != -1)
-		{
-			dup2(shell->fdin, STDIN_FILENO);
-			close(shell->fdin);
-		}
-		if (shell->exec_signal == 0)
-			exec_choose(shell, cmd);
-	}
-	ft_strd_free(cmd);
-}
-
-void	execute(t_shell *shell)
-{
-	int		i;
-	int		j;
-	char	**cmd;
-
-	i = 0;
-	j = 0;
 	setup_redirections(shell);
-	while (shell->full_cmd[i] != NULL)
+	while (cmds[i] != NULL)
 	{
-		while (shell->full_cmd[i] != NULL && ft_strcmp(shell->full_cmd[i],
-				"|") != 0)
-			i++;
-		cmd = extract_command(shell->full_cmd, j, i, shell);
-		if (cmd == NULL)
-			return ;
-		process_command(shell, cmd, shell->full_cmd[i] != NULL);
-		if (shell->full_cmd[i] != NULL)
-			i++;
-		j = i;
+		shell->fdnextin = -1;
+		if (cmds[i + 1] != NULL)
+			apply_pipe(shell);
+		else
+			shell->fdout = STDOUT_FILENO;
+		apply_redirections(cmds[i]->incmd, shell);
+		apply_redirections(cmds[i]->outcmd, shell);
+		exec_choose(cmds, shell, i);
+		shell->fdin = shell->fdnextin;
+		i++;
 	}
 	reset_env(shell);
 	reset_redirections(shell);

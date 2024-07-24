@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 10:48:53 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/22 18:59:45 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 02:59:04 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ int	ft_env_check(char **full_cmd, t_shell *shell)
 	int	i;
 	int	error;
 
-	i = 1;
+	i = 0;
 	error = 0;
-	while (full_cmd[i] != NULL && error == 0)
+	while (full_cmd && full_cmd[i] != NULL && error == 0)
 	{
 		if (full_cmd[i][0] == '=')
 		{
@@ -73,15 +73,15 @@ void	ft_env(t_shell *shell, char **full_cmd)
 	{
 		while (shell->env[i])
 		{
-			ft_putstr_fd(shell->env[i], STDOUT_FILENO);
-			ft_putstr_fd("\n", STDOUT_FILENO);
+			ft_putstr_fd(shell->env[i], shell->fdout);
+			ft_putstr_fd("\n", shell->fdout);
 			i++;
 		}
 		i = 1;
-		while (full_cmd[i])
+		while (full_cmd && full_cmd[i])
 		{
-			ft_putstr_fd(full_cmd[i], STDOUT_FILENO);
-			ft_putstr_fd("\n", STDOUT_FILENO);
+			ft_putstr_fd(full_cmd[i], shell->fdout);
+			ft_putstr_fd("\n", shell->fdout);
 			i++;
 		}
 	}

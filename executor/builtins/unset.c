@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 10:39:41 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/22 18:46:49 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/23 23:05:45 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_unset_check(char **name_var, t_shell *shell)
 	int	x;
 	int	i;
 
-	x = 1;
+	x = 0;
 	i = 0;
 	while (name_var[x] != NULL)
 	{
@@ -79,8 +79,8 @@ void	ft_unset(char **name_var, t_shell *shell)
 {
 	int	x;
 
-	x = 1;
-	if (!(name_var[1]))
+	x = 0;
+	if (!(name_var[0]))
 	{
 		ft_putstr_fd("unset: not enough arguments\n", STDERR_FILENO);
 		shell->g_status = 1;

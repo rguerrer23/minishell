@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 17:59:23 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/22 22:15:31 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/23 23:04:27 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,11 @@ void	ft_export(char **full_cmd, t_shell *shell)
 	int	bad_env;
 
 	i = 0;
-	if (!full_cmd[1])
+	if (!full_cmd[0])
 		print_all_env(shell);
 	else
 	{
-		i = 1;
+		i = 0;
 		while (full_cmd[i] != NULL)
 		{
 			bad_env = is_bad_env(full_cmd[i]);

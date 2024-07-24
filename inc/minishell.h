@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/23 17:02:30 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 02:51:26 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef struct s_shell
 	int		pin;
 	int		outfile;
 	int		fdout;
+	int 	fdnextin;
 	int		pout;
 	pid_t	pid;
 	int		exit;
@@ -97,6 +98,15 @@ typedef struct s_shell
 	char	*oldpwd;
 	int		prev_fd;
 }			t_shell;
+
+typedef struct s_cmd
+{
+	char	*cmd;
+	char	**args;
+	char	**incmd;
+	char	**outcmd;
+	
+}			t_cmd;
 
 int			main(int argc, char **argv, char **envp);
 void		init_pipe_red(t_pipe_red *value);
@@ -132,27 +142,24 @@ char		*delete_str(char *main, size_t start, size_t finish);
 void		handler(int signal);
 void		if_signal(void);
 void		ft_cd(char **full_cmd, t_shell *shell);
-void		ft_echo(char **args);
+void		ft_echo(char **args, t_shell *shell);
 void		ft_env(t_shell *shell, char **full_cmd);
 void		ft_exit(char **cmd, t_shell *shell);
 void		ft_export(char **full_cmd, t_shell *shell);
 void		ft_pwd(t_shell *shell, char **full_cmd);
 void		ft_unset(char **name_var, t_shell *shell);
 int			is_builtin(char *cmd);
-void		execute_builtin(t_shell *shell, char **full_cmd);
+void		execute_builtin(t_shell *shell, t_cmd **cmds, int i);
 void		ft_env_error(int bad_env, char *env);
 int			is_bad_env(char *env);
 void		ft_new_env(char *name_var, char *value_var, t_shell *shell);
 /* executor */
-void		execute_bin(t_shell *shell, char **cmd);
-void		exec_choose(t_shell *shell, char **cmd);
-void		execute(t_shell *shell);
+void		execute_bin(t_shell *shell, t_cmd **cmds, int i);
+void		execute(t_cmd **cmds, t_shell *shell);
 void		reset_fds(t_shell *shell);
 /*redirection*/
-void		apply_redirections(char **prompt, t_shell *shell, int *i, int start);
-void		apply_outfile(char **name, t_shell *shell, int i);
-void		apply_infile(char **name, t_shell *shell, int i);
-void		apply_pipe(t_shell *shell, char **cmd);
+void		apply_redirections(char **redir, t_shell *shell);
+void		apply_pipe(t_shell *shell);
 void		apply_heredoc(char *delimiter, t_shell *shell);
 void		reset_redirections(t_shell *shell);
 void		setup_redirections(t_shell *shell);

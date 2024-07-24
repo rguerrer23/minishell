@@ -6,13 +6,37 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:43:22 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/23 13:48:56 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 02:42:51 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
 /* Esta funcion ejecuta un comando de sistema. */
+
+char	**ft_undo(t_cmd **cmds, int i)
+{
+	char	**exc;
+	int		x;
+
+	x = 0;
+	while (cmds[i]->args != NULL && cmds[i]->args[x] != NULL)
+		x++;
+	exc = calloc(x + 1, sizeof(char *));
+	x = 0;
+	exc[x] = ft_strdup(cmds[i]->cmd);
+	x++;
+	if (cmds[i]->args != NULL)
+	{
+		while (cmds[i]->args[x-1] != NULL && cmds[i]->args != NULL)
+		{
+			exc[x] = ft_strdup(cmds[i]->args[x-1]);
+			x++;
+		}
+	}
+	exc[x] = NULL;
+	return (exc);
+}
 
 int	error_msg(char *cmd)
 {
@@ -60,60 +84,82 @@ char	*get_cmd_path(char *cmd, char *bin)
 	}
 }
 
-void	exc(char *path, char **cmd, t_shell *shell)
+void	exc(char *path, t_cmd **cmd, t_shell *shell, int i)
 {
 	pid_t	pid;
 	int		status;
+	char	**exc;
 
+	exc = ft_undo(cmd, i);
 	pid = fork();
 	if (pid == 0)
 	{
+
+
+		// char buf[1024];
+		// if (shell->fdin > 2){
+		// 	memset(buf, 0, 1024);
+		// 	read(shell->fdin, buf, 1024);
+		// 	lseek(shell->fdin, 0, SEEK_SET);
+		// 	dprintf(STDERR_FILENO, "CHILD: %s\n", buf);
+		// }
+		if (shell->fdin > 2) {
+			dup2(shell->fdin, STDIN_FILENO);
+			close(shell->fdin);
+		}
+		if (shell->fdout > 2) {
+			dup2(shell->fdout, STDOUT_FILENO);
+			close(shell->fdout);
+		}
+
+		dprintf(STDERR_FILENO, "CHILD: cmd=%i, stdin=%i stdout=%i next_stdin=%i\n", i, shell->fdin, shell->fdout, shell->fdnextin);
 		if (ft_strchr(path, '/') != NULL)
-			execve(path, cmd, shell->env);
+			execve(path, exc, shell->env);
 		shell->g_status = error_msg(path);
 		exit(shell->g_status);
 	}
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		shell->g_status = WEXITSTATUS(status);
 	else
-	{
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			shell->g_status = WEXITSTATUS(status);
-		else
-			shell->g_status = 1;
-	}
+		shell->g_status = 1;
+	if (shell->fdin > 2)
+		close(shell->fdin);
+	if (shell->fdout > 2)
+		close(shell->fdout);
 }
 
-void	execute_bin(t_shell *shell, char **cmd)
+void	execute_bin(t_shell *shell, t_cmd **cmds, int i)
 {
-	int		i;
+	int		x;
 	char	**bin;
 
-	i = 0;
-	while (shell->env && shell->env[i])
+	x = 0;
+	while (shell->env && shell->env[x])
 	{
-		if (ft_strncmp(shell->env[i], "PATH=", 5) == 0)
+		if (ft_strncmp(shell->env[x], "PATH=", 5) == 0)
 			break ;
-		i++;
+		x++;
 	}
-	if (shell->env[i] == NULL)
+	if (shell->env[x] == NULL)
 	{
 		shell->g_status = 1;
 		return ;
 	}
-	bin = ft_split(shell->env[i], ':');
-	if (!cmd[0] && !bin)
+	bin = ft_split(shell->env[x], ':');
+	if (!cmds[i]->cmd && !bin)
 	{
 		shell->g_status = 1;
 		return ;
 	}
-	i = 1;
-	shell->cmd_path = get_cmd_path(cmd[0], bin[0] + 5);
-	while (cmd[0] && bin[i] && shell->cmd_path == NULL)
-		shell->cmd_path = get_cmd_path(cmd[0], bin[i++]);
+	x = 1;
+	shell->cmd_path = get_cmd_path(cmds[i]->cmd, bin[0] + 5);
+	while (cmds[i]->cmd && bin[x] && shell->cmd_path == NULL)
+		shell->cmd_path = get_cmd_path(cmds[i]->cmd, bin[x++]);
 	if (shell->cmd_path != NULL)
-		exc(shell->cmd_path, cmd, shell);
+		exc(shell->cmd_path, cmds, shell, i);
 	else
-		exc(cmd[0], cmd, shell);
+		exc(cmds[i]->cmd, cmds, shell, i);
 	return (ft_strd_free(bin), free(shell->cmd_path));
 }
 
