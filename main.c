@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 18:52:15 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 20:21:38 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,6 @@ static int	ft_check_line(char *line)
 	return (1);
 }
 
-int	insert_tab(int count, int key)
-{
-	if (rl_line_buffer[0] == '\0' || strspn(rl_line_buffer,
-			" \t") == strlen(rl_line_buffer))
-	{
-		rl_insert_text("\t");
-		rl_redisplay();
-		return (0);
-	}
-	else
-		return (rl_complete(count, key));
-}
-
 void	init_struct(t_shell *shell, char **envp)
 {
 	shell->prompt = NULL;
@@ -68,7 +55,6 @@ void	init_struct(t_shell *shell, char **envp)
 	reset_fds(shell);
 	shell->exit = 0;
 	shell->exec_signal = 0;
-	rl_bind_key('\t', insert_tab);
 	shell->oldpwd = NULL;
 	update_shlvl(shell);
 }

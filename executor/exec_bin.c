@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:43:22 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 02:42:51 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 20:28:48 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,9 @@ void	execute_bin(t_shell *shell, t_cmd **cmds, int i)
 	}
 	if (shell->env[x] == NULL)
 	{
-		shell->g_status = 1;
+		shell->g_status = 127;
+		ft_putstr_fd(cmds[i]->cmd, STDERR_FILENO);
+		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
 		return ;
 	}
 	bin = ft_split(shell->env[x], ':');

@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 10:48:53 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 18:57:04 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 19:50:37 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,6 @@ int	ft_env_check(char **full_cmd, t_shell *shell)
 	error = 0;
 	while (full_cmd && full_cmd[i] != NULL && error == 0)
 	{
-		if (full_cmd[i][0] == '=')
-		{
-			ft_putstr_fd("env: ", STDERR_FILENO);
-			ft_putstr_fd(full_cmd[i], STDERR_FILENO);
-			ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
-			error = 1;
-			shell->g_status = 127;
-		}
 		if (error == 0)
 			error = ft_env_check_equal(full_cmd[i], shell);
 		i++;
@@ -77,7 +69,7 @@ void	ft_env(t_shell *shell, char **full_cmd)
 			ft_putstr_fd("\n", shell->fdout);
 			i++;
 		}
-		i = 1;
+		i = 0;
 		while (full_cmd && full_cmd[i])
 		{
 			ft_putstr_fd(full_cmd[i], shell->fdout);
