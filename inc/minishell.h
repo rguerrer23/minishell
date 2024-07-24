@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 02:51:26 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 03:34:22 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,14 @@ typedef struct s_var
 	char	*value;
 }			t_var;
 
+typedef struct s_cmd
+{
+	char	*cmd;
+	char	**args;
+	char	**incmd;
+	char	**outcmd;
+}			t_cmd;
+
 /*
 	- *prompt		= linea de comandos leida por el shell, sin parsear.
 	- **env			= matriz de punteros a las variables de entorno del shell.
@@ -79,6 +87,7 @@ typedef struct s_var
 */
 typedef struct s_shell
 {
+	char	**split_cmd;
 	char	*prompt;
 	char	*parsed_prompt;
 	char	**env;
@@ -109,8 +118,9 @@ typedef struct s_cmd
 }			t_cmd;
 
 int			main(int argc, char **argv, char **envp);
+void		delete_end_spaces(char *str);
 void		init_pipe_red(t_pipe_red *value);
-void		init_prompt(t_shell *shell);
+void		init_prompt(t_shell *shell, t_cmd *cmd);
 int			check_cmd(t_shell *shell);
 int			check_quotes(char quote, int state);
 int			check_first_pipe(char *prompt);
@@ -136,7 +146,7 @@ char		*key_x_value(t_var **env_list, char *str, t_shell *shell);
 void		expand_env_var(t_shell *shell, char **envp);
 char		*get_var(t_var **list_var, char *key);
 char		*find_varname(char *str, int pos);
-void		remove_dquotes(char *str);
+void		remove_quotes(char *str);
 char		*insert_str(char *main, char *piece, size_t pos);
 char		*delete_str(char *main, size_t start, size_t finish);
 void		handler(int signal);

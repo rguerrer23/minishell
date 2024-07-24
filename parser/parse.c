@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:59:05 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/23 14:56:10 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/24 02:58:16 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,24 +34,21 @@ int	strlen_end_word(char *prompt, int pos)
 /*
 	Segunda parte de super-Split.
 */
+
 char	*process_token(char *prompt, int *pos)
 {
-	char	*aux;
-
-	aux = NULL;
 	if (prompt[*pos] == '\"')
-		aux = process_dq(prompt, pos);
+		return (process_dq(prompt, pos));
 	else if (prompt[*pos] == '\'')
-		aux = process_sq(prompt, pos);
+		return (process_sq(prompt, pos));
 	else if (prompt[*pos] == '|')
-		aux = process_pipe(prompt, pos);
+		return (process_pipe(prompt, pos));
 	else if (prompt[*pos] == '<')
-		aux = process_red1(prompt, pos);
+		return (process_red1(prompt, pos));
 	else if (prompt[*pos] == '>')
-		aux = process_red2(prompt, pos);
+		return (process_red2(prompt, pos));
 	else
-		aux = process_char(prompt, pos);
-	return (aux);
+		return (process_char(prompt, pos));
 }
 
 /*
@@ -71,6 +68,7 @@ char	**super_split(char *prompt)
 			pos++;
 		if (prompt[pos])
 		{
+			//aux = process_token(prompt, &pos);
 			aux = process_token(prompt, &pos);
 			if (aux && *aux)
 			{
@@ -79,8 +77,10 @@ char	**super_split(char *prompt)
 				else
 					new = ft_strd_add(new, aux);
 			}
+			printf("(split = %s)\n", aux);
 			free(aux);
 		}
 	}
+	
 	return (new);
 }

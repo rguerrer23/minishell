@@ -6,11 +6,28 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/23 13:55:20 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/24 02:23:17 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/minishell.h"
+
+/*
+	Borramos los espacios que puede haber al final del prompt.
+*/
+void	delete_end_spaces(char *str)
+{
+	int	len;
+
+	if (str == NULL)
+		return ;
+	len = strlen(str);
+	while (len > 0 && str[len - 1] == ' ')
+	{
+		len--;
+	}
+	str[len] = '\0';
+}
 
 static int	ft_check_line(char *line)
 {
@@ -59,6 +76,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
 	t_shell	shell;
+	t_cmd	cmd;
 
 	if (argc != 1 || argv[1] != NULL)
 	{
@@ -76,7 +94,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			shell.prompt = line;
 			add_history(line);
-			init_prompt(&shell);
+			init_prompt(&shell, &cmd);
 			execute(&shell);
 		}
 		free(line);

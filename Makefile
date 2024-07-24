@@ -18,6 +18,7 @@ SRC			=	main.c \
 				parser/env_var_utils.c \
 				parser/signal.c \
 				parser/validating_pipes_reds.c \
+				parser/executor_split.c \
 				executor/builtins/cd.c executor/builtins/echo.c executor/builtins/env.c executor/builtins/exit.c \
 				executor/builtins/export.c executor/builtins/pwd.c executor/builtins/unset.c executor/execute.c \
 				executor/exec_bin.c executor/builtins.c executor/redirection.c executor/clean.c executor/builtins/export2.c \

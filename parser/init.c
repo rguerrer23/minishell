@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 21:40:30 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/23 13:58:19 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/24 03:19:11 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,6 @@ void	init_pipe_red(t_pipe_red *value)
 {
 	value->pipe = 0;
 	value->red = 0;
-}
-
-/*
-	Borramos los espacios que puede haber al final del prompt.
-*/
-void	delete_end_spaces(char *str)
-{
-	int	len;
-
-	if (str == NULL)
-		return ;
-	len = strlen(str);
-	while (len > 0 && str[len - 1] == ' ')
-	{
-		len--;
-	}
-	str[len] = '\0';
 }
 
 /*
@@ -69,7 +52,7 @@ t_var	**init_envp(char **envp)
 	Iniciamos el prompt:
 
 		- Parseamos los arguementos.
-		- Super_split.
+		- super_split.
 		- Expansion de las variables de entorno.
 */
 void	init_prompt(t_shell *shell)
@@ -85,10 +68,12 @@ void	init_prompt(t_shell *shell)
 		shell->prompt = NULL;
 	}
 	shell->full_cmd = parse_input(shell->prompt);
+	shell->split_cmd = ft_matrixdup(shell->full_cmd);
+	executor_split(shell);
 	expand_env_var(shell, shell->env);
 	while (shell->full_cmd[i] != NULL)
 	{
-		remove_dquotes(shell->full_cmd[i]);
+		remove_quotes(shell->full_cmd[i]);
 		i++;
 	}
 }

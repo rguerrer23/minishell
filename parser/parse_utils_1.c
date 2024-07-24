@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:46:21 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/23 14:27:11 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/24 00:54:02 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,29 +80,24 @@ char	*process_red2(char *prompt, int *pos)
 */
 char	*process_char(char *prompt, int *pos)
 {
-	int		aux_pos;
-	char	*aux;
 	char	*word;
+	char	*aux1;
+	char	*aux2;
 
-	aux_pos = *pos;
+	aux2 = ft_strdup("");
 	while (prompt[*pos] && prompt[*pos] != ' ' && prompt[*pos] != '|'
 		&& prompt[*pos] != '<' && prompt[*pos] != '>')
 	{
-		if (prompt[++(*pos)] == '=')
-		{
-			aux = ft_substr(prompt, aux_pos, *pos - aux_pos + 1);
-			(*pos)++;
-			if (prompt[*pos] == '\"')
-				word = process_dq(prompt, pos);
-			else if (prompt[*pos] == '\'')
-				word = process_sq(prompt, pos);
-			else
-				word = process_char(prompt, pos);
-			word = ft_strjoin(aux, word);
-			free(aux);
-			return (word);
-		}
+		if (prompt[*pos] == '\"')
+			word = process_dq(prompt, pos);
+		else if (prompt[*pos] == '\'')
+			word = process_sq(prompt, pos);
+		else
+			word = ft_substr(prompt, (*pos)++, 1);
+		aux1 = ft_strjoin(aux2, word);
+		free(aux2);
+		free(word);
+		aux2 = aux1;
 	}
-	word = ft_substr(prompt, aux_pos, *pos - aux_pos);
-	return (word);
+	return (aux2);
 }

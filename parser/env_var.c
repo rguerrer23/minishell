@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 19:30:25 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/23 13:48:49 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/24 00:10:32 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,25 @@ static void	do_command(char **cmd, t_var **list_var, char *status)
 		*cmd = key_x_value(list_var, *cmd, NULL);
 }
 
+void restore_dolar(char **dolar)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (dolar[i])
+	{
+		j = 0;
+		while (dolar[i][j])
+		{
+			if (dolar[i][j] == 1)
+				dolar[i][j] = '$';
+			j++;
+		}
+		i++;
+	}
+}
+
 void	expand_env_var(t_shell *shell, char **envp)
 {
 	t_var	**list_var;
@@ -122,5 +141,6 @@ void	expand_env_var(t_shell *shell, char **envp)
 			do_command(&shell->full_cmd[i], list_var, status);
 		i++;
 	}
+	restore_dolar(shell->full_cmd);
 	free(status);
 }

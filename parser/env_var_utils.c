@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:13:05 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/23 14:57:39 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/24 00:05:53 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*find_varname(char *str, int pos)
 	Borra las comillas, simples o dobles, de un string (str)
 	y da lo mismo donde esten.
 */
-void	remove_dquotes(char *str)
+void	remove_quotes(char *str)
 {
 	int	i;
 	int	j;
