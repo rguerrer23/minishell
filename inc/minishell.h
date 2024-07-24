@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 19:03:04 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/24 19:36:34 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ char		*get_var(t_var **list_var, char *key);
 char		*find_varname(char *str, int pos);
 void		remove_quotes(char *str);
 void		executor_split(t_shell *shell);
+void		allocate_memory(t_cmd **cmds, char **split_cmd);
 char		*insert_str(char *main, char *piece, size_t pos);
 char		*delete_str(char *main, size_t start, size_t finish);
 void		handler(int signal);
@@ -153,6 +154,7 @@ void		ft_pwd(t_shell *shell);
 void		ft_unset(char **name_var, t_shell *shell);
 int			is_builtin(char *cmd);
 void		execute_builtin(t_shell *shell, t_cmd **cmds, int i);
+int			pipe_counter(char **str);
 void		ft_env_error(int bad_env, char *env);
 int			is_bad_env(char *env);
 void		ft_new_env(char *name_var, char *value_var, t_shell *shell);
