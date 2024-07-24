@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:59:05 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/24 18:56:20 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/24 21:13:37 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,10 @@ char	**super_split(char *prompt)
 		if (prompt[pos])
 		{
 			aux = process_token(prompt, &pos);
-			if (aux && *aux)
-			{
-				if (!new)
-					new = ft_strd_new(aux);
-				else
-					new = ft_strd_add(new, aux);
-			}
+			if (!new)
+				new = ft_strd_new(aux);
+			else
+				new = ft_strd_add(new, aux);
 			free(aux);
 		}
 	}

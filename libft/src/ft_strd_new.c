@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 13:37:38 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/23 13:37:53 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/24 22:12:24 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,17 @@
 
 char	**ft_strd_new(char *str)
 {
-	char	**new;
+	char	**new_array;
 
-	new = ft_calloc(sizeof(char *), 2);
-	new[0] = ft_strdup(str);
-	return (new);
+	new_array = (char **)malloc(sizeof(char *) * 2);
+	if (!new_array)
+		return (NULL);
+	new_array[0] = ft_strdup(str);
+	if (!new_array[0])
+	{
+		free(new_array);
+		return (NULL);
+	}
+	new_array[1] = NULL;
+	return (new_array);
 }
