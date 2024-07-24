@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 19:30:25 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/24 19:03:38 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/24 19:38:30 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,8 @@ static void	do_command(char **cmd, t_var **list_var, char *status)
 	j = 0;
 	while ((*cmd)[j])
 	{
-		if ((*cmd)[j] == '$' && ((!ft_isalnum((*cmd)[j + 1])) && ((*cmd)[j + 1] != '_') && ((*cmd)[j + 1] != '?')))
+		if ((*cmd)[j] == '$' && ((!ft_isalnum((*cmd)[j + 1])) && ((*cmd)[j
+					+ 1] != '_') && ((*cmd)[j + 1] != '?')))
 			(*cmd)[j] = '$';
 		else if ((*cmd)[j] == '$')
 			replace_dollar(cmd, &j, status, list_var);

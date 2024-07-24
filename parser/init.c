@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 21:40:30 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/24 18:53:34 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 19:39:35 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ t_var	**init_envp(char **envp)
 	while (i < c)
 	{
 		list_var[i] = ft_calloc(sizeof(t_var), 1);
-		list_var[i]->key = ft_strndup(envp[i],
-				ft_strchr(envp[i], '=') - envp[i]);
+		list_var[i]->key = ft_strndup(envp[i], ft_strchr(envp[i], '=')
+				- envp[i]);
 		list_var[i]->value = ft_strdup(ft_strchr(envp[i], '=') + 1);
 		i++;
 	}
@@ -69,7 +69,6 @@ void	init_prompt(t_shell *shell)
 	parse_input(shell);
 	shell->split_cmd = ft_matrixdup(shell->full_cmd);
 	executor_split(shell);
-	//expand_env_var(shell, shell->env);
 }
 
 /*
@@ -81,9 +80,4 @@ void	parse_input(t_shell *shell)
 	if (shell->prompt[ft_strlen(shell->prompt) - 1] == ' ')
 		shell->full_cmd = ft_strd_lastdel(shell->full_cmd);
 	expand_env_var(shell, shell->env);
-	//while (shell->full_cmd[i] != NULL)
-	//{
-	//	remove_quotes(shell->full_cmd[i]);
-	//	i++;
-	//}
 }
