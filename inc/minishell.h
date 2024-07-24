@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 19:36:34 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 20:37:10 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,6 @@ char		*insert_str(char *main, char *piece, size_t pos);
 char		*delete_str(char *main, size_t start, size_t finish);
 void		handler(int signal);
 void		if_signal(void);
-void		update_shlvl(t_shell *shell);
 void		ft_cd(char **full_cmd, t_shell *shell);
 void		ft_echo(char **args, t_shell *shell);
 void		ft_env(t_shell *shell, char **full_cmd);
@@ -170,6 +169,8 @@ void		reset_redirections(t_shell *shell);
 void		setup_redirections(t_shell *shell);
 /*clean*/
 void		ft_close_resets(t_shell *shell);
-void		reset_env(t_shell *shell);
+/*utils*/
+void		reset_env(t_shell *shell, t_cmd **cmds);
+void		update_shlvl(t_shell *shell);
 
 #endif
