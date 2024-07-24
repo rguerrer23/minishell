@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 23:47:23 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/25 00:35:08 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	init_struct(t_shell *shell, char **envp)
 	int i;
 
 	i = 0;
+	shell->cmds = NULL;
 	shell->prompt = NULL;
 	shell->parsed_prompt = NULL;
 	while (envp[i] != NULL)

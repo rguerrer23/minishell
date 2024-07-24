@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 18:26:40 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 23:48:41 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/25 00:21:58 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	update_shlvl(t_shell *shell)
 			free(shlvl);
 			lvl++;
 			shlvl = ft_itoa(lvl);
+			free(shell->env[i]);
 			shell->env[i] = ft_strjoin("SHLVL=", shlvl);
 			free(shlvl);
 			return ;

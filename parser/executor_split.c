@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_split.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 02:25:24 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/24 23:27:37 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/25 00:32:34 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,15 @@ void	parse_command(char **split_cmd, int *index, t_cmd *cmd_struct)
 	}
 }
 
+void	free_cmd(t_cmd *cmd)
+{
+	free(cmd->cmd);
+	ft_strd_free(cmd->args);
+	ft_strd_free(cmd->incmd);
+	ft_strd_free(cmd->outcmd);
+	free(cmd);
+}
+
 void	executor_split(t_shell *shell)
 {
 	t_cmd	**cmds;
@@ -94,5 +103,12 @@ void	executor_split(t_shell *shell)
 		cmd_index++;
 	}
 	cmds[pipe_cont] = NULL;
+	i = 0;
+	if (shell->cmds)
+	{
+		while (shell->cmds[i])
+			free_cmd(shell->cmds[i++]);
+		free(shell->cmds);
+	}
 	shell->cmds = cmds;
 }
