@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 21:05:48 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 21:07:21 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 22:06:57 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,12 @@ void	exc(char *path, t_cmd **cmd, t_shell *shell, int i)
 	if (pid == 0)
 		execute_child_process(path, exc, shell);
 	waitpid(pid, &status, 0);
-	if (WIFEXITED(status))
-		shell->g_status = WEXITSTATUS(status);
-	else
-		shell->g_status = 1;
+	shell->g_status = status;
 	if (shell->fdin > 2)
 		close(shell->fdin);
 	if (shell->fdout > 2)
 		close(shell->fdout);
+    ft_strd_free(exc);
+    if (shell->g_status == 32512 || shell->g_status == 32256)
+        shell->g_status /= 256;
 }

@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:43:22 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 21:06:21 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 22:01:32 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	exc(char *path, t_cmd **cmd, t_shell *shell, int i)
 
 static char	**get_bin_paths(t_shell *shell)
 {
-	int		x;
+	int	x;
 
 	x = 0;
 	while (shell->env && shell->env[x])
