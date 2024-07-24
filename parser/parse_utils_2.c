@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 19:05:40 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/24 18:16:14 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/25 00:45:26 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 */
 char	*process_dq(char *prompt, int *pos)
 {
-	char	*word;
 	int		w_pos;
 	int		dq_counter;
 	char	*aux;
@@ -32,9 +31,7 @@ char	*process_dq(char *prompt, int *pos)
 		aux[w_pos++] = prompt[*pos];
 		(*pos)++;
 	}
-	word = ft_strdup(aux);
-	free(aux);
-	return (word);
+	return (aux);
 }
 
 /*
@@ -42,7 +39,6 @@ char	*process_dq(char *prompt, int *pos)
 */
 char	*process_sq(char *prompt, int *pos)
 {
-	char	*word;
 	int		w_pos;
 	int		sq_counter;
 	char	*aux;
@@ -64,7 +60,5 @@ char	*process_sq(char *prompt, int *pos)
 				aux[w_pos++] = prompt[*pos];
 		}
 	}
-	word = ft_strdup(aux);
-	free(aux);
-	return (word);
+	return (aux);
 }

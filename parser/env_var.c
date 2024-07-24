@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 19:30:25 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/24 22:56:29 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/25 00:50:16 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void	replace_dollar(char **cmd, int *j, char *status, t_var **list_var)
 {
 	char	*key;
+	char	*var;
 
 	if ((*cmd)[*j + 1] == '?')
 	{
@@ -26,8 +27,11 @@ static void	replace_dollar(char **cmd, int *j, char *status, t_var **list_var)
 	{
 		key = find_varname(*cmd, *j + 1);
 		*cmd = ft_delete_str(*cmd, *j, *j + ft_strlen(key));
-		*cmd = ft_insert_str(*cmd, get_var(list_var, key), *j);
+		var = get_var(list_var, key);
+		free(*cmd);
+		*cmd = ft_insert_str(*cmd, var, *j);
 		free(key);
+		free(var);
 	}
 }
 
