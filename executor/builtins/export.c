@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 17:59:23 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/23 23:04:27 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 23:50:59 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ int	update_env_var(char *name_var, char *value_var, t_shell *shell)
 			free(shell->env[x]);
 			shell->env[x] = ft_strjoin(name_var, "=");
 			if (value_var)
+			{
+				free(shell->env[x]);
 				shell->env[x] = ft_strjoin(shell->env[x], value_var);
+			}
 			updated = 1;
 		}
 		x++;

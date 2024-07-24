@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 17:05:28 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 21:50:05 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 23:51:31 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	update_pwd(t_shell *shell)
 	{
 		if (ft_strncmp(shell->env[i], "PWD=", 4) == 0)
 		{
+			free(shell->env[i]);
 			shell->env[i] = ft_strjoin("PWD=", cwd);
 			if (shell->env[i] == NULL)
 			{

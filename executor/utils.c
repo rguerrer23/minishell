@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 18:26:40 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 21:03:15 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 23:48:41 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	update_shlvl(t_shell *shell)
 		{
 			shlvl = ft_strdup(shell->env[i] + 6);
 			lvl = ft_atoi(shlvl);
+			free(shlvl);
 			lvl++;
 			shlvl = ft_itoa(lvl);
 			shell->env[i] = ft_strjoin("SHLVL=", shlvl);
@@ -46,17 +47,24 @@ void	reset_env(t_shell *shell, t_cmd **cmds)
 	{
 		if (shell->oldpwd != NULL && ft_strncmp(shell->env[i], "OLDPWD=",
 				7) == 0)
+		{
+			free(shell->env[i]);
 			shell->env[i] = ft_strjoin("OLDPWD=", shell->oldpwd);
+		}
 		if (ft_strncmp(shell->env[i], "_=", 2) == 0)
 		{
 			if (cmds[0]->args[0] != NULL)
 			{
 				while (cmds[0]->args[x] != NULL)
 					x++;
+				free(shell->env[i]);
 				shell->env[i] = ft_strjoin("_=", cmds[0]->args[x - 1]);
 			}
 			else
+			{
+				free(shell->env[i]);
 				shell->env[i] = ft_strjoin("_=", cmds[0]->cmd);
+			}
 		}
 		i++;
 	}

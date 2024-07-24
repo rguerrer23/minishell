@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_split_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 18:19:50 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/24 18:20:29 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/24 23:25:09 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,7 @@ void	allocate_memory(t_cmd **cmds, char **split_cmd)
 	i = 0;
 	while (i < cmd_count)
 	{
-		cmds[i] = (t_cmd *)malloc(sizeof(t_cmd));
-		if (!cmds[i])
-			return ;
+		cmds[i] = ft_calloc(1, sizeof(t_cmd));
 		cmds[i]->cmd = NULL;
 		allocate_memory_args(cmds[i], split_cmd);
 		allocate_memory_in(cmds[i], split_cmd);

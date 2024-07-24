@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_split.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 02:25:24 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/24 18:54:45 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/24 23:27:37 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	executor_split(t_shell *shell)
 	i = 0;
 	cmd_index = 0;
 	pipe_cont = pipe_counter(shell->split_cmd);
-	cmds = (t_cmd **)malloc(sizeof(t_cmd *) * (pipe_cont + 1));
+	cmds = ft_calloc(pipe_cont + 1, sizeof(t_cmd *));
 	if (!cmds)
 		return ;
 	allocate_memory(cmds, shell->split_cmd);

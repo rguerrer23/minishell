@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 22:29:08 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 23:47:23 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,20 @@ static int	ft_check_line(char *line)
 
 void	init_struct(t_shell *shell, char **envp)
 {
+	int i;
+
+	i = 0;
 	shell->prompt = NULL;
 	shell->parsed_prompt = NULL;
-	shell->env = envp;
+	while (envp[i] != NULL)
+		i++;
+	shell->env = ft_calloc(i + 1, sizeof(char *));
+	i = 0;
+	while (envp[i] != NULL)
+	{
+		shell->env[i] = ft_strdup(envp[i]);
+		i++;
+	}
 	shell->full_cmd = NULL;
 	shell->cmd_path = NULL;
 	shell->g_status = 0;
@@ -85,6 +96,6 @@ int	main(int argc, char **argv, char **envp)
 		}
 		free(line);
 	}
-	//ft_free_struct(&shell);
+	ft_free_struct(&shell);
 	return (0);
 }

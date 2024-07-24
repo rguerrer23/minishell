@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 22:29:42 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 23:09:23 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ typedef struct s_shell
 
 int			main(int argc, char **argv, char **envp);
 void		ft_free_struct(t_shell *shell);
+void    	ft_free_envs(t_var **list_var);
 void		delete_end_spaces(char *str);
 void		init_pipe_red(t_pipe_red *value);
 void		init_prompt(t_shell *shell);
