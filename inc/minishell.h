@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 03:34:22 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:14:42 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int			update_quote_state(char c, int quote_state);
 int			validating_pipes_reds(char *prompt);
 char		*process_token(char *prompt, int *pos);
 char		**super_split(char *prompt);
-char		**parse_input(char *prompt);
+void		parse_input(t_shell *shell);
 char		*process_dq(char *prompt, int *pos);
 char		*process_sq(char *prompt, int *pos);
 char		*process_pipe(char *prompt, int *pos);

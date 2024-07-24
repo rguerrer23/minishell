@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 19:30:25 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/24 00:10:32 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:45:47 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,4 +143,10 @@ void	expand_env_var(t_shell *shell, char **envp)
 	}
 	restore_dolar(shell->full_cmd);
 	free(status);
+	i = 0;
+	while (shell->full_cmd[i] != NULL)
+	{
+		remove_quotes(shell->full_cmd[i]);
+		i++;
+	}
 }

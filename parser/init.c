@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 21:40:30 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/24 03:19:11 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:27:27 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,6 @@ t_var	**init_envp(char **envp)
 */
 void	init_prompt(t_shell *shell)
 {
-	int	i;
-
-	i = 0;
 	delete_end_spaces(shell->prompt);
 	if (!check_cmd(shell))
 	{
@@ -67,26 +64,24 @@ void	init_prompt(t_shell *shell)
 		shell->g_status = 2;
 		shell->prompt = NULL;
 	}
-	shell->full_cmd = parse_input(shell->prompt);
+	parse_input(shell);
 	shell->split_cmd = ft_matrixdup(shell->full_cmd);
 	executor_split(shell);
-	expand_env_var(shell, shell->env);
-	while (shell->full_cmd[i] != NULL)
-	{
-		remove_quotes(shell->full_cmd[i]);
-		i++;
-	}
+	//expand_env_var(shell, shell->env);
 }
 
 /*
 	Segunda parte de init_prompt.
 */
-char	**parse_input(char *prompt)
+void	parse_input(t_shell *shell)
 {
-	char	**cmd;
-
-	cmd = super_split(prompt);
-	if (prompt[ft_strlen(prompt) - 1] == ' ')
-		cmd = ft_strd_lastdel(cmd);
-	return (cmd);
+	shell->full_cmd = super_split(shell->prompt);
+	if (shell->prompt[ft_strlen(shell->prompt) - 1] == ' ')
+		shell->full_cmd = ft_strd_lastdel(shell->full_cmd);
+	expand_env_var(shell, shell->env);
+	//while (shell->full_cmd[i] != NULL)
+	//{
+	//	remove_quotes(shell->full_cmd[i]);
+	//	i++;
+	//}
 }

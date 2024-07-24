@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:59:05 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/24 02:58:16 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/24 15:53:29 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ char	**super_split(char *prompt)
 				else
 					new = ft_strd_add(new, aux);
 			}
+			printf("(split = %s)\n", aux);
 			free(aux);
 		}
 	}
