@@ -6,26 +6,23 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 17:05:28 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 18:08:20 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 21:50:05 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-/* Esta funcion cambia el directorio actual de trabajo. */
+/* Esta funcion cambia el directorio actual a uno nuevo. */
 
 void	update_pwd(t_shell *shell)
 {
 	char	cwd[PATH_MAX];
-	int	i;
+	int		i;
 
 	i = 0;
 	if (getcwd(cwd, PATH_MAX) == NULL)
 	{
-		ft_putstr_fd("pwd: error retrieving current directory: ", STDERR_FILENO);
-		ft_putstr_fd(strerror(errno), STDERR_FILENO);
-		ft_putchar_fd('\n', STDERR_FILENO);
-		shell->g_status = 1;
+		handle_getcwd_error(shell);
 		return ;
 	}
 	while (shell->env[i] != NULL)
@@ -36,7 +33,7 @@ void	update_pwd(t_shell *shell)
 			if (shell->env[i] == NULL)
 			{
 				shell->g_status = 1;
-				return;
+				return ;
 			}
 			break ;
 		}
@@ -124,12 +121,7 @@ void	ft_cd(char **full_cmd, t_shell *shell)
 	else if (full_cmd[0][0] == '-')
 		ft_cd_oldpwd(shell);
 	else if (chdir(full_cmd[0]) == -1)
-	{
-		ft_putstr_fd("cd: no such file or directory: ", STDERR_FILENO);
-		ft_putstr_fd(full_cmd[0], STDERR_FILENO);
-		ft_putchar_fd('\n', STDERR_FILENO);
-		shell->g_status = 1;
-	}
+		handle_cd_error(full_cmd[0], shell);
 	if (shell->g_status == 1)
 	{
 		free(shell->oldpwd);

@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 19:41:00 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/22 22:15:05 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 19:55:54 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ void	ft_env_error2(int bad_env, char *env, int i)
 	}
 	else if (bad_env == -2)
 	{
-		ft_putstr_fd("zsh: ", STDERR_FILENO);
+		ft_putstr_fd("export: ", STDERR_FILENO);
 		while (env[i] && env[i] != '=')
 			i++;
 		i++;
 		ft_putchar_fd(env[i], STDERR_FILENO);
-		ft_putstr_fd(" not found\n", STDERR_FILENO);
+		ft_putstr_fd(": not a valid identifier\n", STDERR_FILENO);
 	}
 }
 
@@ -55,7 +55,10 @@ void	ft_env_error(int bad_env, char *env)
 		if (env[1] != '\0')
 			bad_env = -2;
 		else
-			ft_putstr_fd("zsh: bad assignment\n", STDERR_FILENO);
+		{
+			ft_putstr_fd("export: not valid in this context", STDERR_FILENO);
+			ft_putchar_fd('\n', STDERR_FILENO);
+		}
 	}
 	ft_env_error2(bad_env, env, i);
 }

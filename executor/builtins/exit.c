@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 10:53:27 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/23 23:04:09 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 21:24:32 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 void	ft_exit(char **cmd, t_shell *shell)
 {
 	shell->exit = 1;
+	ft_putstr_fd("exit\n", STDOUT_FILENO);
 	if (cmd[0] && ft_isdigit_str(cmd[0]) == 0)
 	{
 		shell->g_status = 1;

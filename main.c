@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 18:52:15 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 22:06:06 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,22 @@
 /*
 	Borramos los espacios que puede haber al final del prompt.
 */
+
+void	ft_free_struct(t_shell *shell)
+{
+	if (shell->prompt)
+		free(shell->prompt);
+	if (shell->parsed_prompt)
+		free(shell->parsed_prompt);
+	if (shell->full_cmd)
+		free(shell->full_cmd);
+	if (shell->cmd_path)
+		free(shell->cmd_path);
+	if (shell->oldpwd)
+		free(shell->oldpwd);
+	free(shell->env);
+}
+
 void	delete_end_spaces(char *str)
 {
 	int	len;
@@ -43,19 +59,6 @@ static int	ft_check_line(char *line)
 	return (1);
 }
 
-int	insert_tab(int count, int key)
-{
-	if (rl_line_buffer[0] == '\0' || strspn(rl_line_buffer,
-			" \t") == strlen(rl_line_buffer))
-	{
-		rl_insert_text("\t");
-		rl_redisplay();
-		return (0);
-	}
-	else
-		return (rl_complete(count, key));
-}
-
 void	init_struct(t_shell *shell, char **envp)
 {
 	shell->prompt = NULL;
@@ -68,7 +71,6 @@ void	init_struct(t_shell *shell, char **envp)
 	reset_fds(shell);
 	shell->exit = 0;
 	shell->exec_signal = 0;
-	rl_bind_key('\t', insert_tab);
 	shell->oldpwd = NULL;
 	update_shlvl(shell);
 }
@@ -79,10 +81,8 @@ int	main(int argc, char **argv, char **envp)
 	t_shell	shell;
 
 	if (argc != 1 || argv[1] != NULL)
-	{
-		ft_putstr_fd(RED "minishell: invalid arguments\n" NC, STDERR_FILENO);
-		return (EXIT_FAILURE);
-	}
+		return (ft_putstr_fd(RED "minishell: invalid arguments\n" NC,
+				STDERR_FILENO), EXIT_FAILURE);
 	init_struct(&shell, envp);
 	while (shell.exit == 0)
 	{
@@ -100,5 +100,6 @@ int	main(int argc, char **argv, char **envp)
 		}
 		free(line);
 	}
+	//ft_free_struct(&shell);
 	return (0);
 }

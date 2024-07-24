@@ -6,48 +6,11 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 10:39:41 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/23 23:05:45 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 20:04:00 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-void	ft_unset_error(char *name_var, t_shell *shell)
-{
-	ft_putstr_fd("unset: '", STDERR_FILENO);
-	ft_putstr_fd(name_var, STDERR_FILENO);
-	ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
-	shell->g_status = 1;
-}
-
-int	ft_unset_check(char **name_var, t_shell *shell)
-{
-	int	x;
-	int	i;
-
-	x = 0;
-	i = 0;
-	while (name_var[x] != NULL)
-	{
-		i = 0;
-		if (ft_isdigit(name_var[x][0]))
-		{
-			ft_unset_error(name_var[x], shell);
-			return (1);
-		}
-		while (name_var[x][i] != '\0')
-		{
-			if (!ft_isalnum(name_var[x][i]) && name_var[x][i] != '_')
-			{
-				ft_unset_error(name_var[x], shell);
-				return (1);
-			}
-			i++;
-		}
-		x++;
-	}
-	return (0);
-}
 
 void	ft_unset_env(char **name_var, t_shell *shell, int x)
 {
@@ -80,8 +43,6 @@ void	ft_unset(char **name_var, t_shell *shell)
 	int	x;
 
 	x = 0;
-	if (ft_unset_check(name_var, shell))
-		return ;
 	while (name_var[x] != NULL)
 	{
 		ft_unset_env(name_var, shell, x);

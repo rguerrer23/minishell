@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 19:36:34 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 21:18:27 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,9 @@ char		*insert_str(char *main, char *piece, size_t pos);
 char		*delete_str(char *main, size_t start, size_t finish);
 void		handler(int signal);
 void		if_signal(void);
-void		update_shlvl(t_shell *shell);
+/* builtins */
+void		handle_getcwd_error(t_shell *shell);
+void		handle_cd_error(char *path, t_shell *shell);
 void		ft_cd(char **full_cmd, t_shell *shell);
 void		ft_echo(char **args, t_shell *shell);
 void		ft_env(t_shell *shell, char **full_cmd);
@@ -162,6 +164,7 @@ void		ft_new_env(char *name_var, char *value_var, t_shell *shell);
 void		execute_bin(t_shell *shell, t_cmd **cmds, int i);
 void		execute(t_cmd **cmds, t_shell *shell);
 void		reset_fds(t_shell *shell);
+void		exc(char *path, t_cmd **cmd, t_shell *shell, int i);
 /*redirection*/
 void		apply_redirections(char **redir, t_shell *shell);
 void		apply_pipe(t_shell *shell);
@@ -170,6 +173,10 @@ void		reset_redirections(t_shell *shell);
 void		setup_redirections(t_shell *shell);
 /*clean*/
 void		ft_close_resets(t_shell *shell);
-void		reset_env(t_shell *shell);
+/*utils*/
+void		reset_env(t_shell *shell, t_cmd **cmds);
+void		update_shlvl(t_shell *shell);
+char		**ft_undo(t_cmd **cmds, int i);
+int			error_msg(char *path);
 
 #endif

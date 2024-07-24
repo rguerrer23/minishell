@@ -6,66 +6,13 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 16:43:22 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 02:42:51 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 22:01:32 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
 /* Esta funcion ejecuta un comando de sistema. */
-
-char	**ft_undo(t_cmd **cmds, int i)
-{
-	char	**exc;
-	int		x;
-
-	x = 0;
-	while (cmds[i]->args != NULL && cmds[i]->args[x] != NULL)
-		x++;
-	exc = calloc(x + 1, sizeof(char *));
-	x = 0;
-	exc[x] = ft_strdup(cmds[i]->cmd);
-	x++;
-	if (cmds[i]->args != NULL)
-	{
-		while (cmds[i]->args[x-1] != NULL && cmds[i]->args != NULL)
-		{
-			exc[x] = ft_strdup(cmds[i]->args[x-1]);
-			x++;
-		}
-	}
-	exc[x] = NULL;
-	return (exc);
-}
-
-int	error_msg(char *path)
-{
-	DIR	*dir;
-	int	status;
-
-	status = 0;
-	dir = opendir(path);
-	ft_putstr_fd(path, STDERR_FILENO);
-	if (ft_strchr(path, '/') == NULL)
-		ft_putstr_fd(": command not found", STDERR_FILENO);
-	else if (access(path, F_OK) == -1)
-		ft_putstr_fd(": No such file or directory", 2);
-	else if (dir != NULL)
-	{
-		ft_putstr_fd(": is a directory", 2);
-		closedir(dir);
-	}
-	else if (access(path, X_OK) == -1)
-		ft_putstr_fd(": Permission denied", 2);
-	if (ft_strchr(path, '/') == NULL || (dir == NULL))
-		status = 127;
-	else
-		status = 126;
-	if (dir != NULL)
-		closedir(dir);
-	ft_putchar_fd('\n', 2);
-	return (status);
-}
 
 char	*get_cmd_path(char *cmd, char *bin)
 {
@@ -85,7 +32,7 @@ char	*get_cmd_path(char *cmd, char *bin)
 		return (NULL);
 	}
 }
-
+/*
 void	exc(char *path, t_cmd **cmd, t_shell *shell, int i)
 {
 	pid_t	pid;
@@ -96,11 +43,13 @@ void	exc(char *path, t_cmd **cmd, t_shell *shell, int i)
 	pid = fork();
 	if (pid == 0)
 	{
-		if (shell->fdin > 2) {
+		if (shell->fdin > 2)
+		{
 			dup2(shell->fdin, STDIN_FILENO);
 			close(shell->fdin);
 		}
-		if (shell->fdout > 2) {
+		if (shell->fdout > 2)
+		{
 			dup2(shell->fdout, STDOUT_FILENO);
 			close(shell->fdout);
 		}
@@ -120,6 +69,52 @@ void	exc(char *path, t_cmd **cmd, t_shell *shell, int i)
 		close(shell->fdout);
 }
 
+*/
+
+static char	**get_bin_paths(t_shell *shell)
+{
+	int	x;
+
+	x = 0;
+	while (shell->env && shell->env[x])
+	{
+		if (ft_strncmp(shell->env[x], "PATH=", 5) == 0)
+			return (ft_split(shell->env[x] + 5, ':'));
+		x++;
+	}
+	return (NULL);
+}
+
+static void	find_cmd_path(t_shell *shell, t_cmd *cmd, char **bin)
+{
+	int	x;
+
+	x = 0;
+	shell->cmd_path = get_cmd_path(cmd->cmd, bin[x]);
+	while (cmd->cmd && bin[++x] && shell->cmd_path == NULL)
+		shell->cmd_path = get_cmd_path(cmd->cmd, bin[x]);
+}
+
+void	execute_bin(t_shell *shell, t_cmd **cmds, int i)
+{
+	char	**bin;
+
+	bin = get_bin_paths(shell);
+	if (!cmds[i]->cmd || !bin)
+	{
+		shell->g_status = 1;
+		error_msg(cmds[i]->cmd);
+		return ;
+	}
+	find_cmd_path(shell, cmds[i], bin);
+	if (shell->cmd_path != NULL)
+		exc(shell->cmd_path, cmds, shell, i);
+	else
+		exc(cmds[i]->cmd, cmds, shell, i);
+	ft_strd_free(bin);
+	free(shell->cmd_path);
+}
+/**
 void	execute_bin(t_shell *shell, t_cmd **cmds, int i)
 {
 	int		x;
@@ -134,7 +129,7 @@ void	execute_bin(t_shell *shell, t_cmd **cmds, int i)
 	}
 	if (shell->env[x] == NULL)
 	{
-		shell->g_status = 1;
+		error_msg(cmds[i]->cmd);
 		return ;
 	}
 	bin = ft_split(shell->env[x], ':');
@@ -153,4 +148,4 @@ void	execute_bin(t_shell *shell, t_cmd **cmds, int i)
 		exc(cmds[i]->cmd, cmds, shell, i);
 	return (ft_strd_free(bin), free(shell->cmd_path));
 }
-
+*/

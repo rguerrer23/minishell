@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:54:02 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 02:54:02 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 20:56:08 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	execute_builtin(t_shell *shell, t_cmd **cmds, int i)
 		ft_unset(cmds[i]->args, shell);
 	else if (!ft_strcmp(builtins, "pwd"))
 		ft_pwd(shell);
-
 	if (shell->fdin > 2)
 		close(shell->fdin);
 	if (shell->fdout > 2)

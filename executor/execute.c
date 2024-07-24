@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 11:37:06 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 19:05:49 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 20:55:27 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void	exec_choose(t_cmd **cmds, t_shell *shell, int i)
 
 void	execute(t_cmd **cmds, t_shell *shell)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	setup_redirections(shell);
 	while (cmds[i] != NULL)
@@ -41,6 +41,6 @@ void	execute(t_cmd **cmds, t_shell *shell)
 		shell->fdin = shell->fdnextin;
 		i++;
 	}
-	reset_env(shell);
+	reset_env(shell, cmds);
 	reset_redirections(shell);
 }

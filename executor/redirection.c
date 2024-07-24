@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 20:50:24 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 01:20:40 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 20:56:55 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	apply_outfile(char **name, t_shell *shell, int i)
 		shell->exec_signal = 1;
 		shell->g_status = 1;
 	}
-	//dup2(shell->fdout, STDOUT_FILENO);
 }
 
 void	apply_infile(char **name, t_shell *shell, int i)
@@ -62,7 +61,6 @@ void	apply_infile(char **name, t_shell *shell, int i)
 			shell->exec_signal = 1;
 			shell->g_status = 1;
 		}
-		//dup2(shell->fdin, STDIN_FILENO);
 	}
 }
 
