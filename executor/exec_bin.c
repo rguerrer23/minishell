@@ -38,29 +38,31 @@ char	**ft_undo(t_cmd **cmds, int i)
 	return (exc);
 }
 
-int	error_msg(char *cmd)
+int	error_msg(char *path)
 {
 	DIR	*dir;
 	int	status;
 
 	status = 0;
-	dir = opendir(cmd);
-	if (ft_strchr(cmd, '/') == NULL)
-		ft_putstr_fd("zsh: command not found: ", 2);
-	else if (access(cmd, F_OK) == -1)
-		ft_putstr_fd("zsh: no such file or directory: ", 2);
+	dir = opendir(path);
+	ft_putstr_fd(path, STDERR_FILENO);
+	if (ft_strchr(path, '/') == NULL)
+		ft_putstr_fd(": command not found", STDERR_FILENO);
+	else if (access(path, F_OK) == -1)
+		ft_putstr_fd(": No such file or directory", 2);
 	else if (dir != NULL)
 	{
-		ft_putstr_fd("zsh: is a directory: ", 2);
+		ft_putstr_fd(": is a directory", 2);
 		closedir(dir);
 	}
-	else if (access(cmd, X_OK) == -1)
-		ft_putstr_fd("zsh: permission denied: ", 2);
-	if (ft_strchr(cmd, '/') == NULL || (dir == NULL))
+	else if (access(path, X_OK) == -1)
+		ft_putstr_fd(": Permission denied", 2);
+	if (ft_strchr(path, '/') == NULL || (dir == NULL))
 		status = 127;
 	else
 		status = 126;
-	ft_putstr_fd(cmd, 2);
+	if (dir != NULL)
+		closedir(dir);
 	ft_putchar_fd('\n', 2);
 	return (status);
 }
@@ -94,15 +96,6 @@ void	exc(char *path, t_cmd **cmd, t_shell *shell, int i)
 	pid = fork();
 	if (pid == 0)
 	{
-
-
-		// char buf[1024];
-		// if (shell->fdin > 2){
-		// 	memset(buf, 0, 1024);
-		// 	read(shell->fdin, buf, 1024);
-		// 	lseek(shell->fdin, 0, SEEK_SET);
-		// 	dprintf(STDERR_FILENO, "CHILD: %s\n", buf);
-		// }
 		if (shell->fdin > 2) {
 			dup2(shell->fdin, STDIN_FILENO);
 			close(shell->fdin);
@@ -111,8 +104,6 @@ void	exc(char *path, t_cmd **cmd, t_shell *shell, int i)
 			dup2(shell->fdout, STDOUT_FILENO);
 			close(shell->fdout);
 		}
-
-		dprintf(STDERR_FILENO, "CHILD: cmd=%i, stdin=%i stdout=%i next_stdin=%i\n", i, shell->fdin, shell->fdout, shell->fdnextin);
 		if (ft_strchr(path, '/') != NULL)
 			execve(path, exc, shell->env);
 		shell->g_status = error_msg(path);

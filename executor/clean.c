@@ -24,19 +24,14 @@ void	close_fds(t_shell *shell)
 		close(shell->fdin);
 	if (shell->fdout > 0)
 		close(shell->fdout);
-	if (shell->pin > 0)
-		close(shell->pin);
-	if (shell->pout > 0)
-		close(shell->pout);
 }
 
 void	reset_fds(t_shell *shell)
 {
 	shell->fdin = -1;
 	shell->fdout = -1;
-	shell->pin = -1;
-	shell->pout = -1;
 	shell->pid = -1;
+	shell->fdnextin = -1;
 }
 
 void	ft_close_resets(t_shell *shell)

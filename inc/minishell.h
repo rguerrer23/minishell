@@ -96,31 +96,21 @@ typedef struct s_shell
 	int		g_status;
 	int		infile;
 	int		fdin;
-	int		pin;
 	int		outfile;
 	int		fdout;
 	int 	fdnextin;
-	int		pout;
 	pid_t	pid;
 	int		exit;
 	int		exec_signal;
 	char	*oldpwd;
 	int		prev_fd;
+	t_cmd	**cmds;
 }			t_shell;
-
-typedef struct s_cmd
-{
-	char	*cmd;
-	char	**args;
-	char	**incmd;
-	char	**outcmd;
-	
-}			t_cmd;
 
 int			main(int argc, char **argv, char **envp);
 void		delete_end_spaces(char *str);
 void		init_pipe_red(t_pipe_red *value);
-void		init_prompt(t_shell *shell, t_cmd *cmd);
+void		init_prompt(t_shell *shell);
 int			check_cmd(t_shell *shell);
 int			check_quotes(char quote, int state);
 int			check_first_pipe(char *prompt);
@@ -147,6 +137,7 @@ void		expand_env_var(t_shell *shell, char **envp);
 char		*get_var(t_var **list_var, char *key);
 char		*find_varname(char *str, int pos);
 void		remove_quotes(char *str);
+void 		executor_split(t_shell *shell);
 char		*insert_str(char *main, char *piece, size_t pos);
 char		*delete_str(char *main, size_t start, size_t finish);
 void		handler(int signal);
@@ -156,7 +147,7 @@ void		ft_echo(char **args, t_shell *shell);
 void		ft_env(t_shell *shell, char **full_cmd);
 void		ft_exit(char **cmd, t_shell *shell);
 void		ft_export(char **full_cmd, t_shell *shell);
-void		ft_pwd(t_shell *shell, char **full_cmd);
+void		ft_pwd(t_shell *shell);
 void		ft_unset(char **name_var, t_shell *shell);
 int			is_builtin(char *cmd);
 void		execute_builtin(t_shell *shell, t_cmd **cmds, int i);

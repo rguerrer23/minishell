@@ -12,33 +12,6 @@
 
 #include "../inc/minishell.h"
 
-char	*ft_undo_dim(char **cmd)
-{
-	int	i;
-	int len;
-	char *str;
-
-	i = 0;
-	while (cmd[i] != NULL)
-	{	
-		len += ft_strlen(cmd[i]) + 1;
-		i++;
-	}
-	str = ft_calloc(len + i + 1, sizeof(char));
-	i = 0;
-	int pos = 0;
-	while (cmd[i] != NULL)
-	{
-		strcpy(str + pos, cmd[i]);
-		pos += ft_strlen(cmd[i]);
-		str[pos] = ' ';
-		pos++;
-		i++;
-	}
-	str[len] = '\0';
-	return (str);
-}
-
 /* Esta funcion comprueba si existe un builtin y escoje*/
 void	exec_choose(t_cmd **cmds, t_shell *shell, int i)
 {
@@ -47,12 +20,6 @@ void	exec_choose(t_cmd **cmds, t_shell *shell, int i)
 		execute_builtin(shell, cmds, i);
 	else if (cmds[i]->cmd)
 		execute_bin(shell, cmds, i);
-	if (shell->pin > 0)
-		close(shell->pin);
-	if (shell->pout > 0)
-		close(shell->pout);
-	shell->pin = -1;
-	shell->pout = -1;
 }
 
 void	execute(t_cmd **cmds, t_shell *shell)

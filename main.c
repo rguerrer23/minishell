@@ -76,7 +76,6 @@ int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
 	t_shell	shell;
-	t_cmd	cmd;
 
 	if (argc != 1 || argv[1] != NULL)
 	{
@@ -94,8 +93,8 @@ int	main(int argc, char **argv, char **envp)
 		{
 			shell.prompt = line;
 			add_history(line);
-			init_prompt(&shell, &cmd);
-			execute(&shell);
+			init_prompt(&shell);
+			execute(shell.cmds, &shell);
 		}
 		free(line);
 	}

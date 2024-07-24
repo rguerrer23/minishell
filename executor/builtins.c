@@ -32,7 +32,7 @@ void	execute_builtin(t_shell *shell, t_cmd **cmds, int i)
 	else if (!ft_strcmp(builtins, "unset"))
 		ft_unset(cmds[i]->args, shell);
 	else if (!ft_strcmp(builtins, "pwd"))
-		ft_pwd(shell, cmds[i]->args);
+		ft_pwd(shell);
 
 	if (shell->fdin > 2)
 		close(shell->fdin);

@@ -12,47 +12,6 @@
 
 #include "../inc/minishell.h"
 
-void	apply_outfile(char **name, t_shell *shell)
-{
-	if (shell->fdout > 2)
-		close(shell->fdout);
-	if (ft_strcmp(name[0], ">>") == 0)
-		shell->fdout = open(name[1], O_WRONLY | O_CREAT | O_APPEND,
-				S_IRWXU);
-	else
-		shell->fdout = open(name[1], O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU);
-	if (shell->fdout == -1)
-	{
-		ft_putstr_fd("zsh: no such file or directory: ", 2);
-		ft_putstr_fd(name[1], 2);
-		ft_putchar_fd('\n', 2);
-		shell->exec_signal = 1;
-		shell->g_status = 1;
-	}
-	//dup2(shell->fdout, STDOUT_FILENO);
-}
-
-void	apply_infile(char **name, t_shell *shell)
-{
-	if (shell->fdin > 2)
-		close(shell->fdin);
-	if (ft_strcmp(name[0], "<<") == 0)
-		apply_heredoc(name[1], shell);
-	else
-	{
-		shell->fdin = open(name[1], O_RDONLY);
-		if (shell->fdin == -1)
-		{
-			ft_putstr_fd("zsh: no such file or directory: ", 2);
-			ft_putstr_fd(name[1], 2);
-			ft_putchar_fd('\n', 2);
-			shell->exec_signal = 1;
-			shell->g_status = 1;
-		}
-		//dup2(shell->fdin, STDIN_FILENO);
-	}
-}
-
 void	setup_redirections(t_shell *shell)
 {
 	shell->exec_signal = 0;
@@ -68,6 +27,45 @@ void	reset_redirections(t_shell *shell)
 	close(shell->outfile);
 }
 
+void	apply_outfile(char **name, t_shell *shell, int i)
+{
+	if (shell->fdout > 2)
+		close(shell->fdout);
+	if (ft_strcmp(name[i], ">>") == 0)
+		shell->fdout = open(name[i + 1], O_WRONLY | O_CREAT | O_APPEND,
+				S_IRWXU);
+	else
+		shell->fdout = open(name[i + 1], O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU);
+	if (shell->fdout == -1)
+	{
+		ft_putstr_fd(name[i + 1], STDERR_FILENO);
+		ft_putstr_fd(": no such file or directory\n", STDERR_FILENO);
+		shell->exec_signal = 1;
+		shell->g_status = 1;
+	}
+	//dup2(shell->fdout, STDOUT_FILENO);
+}
+
+void	apply_infile(char **name, t_shell *shell, int i)
+{
+	if (shell->fdin > 2)
+		close(shell->fdin);
+	if (ft_strcmp(name[i], "<<") == 0)
+		apply_heredoc(name[i + 1], shell);
+	else
+	{
+		shell->fdin = open(name[i + 1], O_RDONLY);
+		if (shell->fdin == -1)
+		{
+			ft_putstr_fd(name[i + 1], STDERR_FILENO);
+			ft_putstr_fd(": no such file or directory\n", STDERR_FILENO);
+			shell->exec_signal = 1;
+			shell->g_status = 1;
+		}
+		//dup2(shell->fdin, STDIN_FILENO);
+	}
+}
+
 void	apply_redirections(char **redir, t_shell *shell)
 {
 	int	j;
@@ -76,10 +74,10 @@ void	apply_redirections(char **redir, t_shell *shell)
 	while (redir != NULL && redir[j] != NULL)
 	{
 		if (ft_strcmp(redir[j], ">") == 0 || ft_strcmp(redir[j], ">>") == 0)
-			apply_outfile(redir, shell);
+			apply_outfile(redir, shell, j);
 		else if (ft_strcmp(redir[j], "<") == 0 || ft_strcmp(redir[j],
 				"<<") == 0)
-			apply_infile(redir, shell);
+			apply_infile(redir, shell, j);
 		j++;
 	}
 }

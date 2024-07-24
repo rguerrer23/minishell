@@ -14,7 +14,7 @@
 
 static void	handle_heredoc_error(t_shell *shell)
 {
-	ft_putstr_fd("zsh: pipe failed\n", 2);
+	ft_putstr_fd("heredoc: error creating pipe\n", STDERR_FILENO);
 	shell->exec_signal = 1;
 	shell->g_status = 1;
 }

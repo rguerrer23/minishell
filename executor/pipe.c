@@ -14,7 +14,7 @@
 
 void	handle_pipe_error(t_shell *shell)
 {
-	ft_putstr_fd("zsh: pipe or fork failed\n", 2);
+	ft_putstr_fd("pipe: error creating pipe\n", STDERR_FILENO);
 	shell->exec_signal = 1;
 	shell->g_status = 1;
 }

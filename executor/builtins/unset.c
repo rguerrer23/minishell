@@ -80,12 +80,6 @@ void	ft_unset(char **name_var, t_shell *shell)
 	int	x;
 
 	x = 0;
-	if (!(name_var[0]))
-	{
-		ft_putstr_fd("unset: not enough arguments\n", STDERR_FILENO);
-		shell->g_status = 1;
-		return ;
-	}
 	if (ft_unset_check(name_var, shell))
 		return ;
 	while (name_var[x] != NULL)

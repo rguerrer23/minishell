@@ -77,10 +77,8 @@ char	**super_split(char *prompt)
 				else
 					new = ft_strd_add(new, aux);
 			}
-			printf("(split = %s)\n", aux);
 			free(aux);
 		}
 	}
-	
 	return (new);
 }

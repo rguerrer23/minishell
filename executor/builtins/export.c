@@ -61,7 +61,9 @@ void	print_all_env(t_shell *shell)
 	i = 0;
 	while (shell->env[i])
 	{
-		ft_putendl_fd(shell->env[i], STDOUT_FILENO);
+		ft_putstr_fd("declare -x ", shell->fdout);
+		ft_putstr_fd(shell->env[i], shell->fdout);
+		ft_putstr_fd("\n", shell->fdout);
 		i++;
 	}
 }

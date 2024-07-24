@@ -14,16 +14,10 @@
 
 /* Esta funcion imprime el directorio actual de trabajo. */
 
-void	ft_pwd(t_shell *shell, char **full_cmd)
+void	ft_pwd(t_shell *shell)
 {
 	char	cwd[PATH_MAX];
 
-	if (full_cmd[0] != NULL)
-	{
-		ft_putstr_fd("pwd: too many arguments\n", STDERR_FILENO);
-		shell->g_status = 1;
-		return ;
-	}
 	if (getcwd(cwd, PATH_MAX) == NULL)
 	{
 		ft_putstr_fd("pwd: error retrieving current directory: ", 2);
@@ -32,6 +26,6 @@ void	ft_pwd(t_shell *shell, char **full_cmd)
 		shell->g_status = 1;
 		return ;
 	}
-	ft_putstr_fd(cwd, STDOUT_FILENO);
-	ft_putstr_fd("\n", STDOUT_FILENO);
+	ft_putstr_fd(cwd, shell->fdout);
+	ft_putstr_fd("\n", shell->fdout);
 }
