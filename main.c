@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 20:21:38 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 21:23:25 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,8 @@ int	main(int argc, char **argv, char **envp)
 	t_shell	shell;
 
 	if (argc != 1 || argv[1] != NULL)
-	{
-		ft_putstr_fd(RED "minishell: invalid arguments\n" NC, STDERR_FILENO);
-		return (EXIT_FAILURE);
-	}
+		return (ft_putstr_fd(RED "minishell: invalid arguments\n" NC,
+				STDERR_FILENO), EXIT_FAILURE);
 	init_struct(&shell, envp);
 	while (shell.exit == 0)
 	{

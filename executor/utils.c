@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 18:26:40 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 20:54:04 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 21:03:15 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void	reset_env(t_shell *shell, t_cmd **cmds)
 	x = 0;
 	while (shell->env[i])
 	{
-		if (shell->oldpwd != NULL && ft_strncmp(shell->env[i], "OLDPWD=", 7) == 0)
+		if (shell->oldpwd != NULL && ft_strncmp(shell->env[i], "OLDPWD=",
+				7) == 0)
 			shell->env[i] = ft_strjoin("OLDPWD=", shell->oldpwd);
 		if (ft_strncmp(shell->env[i], "_=", 2) == 0)
 		{
@@ -53,10 +54,63 @@ void	reset_env(t_shell *shell, t_cmd **cmds)
 				while (cmds[0]->args[x] != NULL)
 					x++;
 				shell->env[i] = ft_strjoin("_=", cmds[0]->args[x - 1]);
-			}	
+			}
 			else
 				shell->env[i] = ft_strjoin("_=", cmds[0]->cmd);
-		}	
+		}
 		i++;
 	}
+}
+
+char	**ft_undo(t_cmd **cmds, int i)
+{
+	char	**exc;
+	int		x;
+
+	x = 0;
+	while (cmds[i]->args != NULL && cmds[i]->args[x] != NULL)
+		x++;
+	exc = calloc(x + 1, sizeof(char *));
+	x = 0;
+	exc[x] = ft_strdup(cmds[i]->cmd);
+	x++;
+	if (cmds[i]->args != NULL)
+	{
+		while (cmds[i]->args[x - 1] != NULL && cmds[i]->args != NULL)
+		{
+			exc[x] = ft_strdup(cmds[i]->args[x - 1]);
+			x++;
+		}
+	}
+	exc[x] = NULL;
+	return (exc);
+}
+
+int	error_msg(char *path)
+{
+	DIR	*dir;
+	int	status;
+
+	status = 0;
+	dir = opendir(path);
+	ft_putstr_fd(path, STDERR_FILENO);
+	if (ft_strchr(path, '/') == NULL)
+		ft_putstr_fd(": command not found", STDERR_FILENO);
+	else if (access(path, F_OK) == -1)
+		ft_putstr_fd(": No such file or directory", 2);
+	else if (dir != NULL)
+	{
+		ft_putstr_fd(": is a directory", 2);
+		closedir(dir);
+	}
+	else if (access(path, X_OK) == -1)
+		ft_putstr_fd(": Permission denied", 2);
+	if (ft_strchr(path, '/') == NULL || (dir == NULL))
+		status = 127;
+	else
+		status = 126;
+	if (dir != NULL)
+		closedir(dir);
+	ft_putchar_fd('\n', 2);
+	return (status);
 }

@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 17:49:15 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 20:34:19 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 20:56:18 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,3 @@ void	ft_close_resets(t_shell *shell)
 	close_fds(shell);
 	reset_fds(shell);
 }
-

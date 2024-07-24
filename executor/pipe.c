@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 20:58:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 02:47:15 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 20:55:10 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,9 @@ void	handle_pipe_error(t_shell *shell)
 	shell->g_status = 1;
 }
 
-
 void	apply_pipe(t_shell *shell)
 {
-	int		fd[2];
+	int	fd[2];
 
 	if (pipe(fd) == -1)
 		return (handle_pipe_error(shell));
