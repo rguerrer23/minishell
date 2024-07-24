@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 10:48:53 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 02:59:04 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 18:57:04 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_env_check_equal(char *cmd, t_shell *shell)
 	}
 	if (cmd[i] != '=')
 	{
-		ft_putstr_fd("zsh: ", STDERR_FILENO);
+		ft_putstr_fd("env: ", STDERR_FILENO);
 		ft_putstr_fd(cmd, STDERR_FILENO);
 		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
 		shell->g_status = 127;
@@ -49,9 +49,9 @@ int	ft_env_check(char **full_cmd, t_shell *shell)
 	{
 		if (full_cmd[i][0] == '=')
 		{
-			ft_putstr_fd("zsh: ", STDERR_FILENO);
+			ft_putstr_fd("env: ", STDERR_FILENO);
 			ft_putstr_fd(full_cmd[i], STDERR_FILENO);
-			ft_putstr_fd(" not found\n", STDERR_FILENO);
+			ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
 			error = 1;
 			shell->g_status = 127;
 		}
