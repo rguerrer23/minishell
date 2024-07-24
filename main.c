@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 22:06:06 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 22:29:08 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,6 @@
 /*
 	Borramos los espacios que puede haber al final del prompt.
 */
-
-void	ft_free_struct(t_shell *shell)
-{
-	if (shell->prompt)
-		free(shell->prompt);
-	if (shell->parsed_prompt)
-		free(shell->parsed_prompt);
-	if (shell->full_cmd)
-		free(shell->full_cmd);
-	if (shell->cmd_path)
-		free(shell->cmd_path);
-	if (shell->oldpwd)
-		free(shell->oldpwd);
-	free(shell->env);
-}
 
 void	delete_end_spaces(char *str)
 {

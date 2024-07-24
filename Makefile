@@ -23,7 +23,7 @@ SRC			=	main.c \
 				executor/builtins/cd.c executor/builtins/echo.c executor/builtins/env.c executor/builtins/exit.c \
 				executor/builtins/export.c executor/builtins/pwd.c executor/builtins/unset.c executor/execute.c \
 				executor/exec_bin.c executor/builtins.c executor/redirection.c executor/clean.c executor/builtins/export2.c \
-				executor/pipe.c executor/heredoc.c executor/utils.c executor/exec_bin2.c executor/builtins/cd_error.c \
+				executor/pipe.c executor/heredoc.c executor/utils.c executor/exec_bin2.c executor/builtins/cd_error.c free.c \
 
 LIBFT		= libft/libft.a
 
