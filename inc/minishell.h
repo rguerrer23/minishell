@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 18:52:27 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/24 19:03:04 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ typedef struct s_shell
 	int		fdin;
 	int		outfile;
 	int		fdout;
-	int 	fdnextin;
+	int		fdnextin;
 	pid_t	pid;
 	int		exit;
 	int		exec_signal;
@@ -138,7 +138,7 @@ void		expand_env_var(t_shell *shell, char **envp);
 char		*get_var(t_var **list_var, char *key);
 char		*find_varname(char *str, int pos);
 void		remove_quotes(char *str);
-void 		executor_split(t_shell *shell);
+void		executor_split(t_shell *shell);
 char		*insert_str(char *main, char *piece, size_t pos);
 char		*delete_str(char *main, size_t start, size_t finish);
 void		handler(int signal);
