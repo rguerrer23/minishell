@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 18:26:40 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/25 14:17:04 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/25 15:58:18 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,14 @@ void	reset_env(t_shell *shell, t_cmd **cmds)
 		update_oldpwd(shell, i);
 		if (ft_strncmp(shell->env[i], "_=", 2) == 0)
 		{
-			if (cmds[0]->args[0] != NULL)
+			if (cmds[0]->args && cmds[0]->args[0] != NULL)
 			{
 				while (cmds[0]->args[x] != NULL)
 					x++;
 				free(shell->env[i]);
 				shell->env[i] = ft_strjoin("_=", cmds[0]->args[x - 1]);
 			}
-			else
+			else if (cmds[0]->cmd != NULL)
 			{
 				free(shell->env[i]);
 				shell->env[i] = ft_strjoin("_=", cmds[0]->cmd);
