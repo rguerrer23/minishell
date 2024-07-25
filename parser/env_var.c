@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 19:30:25 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/25 02:07:05 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/25 16:13:19 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,12 @@ static void	replace_var_env(char **cmd, int *j, char *status, t_var **list_var)
 
 	if ((*cmd)[*j + 1] == '?')
 	{
-		*cmd = ft_delete_str(*cmd, *j, *j + 1);
-		*cmd = ft_insert_str(*cmd, status, *j);
+		tmp = *cmd;
+		*cmd = ft_delete_str(tmp, *j, *j + 1);
+		free(tmp);
+		tmp = *cmd;
+		*cmd = ft_insert_str(tmp, status, *j);
+		free(tmp);
 		(*j)++;
 	}
 	else
