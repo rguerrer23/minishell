@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/25 01:15:07 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/25 14:19:03 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	main(int argc, char **argv, char **envp)
 				execute(shell.cmds, &shell);
 		}
 		free(line);
+		ft_free_struct(&shell);
 	}
-	ft_free_struct(&shell);
-	return (0);
+	return (ft_strd_free(shell.env), 0);
 }

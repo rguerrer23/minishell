@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 18:26:40 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/25 11:16:40 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/25 14:17:04 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	update_oldpwd(t_shell *shell, int i)
 		free(shell->env[i]);
 		shell->env[i] = ft_strjoin("OLDPWD=", shell->oldpwd);
 	}
+	free(shell->oldpwd);
 }
 
 void	reset_env(t_shell *shell, t_cmd **cmds)
