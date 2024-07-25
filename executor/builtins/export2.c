@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 19:41:00 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/25 14:38:35 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/25 14:39:42 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ char	*create_new_entry(char *value_var, char *name_var)
 		temp = ft_strjoin(new_entry, value_var);
 		free(new_entry);
 		new_entry = temp;
+		free(temp);
 	}
 	return (new_entry);
 }
@@ -129,4 +130,5 @@ void	ft_new_env(char *name_var, char *value_var, t_shell *shell)
 	new_env[i + 1] = NULL;
 	ft_strd_free(shell->env);
 	shell->env = new_env;
+	free(new_entry);
 }
