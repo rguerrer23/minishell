@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:59:05 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/25 13:55:37 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/25 13:56:29 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ int	strlen_end_word(char *prompt, int pos)
 	int	w_len;
 
 	w_len = 0;
-	while (prompt[pos]
-		&& prompt[pos] != ' ' && prompt[pos] != '|'
+	while (prompt[pos] && prompt[pos] != ' ' && prompt[pos] != '|'
 		&& prompt[pos] != '<' && prompt[pos] != '>')
 	{
 		w_len++;
@@ -37,10 +36,6 @@ int	strlen_end_word(char *prompt, int pos)
 
 char	*process_token(char *prompt, int *pos)
 {
-	//if (prompt[*pos] == '\"')
-	//	return (process_dq(prompt, pos));
-	//else if (prompt[*pos] == '\'')
-	//	return (process_sq(prompt, pos));
 	if (prompt[*pos] == '|')
 		return (process_pipe(prompt, pos));
 	else if (prompt[*pos] == '<')
