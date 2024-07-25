@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 14:13:05 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/24 19:32:54 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/25 02:51:30 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,14 @@ void	remove_quotes(char *str)
 			i++;
 			while (str[i] && str[i] != '\'')
 				str[j++] = str[i++];
+			i++;
 		}
 		else if (str[i] == '\"')
 		{
 			i++;
 			while (str[i] && str[i] != '\"')
 				str[j++] = str[i++];
+			i++;
 		}
 		else
 			str[j++] = str[i++];
