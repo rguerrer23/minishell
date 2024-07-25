@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:59:05 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/25 01:14:17 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/25 13:55:37 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ int	strlen_end_word(char *prompt, int pos)
 
 char	*process_token(char *prompt, int *pos)
 {
-	if (prompt[*pos] == '\"')
-		return (process_dq(prompt, pos));
-	else if (prompt[*pos] == '\'')
-		return (process_sq(prompt, pos));
-	else if (prompt[*pos] == '|')
+	//if (prompt[*pos] == '\"')
+	//	return (process_dq(prompt, pos));
+	//else if (prompt[*pos] == '\'')
+	//	return (process_sq(prompt, pos));
+	if (prompt[*pos] == '|')
 		return (process_pipe(prompt, pos));
 	else if (prompt[*pos] == '<')
 		return (process_red1(prompt, pos));
@@ -66,7 +66,6 @@ void	no_space(char **new, char *word)
 char	**super_split(char *prompt)
 {
 	int		pos;
-	int		has_space;
 	char	*aux;
 	char	**new;
 
@@ -74,7 +73,6 @@ char	**super_split(char *prompt)
 	new = NULL;
 	while (prompt[pos])
 	{
-		has_space = prompt[pos] == ' ';
 		while (prompt[pos] == ' ')
 			pos++;
 		if (!prompt[pos])
@@ -82,10 +80,8 @@ char	**super_split(char *prompt)
 		aux = process_token(prompt, &pos);
 		if (!new)
 			new = ft_strd_new(aux);
-		else if (has_space)
-			new = ft_strd_add(new, aux);
 		else
-			no_space(new, aux);
+			new = ft_strd_add(new, aux);
 		free(aux);
 	}
 	return (new);

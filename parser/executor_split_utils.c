@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 18:19:50 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/25 11:19:30 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/25 11:47:49 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	free_cmd(t_cmd *cmd)
 {
-	printf("freeing cmd\n");
 	free(cmd->cmd);
 	ft_strd_free(cmd->args);
 	ft_strd_free(cmd->incmd);
