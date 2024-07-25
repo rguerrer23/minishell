@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 19:41:00 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 19:55:54 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/25 14:38:35 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,5 +127,6 @@ void	ft_new_env(char *name_var, char *value_var, t_shell *shell)
 	new_entry = create_new_entry(value_var, name_var);
 	new_env[i] = new_entry;
 	new_env[i + 1] = NULL;
+	ft_strd_free(shell->env);
 	shell->env = new_env;
 }
