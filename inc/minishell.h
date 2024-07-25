@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/25 13:53:31 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/25 14:56:22 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void		ft_free_envs(t_var **list_var);
 void		free_cmd(t_cmd *cmd);
 void		delete_end_spaces(char *str);
 void		init_pipe_red(t_pipe_red *value);
-void		init_prompt(t_shell *shell);
+void		init_prompt(t_shell *shell, char *line);
 int			check_cmd(t_shell *shell);
 int			check_quotes(char quote, int state);
 int			check_first_pipe(char *prompt);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/25 14:19:03 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/25 14:54:00 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,13 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		else if (ft_check_line(line) == 0)
 		{
-			shell.prompt = line;
 			add_history(line);
-			init_prompt(&shell);
+			init_prompt(&shell, line);
 			if (shell.parse_error == 0)
 				execute(shell.cmds, &shell);
 		}
-		free(line);
+		if (line)
+			free(line);
 		ft_free_struct(&shell);
 	}
 	return (ft_strd_free(shell.env), 0);
