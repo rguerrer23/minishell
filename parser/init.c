@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 21:40:30 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/25 14:56:00 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/25 15:12:26 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_var	**init_envp(char **envp)
 */
 void	init_prompt(t_shell *shell, char *line)
 {
-	shell->prompt = ft_strdup(line);
+	shell->prompt = line;
 	shell->parse_error = 0;
 	delete_end_spaces(shell->prompt);
 	if (!check_cmd(shell))
@@ -68,7 +68,6 @@ void	init_prompt(t_shell *shell, char *line)
 		return ;
 	}
 	parse_input(shell);
-	free(shell->prompt);
 	shell->split_cmd = ft_matrixdup(shell->full_cmd);
 	executor_split(shell);
 	ft_strd_free(shell->full_cmd);
