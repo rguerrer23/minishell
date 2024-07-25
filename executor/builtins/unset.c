@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 10:39:41 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 20:04:00 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/25 15:31:57 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	ft_unset_env(char **name_var, t_shell *shell, int x)
 		if (!ft_strncmp(shell->env[i], name_var[x], len)
 			&& shell->env[i][len] == '=')
 		{
+			free(shell->env[i]);
 			j = i;
 			while (shell->env[j] != NULL)
 			{
