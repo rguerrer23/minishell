@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 02:25:24 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/25 00:32:34 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/25 01:17:08 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,6 @@ void	executor_split(t_shell *shell)
 	cmd_index = 0;
 	pipe_cont = pipe_counter(shell->split_cmd);
 	cmds = ft_calloc(pipe_cont + 1, sizeof(t_cmd *));
-	if (!cmds)
-		return ;
 	allocate_memory(cmds, shell->split_cmd);
 	while (shell->split_cmd[i])
 	{
@@ -102,7 +100,6 @@ void	executor_split(t_shell *shell)
 			i++;
 		cmd_index++;
 	}
-	cmds[pipe_cont] = NULL;
 	i = 0;
 	if (shell->cmds)
 	{

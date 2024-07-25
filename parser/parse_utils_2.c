@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 19:05:40 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/25 00:45:26 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/25 02:46:46 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,16 @@ char	*process_sq(char *prompt, int *pos)
 	w_pos = 0;
 	sq_counter = 0;
 	aux = ft_calloc(ft_strlen(prompt) - *pos + 1, sizeof(char));
-	while (prompt[++(*pos)] && sq_counter != 2)
+	while (prompt[*pos] && sq_counter < 2)
 	{
+		printf("char %i: %c\n", *pos, prompt[*pos]);
 		if (prompt[*pos] == '\'')
 			sq_counter++;
 		if (prompt[*pos] == '$')
 			aux[w_pos++] = (char)1;
 		else
-		{
-			if (prompt[*pos] == '\"')
-				aux[w_pos++] = '"';
-			else
-				aux[w_pos++] = prompt[*pos];
-		}
+			aux[w_pos++] = prompt[*pos];
+		(*pos)++;
 	}
 	return (aux);
 }

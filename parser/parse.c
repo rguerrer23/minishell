@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:59:05 by jmartos-          #+#    #+#             */
-/*   Updated: 2024/07/24 21:13:37 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/25 01:14:17 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,22 @@ char	*process_token(char *prompt, int *pos)
 		return (process_char(prompt, pos));
 }
 
+void	no_space(char **new, char *word)
+{
+	char	*aux;
+
+	aux = ft_strjoin(new[ft_strd_len(new) - 1], word);
+	free(new[ft_strd_len(new) - 1]);
+	new[ft_strd_len(new) - 1] = aux;
+}
+
 /*
 	Nuestro Super_split: separamos el prompt por grupos de string.
 */
 char	**super_split(char *prompt)
 {
 	int		pos;
+	int		has_space;
 	char	*aux;
 	char	**new;
 
@@ -64,17 +74,19 @@ char	**super_split(char *prompt)
 	new = NULL;
 	while (prompt[pos])
 	{
+		has_space = prompt[pos] == ' ';
 		while (prompt[pos] == ' ')
 			pos++;
-		if (prompt[pos])
-		{
-			aux = process_token(prompt, &pos);
-			if (!new)
-				new = ft_strd_new(aux);
-			else
-				new = ft_strd_add(new, aux);
-			free(aux);
-		}
+		if (!prompt[pos])
+			break ;
+		aux = process_token(prompt, &pos);
+		if (!new)
+			new = ft_strd_new(aux);
+		else if (has_space)
+			new = ft_strd_add(new, aux);
+		else
+			no_space(new, aux);
+		free(aux);
 	}
 	return (new);
 }

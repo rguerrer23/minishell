@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 21:22:06 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/22 22:38:40 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/25 01:58:24 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	**ft_matrixdup(char **matrix)
 		return (NULL);
 	while (matrix[c])
 		c++;
-	new = (char **)malloc(sizeof(char *) * (c + 1));
+	new = ft_calloc(sizeof(char *), c + 1);
 	if (!new)
 		return (NULL);
 	c = 0;

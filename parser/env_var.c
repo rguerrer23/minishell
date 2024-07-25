@@ -6,16 +6,17 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 19:30:25 by kevlar            #+#    #+#             */
-/*   Updated: 2024/07/25 00:50:16 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/25 02:07:05 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-static void	replace_dollar(char **cmd, int *j, char *status, t_var **list_var)
+static void	replace_var_env(char **cmd, int *j, char *status, t_var **list_var)
 {
 	char	*key;
 	char	*var;
+	char	*tmp;
 
 	if ((*cmd)[*j + 1] == '?')
 	{
@@ -28,25 +29,31 @@ static void	replace_dollar(char **cmd, int *j, char *status, t_var **list_var)
 		key = find_varname(*cmd, *j + 1);
 		*cmd = ft_delete_str(*cmd, *j, *j + ft_strlen(key));
 		var = get_var(list_var, key);
-		free(*cmd);
-		*cmd = ft_insert_str(*cmd, var, *j);
+		tmp = *cmd;
+		*cmd = ft_insert_str(tmp, var, *j);
 		free(key);
 		free(var);
+		free(tmp);
 	}
 }
 
 static void	do_command(char **cmd, t_var **list_var, char *status)
 {
 	int	j;
+	int	is_at_dollar;
+	int	is_alpha;
+	int	is_underscore;
+	int	is_question_mark;
 
 	j = 0;
 	while ((*cmd)[j])
 	{
-		if ((*cmd)[j] == '$' && ((!ft_isalnum((*cmd)[j + 1])) && ((*cmd)[j
-					+ 1] != '_') && ((*cmd)[j + 1] != '?')))
-			(*cmd)[j] = '$';
-		else if ((*cmd)[j] == '$')
-			replace_dollar(cmd, &j, status, list_var);
+		is_at_dollar = (*cmd)[j] == '$';
+		is_alpha = ft_isalpha((*cmd)[j + 1]);
+		is_underscore = (*cmd)[j + 1] == '_';
+		is_question_mark = (*cmd)[j + 1] == '?';
+		if (is_at_dollar && (is_alpha || is_underscore || is_question_mark))
+			replace_var_env(cmd, &j, status, list_var);
 		j++;
 	}
 }

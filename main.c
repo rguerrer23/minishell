@@ -6,7 +6,7 @@
 /*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:03:39 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/25 00:35:08 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/25 01:15:07 by jmartos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int	ft_check_line(char *line)
 
 void	init_struct(t_shell *shell, char **envp)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	shell->cmds = NULL;
