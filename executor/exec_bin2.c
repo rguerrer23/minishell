@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 21:05:48 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 23:57:41 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/25 11:14:39 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	exc(char *path, t_cmd **cmd, t_shell *shell, int i)
 		close(shell->fdin);
 	if (shell->fdout > 2)
 		close(shell->fdout);
-    if (shell->g_status == 32512 || shell->g_status == 32256)
-        shell->g_status /= 256;
-    ft_strd_free(exc);
+	if (shell->g_status == 32512 || shell->g_status == 32256)
+		shell->g_status /= 256;
+	ft_strd_free(exc);
 }

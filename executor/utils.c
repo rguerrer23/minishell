@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmartos- <jmartos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 18:26:40 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/25 00:21:58 by jmartos-         ###   ########.fr       */
+/*   Updated: 2024/07/25 11:16:40 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,15 @@ void	update_shlvl(t_shell *shell)
 	}
 }
 
+void	update_oldpwd(t_shell *shell, int i)
+{
+	if (shell->oldpwd != NULL && ft_strncmp(shell->env[i], "OLDPWD=", 7) == 0)
+	{
+		free(shell->env[i]);
+		shell->env[i] = ft_strjoin("OLDPWD=", shell->oldpwd);
+	}
+}
+
 void	reset_env(t_shell *shell, t_cmd **cmds)
 {
 	int	i;
@@ -46,12 +55,7 @@ void	reset_env(t_shell *shell, t_cmd **cmds)
 	x = 0;
 	while (shell->env[i])
 	{
-		if (shell->oldpwd != NULL && ft_strncmp(shell->env[i], "OLDPWD=",
-				7) == 0)
-		{
-			free(shell->env[i]);
-			shell->env[i] = ft_strjoin("OLDPWD=", shell->oldpwd);
-		}
+		update_oldpwd(shell, i);
 		if (ft_strncmp(shell->env[i], "_=", 2) == 0)
 		{
 			if (cmds[0]->args[0] != NULL)

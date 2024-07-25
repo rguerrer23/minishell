@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 22:28:22 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 23:56:38 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/25 11:19:01 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,26 +25,26 @@ void	ft_free_cmd(t_cmd *cmd)
 
 void	ft_free_var(t_var *var)
 {
-    if (!var)
-        return;
-    free(var->key);
-    free(var->value);
-    free(var);
+	if (!var)
+		return ;
+	free(var->key);
+	free(var->value);
+	free(var);
 }
 
 void	ft_free_envs(t_var **var_array)
 {
-    int	i;
+	int	i;
 
-    if (!var_array)
-        return;
-    i = 0;
-    while (var_array[i])
-    {
-        ft_free_var(var_array[i]);
-        i++;
-    }
-    free(var_array);
+	if (!var_array)
+		return ;
+	i = 0;
+	while (var_array[i])
+	{
+		ft_free_var(var_array[i]);
+		i++;
+	}
+	free(var_array);
 }
 
 void	ft_free_struct(t_shell *shell)
@@ -61,7 +61,7 @@ void	ft_free_struct(t_shell *shell)
 			ft_free_cmd(shell->cmds[i]);
 			i++;
 		}
-        free(shell->cmds);
+		free(shell->cmds);
 	}
-    ft_strd_free(shell->env);
+	ft_strd_free(shell->env);
 }

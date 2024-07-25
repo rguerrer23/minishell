@@ -6,7 +6,7 @@
 /*   By: rguerrer <rguerrer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:51:36 by rguerrer          #+#    #+#             */
-/*   Updated: 2024/07/24 23:09:23 by rguerrer         ###   ########.fr       */
+/*   Updated: 2024/07/25 11:19:55 by rguerrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,20 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# define _XOPEN_SOURCE 700	// Macro utilizada para evitar errores por
-							// inicializaciones o estructuras incompletas.
+# define _XOPEN_SOURCE \
+	700 // Macro utilizada para evitar errores por
+		// inicializaciones o estructuras incompletas.
 
 # include "libft/includes/libft.h" // libft
+# include <dirent.h>
 # include <errno.h>
 # include <fcntl.h>
 # include <readline/history.h>  // redline
 # include <readline/readline.h> // redline
-# include <stdio.h>             // redline
 # include <signal.h>            // señales
+# include <stdio.h>             // redline
 # include <sys/types.h>
 # include <sys/wait.h>
-# include <dirent.h>
 
 # define EXIT_SUCCESS 0
 # define EXIT_FAILURE 1
@@ -110,7 +111,8 @@ typedef struct s_shell
 
 int			main(int argc, char **argv, char **envp);
 void		ft_free_struct(t_shell *shell);
-void    	ft_free_envs(t_var **list_var);
+void		ft_free_envs(t_var **list_var);
+void		free_cmd(t_cmd *cmd);
 void		delete_end_spaces(char *str);
 void		init_pipe_red(t_pipe_red *value);
 void		init_prompt(t_shell *shell);
